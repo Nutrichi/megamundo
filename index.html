@@ -6,38 +6,38 @@
 <title>Megamundo, GTA 6 fansite</title>
 <meta name="description" content="Megamundo is een fansite over Grand Theft Auto VI: nieuws, gidsen en alles uit Leonida en Vice City.">
 <link rel="canonical" href="https://megamundo.be/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0a0a12">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://megamundo.be/">
 <meta property="og:title" content="Megamundo, GTA 6 fansite">
 <meta property="og:description" content="Nieuws, gidsen en alles uit Leonida en Vice City.">
-<meta property="og:image" content="https://megamundo.be/assets/logo_only.png">
+<meta property="og:image" content="https://megamundo.be/assets/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <style>
   :root {
     color-scheme: dark;
 
-    /* Megamundo-palet, afgelezen van het logo */
-    --mm-magenta: #fe05fe;
-    --mm-red:     #fc1f30;
-    --mm-orange:  #ff9e03;
-    --mm-yellow:  #fdec06;
-    --mm-green:   #71fb85;
-    --mm-cyan:    #01e2fd;
-    --mm-azure:   #008cfd;
-    --mm-blue:    #0038fc;
-    --mm-indigo:  #001dfb;
+    /* Megamundo-palet */
+    --mm-pink:   #e5399b;
+    --mm-orange: #f0603a;
+    --mm-amber:  #f6a63c;
+    --mm-yellow: #f3e05a;
+    --mm-mint:   #78d6a4;
+    --mm-sky:    #4bb2e0;
+    --mm-blue:   #2f5fd8;
 
     --mm-spectrum: linear-gradient(90deg,
-      var(--mm-magenta) 0%, var(--mm-red) 13%, var(--mm-orange) 27%,
-      var(--mm-yellow) 40%, var(--mm-green) 54%, var(--mm-cyan) 68%,
-      var(--mm-azure) 81%, var(--mm-blue) 92%, var(--mm-indigo) 100%);
+      var(--mm-pink) 0%, var(--mm-orange) 17%, var(--mm-amber) 34%,
+      var(--mm-yellow) 50%, var(--mm-mint) 67%, var(--mm-sky) 84%, var(--mm-blue) 100%);
 
-    --bg: #000;
-    --fg: #fff;
-    --muted: #8b8b96;
-    --line: #1c1c22;
+    --bg: #0a0a12;
+    --fg: #f2f0f6;
+    --muted: #8d8aa3;
+    --line: #2c2a3d;
+    --red: #ff2d2d;
   }
 
   * { box-sizing: border-box; }
@@ -53,78 +53,82 @@
     font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
 
-  main { width: 100%; max-width: 40rem; text-align: center; }
+  main { width: 100%; max-width: 34rem; text-align: center; }
 
-  .logo {
+  .globe {
     display: block;
-    width: min(100%, 30rem);
-    margin: 0 auto 2rem;
-    filter: drop-shadow(0 0 5rem rgba(1, 226, 253, .28));
+    width: min(60vw, 15rem);
+    height: auto;
+    margin: 0 auto 1.5rem;
   }
+
+  /* var() werkt niet in een fill-attribuut, dus de banden krijgen hun kleur hier */
+  .globe .band-1 { fill: var(--mm-pink); }
+  .globe .band-2 { fill: var(--mm-orange); }
+  .globe .band-3 { fill: var(--mm-amber); }
+  .globe .band-4 { fill: var(--mm-yellow); }
+  .globe .band-5 { fill: var(--mm-mint); }
+  .globe .band-6 { fill: var(--mm-sky); }
+  .globe .band-7 { fill: var(--mm-blue); }
 
   .badge {
     display: inline-block;
-    margin-bottom: 1.25rem;
-    padding: .35rem .9rem;
+    margin-bottom: 1.5rem;
+    padding: .35rem .85rem;
     border: 1px solid var(--line);
     border-radius: 999px;
-    font-size: .72rem;
-    font-weight: 600;
-    letter-spacing: .16em;
+    font-size: .75rem;
+    letter-spacing: .14em;
     text-transform: uppercase;
     color: var(--muted);
   }
 
   h1 {
     margin: 0 0 .75rem;
-    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-size: clamp(2.75rem, 12vw, 5rem);
     font-weight: 800;
-    letter-spacing: -.01em;
+    letter-spacing: -.02em;
+    color: var(--red);
+    text-shadow: 0 0 2.5rem rgba(255, 45, 45, .45);
   }
 
   p.tagline {
     margin: 0 auto;
-    max-width: 30rem;
-    font-size: 1.05rem;
+    max-width: 28rem;
+    font-size: 1.1rem;
     color: var(--muted);
   }
 
-  .rule {
-    width: min(100%, 22rem);
-    height: 3px;
-    margin: 2.5rem auto 0;
-    border-radius: 999px;
-    background: var(--mm-spectrum);
-    opacity: .85;
-  }
-
   footer {
-    margin-top: 2.5rem;
+    margin-top: 3.5rem;
     font-size: .8rem;
     line-height: 1.7;
-    color: #55555f;
-  }
-
-  footer a { color: var(--muted); }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .logo { animation: rise .9s cubic-bezier(.2, .7, .2, 1) both; }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(1.25rem) scale(.97); }
-      to   { opacity: 1; transform: none; }
-    }
+    color: #5d5a72;
   }
 </style>
 </head>
 <body>
 <main>
-  <img class="logo" src="/assets/logo_only.png" width="512" height="512" alt="Megamundo.be">
+  <svg class="globe" viewBox="0 0 200 190" role="img" aria-label="Megamundo-logo">
+    <defs>
+      <clipPath id="ball"><circle cx="100" cy="95" r="88"/></clipPath>
+    </defs>
+    <g clip-path="url(#ball)">
+      <path class="band-1" d="M12 7h176v20H12z"/>
+      <path class="band-2" d="M12 32h176v20H12z"/>
+      <path class="band-3" d="M12 57h176v20H12z"/>
+      <path class="band-4" d="M12 82h176v20H12z"/>
+      <path class="band-5" d="M12 107h176v20H12z"/>
+      <path class="band-6" d="M12 132h176v20H12z"/>
+      <path class="band-7" d="M12 157h176v26H12z"/>
+    </g>
+  </svg>
   <div><span class="badge">Binnenkort</span></div>
-  <h1>Een fansite over Grand Theft Auto VI</h1>
-  <p class="tagline">Nieuws, gidsen en alles uit Leonida en Vice City. De site wordt op dit moment gebouwd.</p>
-  <div class="rule"></div>
+  <h1>MEGAMUNDO</h1>
+  <p class="tagline">Een fansite over Grand Theft Auto VI. Nieuws, gidsen en alles uit Leonida.</p>
   <footer>
     megamundo.be is een fansite en staat los van Rockstar Games.<br>
+    Grand Theft Auto en GTA zijn handelsmerken van Take-Two Interactive.
   </footer>
 </main>
 </body>

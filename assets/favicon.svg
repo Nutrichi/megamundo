@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Megamundo">
+  <defs>
+    <clipPath id="ball"><circle cx="100" cy="100" r="92"/></clipPath>
+  </defs>
+  <rect width="200" height="200" rx="30" fill="#0a0a12"/>
+  <g clip-path="url(#ball)">
+    <rect x="4" y="8"   width="192" height="21" fill="#e5399b"/>
+    <rect x="4" y="34"  width="192" height="21" fill="#f0603a"/>
+    <rect x="4" y="60"  width="192" height="21" fill="#f6a63c"/>
+    <rect x="4" y="86"  width="192" height="21" fill="#f3e05a"/>
+    <rect x="4" y="112" width="192" height="21" fill="#78d6a4"/>
+    <rect x="4" y="138" width="192" height="21" fill="#4bb2e0"/>
+    <rect x="4" y="164" width="192" height="28" fill="#2f5fd8"/>
+  </g>
+</svg>

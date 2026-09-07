@@ -28,11 +28,14 @@
     --mm-red:    #f25e3d;
     --mm-orange: #f2a341;
     --mm-yellow: #f2d95c;
+    --mm-green:  #5cd98a;
+    --mm-cyan:   #3dc5d9;
     --mm-blue:   #3068d9;
 
     --mm-spectrum: linear-gradient(90deg,
-      var(--mm-pink) 0%, var(--mm-red) 25%, var(--mm-orange) 50%,
-      var(--mm-yellow) 75%, var(--mm-blue) 100%);
+      var(--mm-pink) 0%, var(--mm-red) 17%, var(--mm-orange) 33%,
+      var(--mm-yellow) 50%, var(--mm-green) 67%, var(--mm-cyan) 83%,
+      var(--mm-blue) 100%);
 
     --bg: #0a0a12;
     --fg: #f2f0f6;
@@ -72,7 +75,9 @@
   .globe .band-2 { fill: var(--mm-red); }
   .globe .band-3 { fill: var(--mm-orange); }
   .globe .band-4 { fill: var(--mm-yellow); }
-  .globe .band-5 { fill: var(--mm-blue); }
+  .globe .band-5 { fill: var(--mm-green); }
+  .globe .band-6 { fill: var(--mm-cyan); }
+  .globe .band-7 { fill: var(--mm-blue); }
 
   .badge {
     display: inline-block;
@@ -127,11 +132,13 @@
       <clipPath id="ball"><circle cx="100" cy="100" r="96"/></clipPath>
     </defs>
     <g clip-path="url(#ball)">
-      <rect class="band-1" x="0" y="4"   width="200" height="34"/>
-      <rect class="band-2" x="0" y="44"  width="200" height="34"/>
-      <rect class="band-3" x="0" y="84"  width="200" height="34"/>
-      <rect class="band-4" x="0" y="124" width="200" height="34"/>
-      <rect class="band-5" x="0" y="164" width="200" height="34"/>
+      <rect class="band-1" x="0" y="4.000" width="200" height="23.143"/>
+      <rect class="band-2" x="0" y="32.143" width="200" height="23.143"/>
+      <rect class="band-3" x="0" y="60.286" width="200" height="23.143"/>
+      <rect class="band-4" x="0" y="88.429" width="200" height="23.143"/>
+      <rect class="band-5" x="0" y="116.571" width="200" height="23.143"/>
+      <rect class="band-6" x="0" y="144.714" width="200" height="23.143"/>
+      <rect class="band-7" x="0" y="172.857" width="200" height="23.143"/>
     </g>
   </svg>
   <div><span class="badge">Binnenkort</span></div>

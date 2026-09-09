@@ -1,0 +1,90 @@
+---
+/*
+ * Het tweekoloms-grid van richting 1C: links één uitgelicht item groot,
+ * rechts het volledige archief als pillijst.
+ *
+ * Fase 1 zet het raster en de lege staat; fase 2 vult de twee slots met
+ * echte posts. Boven 900 px twee kolommen, daaronder gestapeld met
+ * uitgelicht boven. `min-width: 0` op beide kolommen is essentieel: zonder
+ * dat breekt straks de ellipsis van de pillen.
+ */
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+  /** Aantal posts, voor de teller rechts in de lijstkop. */
+  count?: number;
+}
+
+const { locale, count = 0 } = Astro.props;
+const t = useTranslations(locale);
+/** "1 post" of "143 posts", in de taal van de pagina. */
+const countLabel = (count === 1 ? t('list.countOne') : t('list.countMany'))
+  .replace('{n}', String(count));
+
+const hasFeatured = Astro.slots.has('featured');
+const hasList = Astro.slots.has('list');
+---
+
+<div class="mm-home">
+  <section class="mm-home__col" aria-label={t('featured.label')}>
+    <h2 class="mm-home__label">{t('featured.label')}</h2>
+    {hasFeatured ? <slot name="featured" /> : <p class="mm-home__empty">{t('list.empty')}</p>}
+  </section>
+
+  <section class="mm-home__col" aria-label={t('list.heading')}>
+    <div class="mm-home__listhead">
+      <h2 class="mm-home__label">{t('list.heading')}</h2>
+      {hasList && count > 0 && <span class="mm-home__count mm-nums">{countLabel}</span>}
+    </div>
+    {hasList ? <slot name="list" /> : <p class="mm-home__empty">{t('list.empty')}</p>}
+  </section>
+</div>
+
+<style>
+  .mm-home {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 26px;
+  }
+
+  .mm-home__col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .mm-home__label {
+    font-family: var(--mm-display);
+    font-size: 14px;
+    letter-spacing: .18em;
+    color: var(--mm-muted);
+  }
+
+  .mm-home__listhead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 4px;
+  }
+
+  .mm-home__count {
+    font-size: 12.5px;
+    color: var(--mm-muted);
+  }
+
+  .mm-home__empty {
+    font-size: 13.5px;
+    color: var(--mm-muted);
+  }
+
+  @media (max-width: 899px) {
+    .mm-home {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+    }
+  }
+</style>

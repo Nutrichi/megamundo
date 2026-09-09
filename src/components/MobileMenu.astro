@@ -1,0 +1,331 @@
+---
+/*
+ * Het mobiele menu (scherm 4 uit de handoff).
+ *
+ * Let op: de handoff tekent onder Game ook `Characters — soon` en
+ * `Vehicles — soon`. Die worden niet gebouwd. De regel uit §4.1 kent geen
+ * uitzondering voor een item dat alleen als tekst in een menu staat, ook
+ * niet als het ontwerp het tekent. Bevestigd op 9 september 2026.
+ */
+import type { Locale } from '../i18n/ui';
+import type { NavItem } from '../config/nav';
+import { isCurrent } from '../config/nav';
+import { localizePath, useTranslations } from '../i18n/utils';
+import Logo from './Logo.astro';
+import SearchField from './SearchField.astro';
+import LangPicker from './LangPicker.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  locale: Locale;
+  nav: NavItem[];
+  pathname: string;
+}
+
+const { locale, nav, pathname } = Astro.props;
+const t = useTranslations(locale);
+const home = localizePath('', locale);
+---
+
+<div
+  class="mm-menu"
+  id="mm-mobile-menu"
+  data-mm-menu
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-label={t('nav.label')}
+>
+  <div class="mm-menu__top">
+    <a class="mm-menu__brand" href={home}>
+      <Logo size={24} uid="menu" />
+      <span class="mm-menu__word">MEGAMUNDO</span>
+    </a>
+
+    <button
+      type="button"
+      class="mm-close"
+      data-mm-menu-close
+      aria-label={t('nav.close')}
+    >
+      <span class="mm-close__box">
+        <span class="mm-close__bar"></span>
+        <span class="mm-close__bar"></span>
+      </span>
+    </button>
+  </div>
+
+  <div class="mm-menu__spectrum" aria-hidden="true"></div>
+
+  <div class="mm-menu__body">
+    <SearchField locale={locale} variant="block" />
+
+    <ul class="mm-menu__list">
+      {nav.map((item) => {
+        const current = isCurrent(item.path, pathname);
+        const hasChildren = !!item.children?.length;
+        return (
+          <li class="mm-menu__row">
+            <a
+              href={hasChildren ? item.children![0].path : item.path}
+              class:list={['mm-menu__item', { 'is-current': current }]}
+              aria-current={current ? 'page' : undefined}
+            >
+              <span>{t(item.labelKey)}</span>
+              {current && !hasChildren && <span class="mm-menu__diamond" aria-hidden="true"></span>}
+              {hasChildren && (
+                <span class="mm-menu__chevron" aria-hidden="true">
+                  <span></span><span></span>
+                </span>
+              )}
+            </a>
+
+            {hasChildren && (
+              <ul class="mm-menu__sub">
+                {item.children!.map((child) => {
+                  const childCurrent = isCurrent(child.path, pathname);
+                  return (
+                    <li>
+                      <a
+                        href={child.path}
+                        class:list={['mm-menu__subitem', { 'is-current': childCurrent }]}
+                        aria-current={childCurrent ? 'page' : undefined}
+                      >
+                        {t(child.labelKey)}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+
+    <div class="mm-menu__foot">
+      <LangPicker locale={locale} pathname={pathname} variant="grid" />
+      <ThemeToggle locale={locale} variant="row" />
+    </div>
+  </div>
+</div>
+
+<style>
+  .mm-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    min-height: 620px;
+    padding: 16px;
+    gap: 8px;
+    overflow-y: auto;
+    background: var(--mm-bg);
+    background-image: var(--mm-wash-menu);
+  }
+
+  .mm-menu__top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mm-menu__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mm-menu__word {
+    font-family: var(--mm-display);
+    font-size: 21px;
+    letter-spacing: .07em;
+    line-height: 1;
+    color: var(--mm-ink);
+    text-shadow: var(--mm-glow-wordmark);
+  }
+
+  .mm-close {
+    margin-left: auto;
+    padding: 10px; /* raakvlak 44 px */
+  }
+
+  .mm-close__box {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+  }
+
+  .mm-close__bar {
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--mm-accent-pink);
+  }
+
+  .mm-close__bar:first-child { transform: rotate(45deg); }
+  .mm-close__bar:last-child { transform: rotate(-45deg); }
+
+  .mm-menu__spectrum {
+    height: 2px;
+    flex: none;
+    background: var(--mm-spectrum-h);
+  }
+
+  .mm-menu__body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 auto;
+  }
+
+  .mm-menu__list {
+    margin: 8px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mm-menu__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mm-display);
+    font-size: 22px;
+    letter-spacing: .08em;
+    padding: 12px 4px;
+    border-bottom: 1px solid var(--mm-border);
+    color: var(--mm-ink);
+  }
+
+  .mm-menu__item.is-current { color: var(--mm-ink); }
+
+  .mm-menu__diamond {
+    margin-left: auto;
+    width: 8px;
+    height: 8px;
+    background: var(--mm-accent-pink);
+    transform: rotate(45deg);
+  }
+
+  .mm-menu__chevron {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .mm-menu__chevron span {
+    display: block;
+    width: 11px;
+    height: 2px;
+    background: var(--mm-accent-cyan);
+  }
+
+  .mm-menu__sub {
+    margin: 0 0 0 4px;
+    padding: 2px 4px 10px 16px;
+    border-left: 2px solid var(--mm-border);
+    list-style: none;
+  }
+
+  .mm-menu__subitem {
+    display: block;
+    font-size: 15px;
+    padding: 9px 0;
+    color: var(--mm-muted);
+  }
+
+  .mm-menu__subitem.is-current {
+    color: var(--mm-accent-cyan);
+    font-weight: 600;
+  }
+
+  .mm-menu__foot {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 20px;
+  }
+
+  /* Boven de breakpoint bestaat dit menu niet, ook niet als het openstond. */
+  @media (min-width: 900px) {
+    .mm-menu { display: none; }
+  }
+</style>
+
+<script>
+  /*
+   * Openen en sluiten. Vergrendelt de achtergrondscroll, sluit op Escape,
+   * en houdt de focus binnen de overlay zolang hij open is.
+   */
+  const menu = document.querySelector<HTMLElement>('[data-mm-menu]');
+  const openBtn = document.querySelector<HTMLElement>('[data-mm-menu-open]');
+  const closeBtn = document.querySelector<HTMLElement>('[data-mm-menu-close]');
+
+  if (menu && openBtn && closeBtn) {
+    const focusables = () =>
+      Array.from(
+        menu.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input, summary, [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => el.offsetParent !== null);
+
+    const open = () => {
+      menu.hidden = false;
+      openBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    };
+
+    const close = () => {
+      menu.hidden = true;
+      openBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      openBtn.focus();
+    };
+
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+
+    document.addEventListener('keydown', (event) => {
+      if (menu.hidden) return;
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const items = focusables();
+      if (!items.length) return;
+
+      const first = items[0];
+      const last = items[items.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    /*
+     * Wie het venster breed maakt terwijl het menu open staat, zou anders
+     * met een vergrendelde scroll achterblijven.
+     */
+    const wide = window.matchMedia('(min-width: 900px)');
+    wide.addEventListener('change', (event) => {
+      if (event.matches && !menu.hidden) close();
+    });
+  }
+</script>

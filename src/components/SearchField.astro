@@ -1,0 +1,85 @@
+---
+/*
+ * Zoekveld. Filtert in fase 2 de pillijst live op titel; hier staat de
+ * vorm en het formulier al. Zonder JavaScript komt de zoekterm als ?q= op
+ * de homepage terecht, en dat is precies waar fase 2 hem oppikt.
+ */
+import type { Locale } from '../i18n/ui';
+import { localizePath, useTranslations } from '../i18n/utils';
+import Icon from './Icon.astro';
+
+interface Props {
+  locale: Locale;
+  variant?: 'bar' | 'block';
+}
+
+const { locale, variant = 'bar' } = Astro.props;
+const t = useTranslations(locale);
+const action = localizePath('', locale);
+---
+
+<form
+  class:list={['mm-search', variant === 'block' && 'is-block']}
+  role="search"
+  action={action}
+  method="get"
+>
+  <Icon name="search" size={14} class="mm-search__icon" />
+  <label class="mm-sr" for={`mm-q-${variant}`}>{t('search.label')}</label>
+  <input
+    id={`mm-q-${variant}`}
+    class="mm-search__input"
+    type="search"
+    name="q"
+    placeholder={t('search.placeholder')}
+    autocomplete="off"
+  />
+</form>
+
+<style>
+  .mm-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: none;
+    min-width: 150px;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field);
+    padding: 7px 12px;
+    color: var(--mm-muted);
+    transition: var(--mm-transition);
+  }
+
+  .mm-search:focus-within { border-color: var(--mm-accent-cyan); }
+
+  .mm-search__icon {
+    stroke: var(--mm-muted);
+    fill: none;
+  }
+
+  .mm-search__input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: 13.5px;
+    color: var(--mm-ink);
+  }
+
+  .mm-search__input::placeholder { color: var(--mm-muted); }
+  .mm-search__input:focus { outline: none; }
+
+  /* Weg met het kruisje dat WebKit er zelf in zet. */
+  .mm-search__input::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+  /* --- Blokvariant: het veld bovenaan het mobiele menu --- */
+  .is-block {
+    width: 100%;
+    border-radius: var(--mm-r-field-xl);
+    padding: 11px 13px;
+    background: var(--mm-raised);
+  }
+
+  .is-block .mm-search__input { font-size: 14.5px; }
+</style>

@@ -1,0 +1,55 @@
+---
+/*
+ * Het logo. Dezelfde meetkunde als assets/favicon.svg — niet opnieuw
+ * getekend, want de geometrie hoort alleen in tools/mkicon.py te wijzigen.
+ *
+ * De fills staan als letterlijke hex in de SVG en niet als CSS-variabele:
+ * een variabele werkt niet in een fill-attribuut (PROJECT_SPEC.md §13).
+ *
+ * `uid` maakt de clipPath-id uniek, zodat twee logo's op één pagina
+ * (header en mobiel menu) elkaars clip niet overnemen.
+ */
+interface Props {
+  size?: number;
+  uid?: string;
+  class?: string;
+}
+
+const { size = 28, uid = 'hdr', class: className } = Astro.props;
+const clipId = `mm-ball-${uid}`;
+
+const bands = [
+  { y: '4.000', fill: '#d93ba1' },
+  { y: '32.143', fill: '#f25e3d' },
+  { y: '60.286', fill: '#f2a341' },
+  { y: '88.429', fill: '#f2d95c' },
+  { y: '116.571', fill: '#5cd98a' },
+  { y: '144.714', fill: '#3dc5d9' },
+  { y: '172.857', fill: '#3068d9' },
+];
+---
+
+<svg
+  class:list={['mm-logo', className]}
+  viewBox="0 0 200 200"
+  width={size}
+  height={size}
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <clipPath id={clipId}><circle cx="100" cy="100" r="96" /></clipPath>
+  </defs>
+  <g clip-path={`url(#${clipId})`}>
+    {bands.map((band) => (
+      <rect x="0" y={band.y} width="200" height="23.143" fill={band.fill} />
+    ))}
+  </g>
+</svg>
+
+<style>
+  .mm-logo {
+    flex: none;
+    filter: var(--mm-glow-logo);
+  }
+</style>

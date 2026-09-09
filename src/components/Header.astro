@@ -1,0 +1,191 @@
+---
+/*
+ * De header. Links logo en woordmerk, daarnaast de hoofdnavigatie, rechts
+ * zoeken, taal en thema. Onder 900 px blijft alleen logo plus hamburger
+ * over en verhuist de rest naar het mobiele menu.
+ *
+ * De navigatie komt binnen als lijst; welke tabs erin staan is al beslist
+ * door getNav() op basis van de content collections (PROJECT_SPEC.md §4.1).
+ */
+import type { Locale } from '../i18n/ui';
+import type { NavItem } from '../config/nav';
+import { isCurrent } from '../config/nav';
+import { localizePath, useTranslations } from '../i18n/utils';
+import Logo from './Logo.astro';
+import SearchField from './SearchField.astro';
+import LangPicker from './LangPicker.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  locale: Locale;
+  nav: NavItem[];
+  pathname: string;
+}
+
+const { locale, nav, pathname } = Astro.props;
+const t = useTranslations(locale);
+const home = localizePath('', locale);
+
+/*
+ * Een oudertab linkt naar zijn eerste kind. Er bestaat geen overzichtspagina
+ * die "binnenkort" zegt, en een tab zonder inhoud staat hier toch al niet.
+ */
+const hrefFor = (item: NavItem) => item.children?.[0]?.path ?? item.path;
+---
+
+<header class="mm-header">
+  <div class="mm-header__inner">
+    <a class="mm-brand" href={home}>
+      <Logo size={28} uid="hdr" class="mm-brand__logo" />
+      <span class="mm-brand__word">MEGAMUNDO</span>
+    </a>
+
+    <nav class="mm-nav" aria-label={t('nav.label')}>
+      <ul class="mm-nav__list">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={hrefFor(item)}
+              class:list={['mm-nav__item', { 'is-current': isCurrent(item.path, pathname) }]}
+              aria-current={isCurrent(item.path, pathname) ? 'page' : undefined}
+            >
+              {t(item.labelKey)}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="mm-header__tools">
+      <SearchField locale={locale} variant="bar" />
+      <LangPicker locale={locale} pathname={pathname} variant="bar" />
+      <ThemeToggle locale={locale} variant="bar" />
+    </div>
+
+    <button
+      type="button"
+      class="mm-burger"
+      data-mm-menu-open
+      aria-label={t('nav.open')}
+      aria-expanded="false"
+      aria-controls="mm-mobile-menu"
+    >
+      <span class="mm-burger__bars">
+        <span class="mm-burger__bar is-1"></span>
+        <span class="mm-burger__bar is-2"></span>
+        <span class="mm-burger__bar is-3"></span>
+      </span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .mm-header { background: var(--mm-header); }
+
+  .mm-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    width: 100%;
+    max-width: var(--mm-max);
+    margin: 0 auto;
+    padding: 15px 26px;
+  }
+
+  .mm-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: none;
+  }
+
+  .mm-brand__word {
+    font-family: var(--mm-display);
+    font-size: 27px;
+    letter-spacing: .07em;
+    line-height: 1;
+    color: var(--mm-ink);
+    text-shadow: var(--mm-glow-wordmark);
+  }
+
+  .mm-nav__list {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /*
+   * Elk item heeft zijn eigen 1px rand, ook het actieve. Zo zijn ze allemaal
+   * exact even hoog; een variant zonder rand zou een pixel schelen.
+   */
+  .mm-nav__item {
+    display: block;
+    font-family: var(--mm-display);
+    font-size: 18px;
+    letter-spacing: .09em;
+    white-space: nowrap;
+    padding: 6px 15px;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field);
+    color: var(--mm-muted);
+    transition: var(--mm-transition), color .16s ease;
+  }
+
+  .mm-nav__item:hover {
+    border-color: var(--mm-accent-cyan);
+    color: var(--mm-ink);
+  }
+
+  .mm-nav__item.is-current {
+    border-color: var(--mm-accent-pink);
+    background: var(--mm-accent-pink-soft);
+    color: var(--mm-ink);
+  }
+
+  .mm-header__tools {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  /* --- De hamburger: alleen onder 900 px --- */
+  .mm-burger {
+    display: none;
+    margin-left: auto;
+    /* Een raakvlak van 44 px: 24 px inhoud plus 10 px rondom. */
+    padding: 10px;
+  }
+
+  .mm-burger__bars {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    width: 20px;
+  }
+
+  .mm-burger__bar {
+    height: 2px;
+    border-radius: 2px;
+  }
+
+  .mm-burger__bar.is-1 { width: 20px; background: var(--mm-ink); }
+  .mm-burger__bar.is-2 { width: 20px; background: var(--mm-accent-cyan); }
+  .mm-burger__bar.is-3 { width: 14px; background: var(--mm-accent-pink); }
+
+  @media (max-width: 899px) {
+    .mm-header__inner {
+      gap: 12px;
+      padding: 14px 16px;
+    }
+
+    .mm-brand__word { font-size: 21px; }
+    .mm-brand__logo { width: 24px; height: 24px; }
+    .mm-nav,
+    .mm-header__tools { display: none; }
+    .mm-burger { display: block; }
+  }
+</style>

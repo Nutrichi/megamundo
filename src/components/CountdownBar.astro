@@ -1,0 +1,280 @@
+---
+/*
+ * De aftelbalk naar GTA VI, 19 november 2026 (PROJECT_SPEC.md §5.4).
+ *
+ * Dit blok staat bewust op zichzelf: na de release moet het in zijn geheel
+ * weg kunnen zonder de header aan te raken. Het raakt niets buiten zijn
+ * eigen markup en zijn eigen script.
+ *
+ * De cijfers worden bij het bouwen al gevuld, zodat er zonder JavaScript
+ * ook iets staat. Het script zet ze bij de eerste tik goed en tikt daarna
+ * elke seconde. Onder nul klemt hij op nul en loopt hij niet negatief door.
+ */
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import { releaseDate } from '../config/site';
+
+interface Props {
+  locale: Locale;
+  /** Compacte variant voor de postpagina: kleiner en gecentreerd. */
+  compact?: boolean;
+}
+
+const { locale, compact = false } = Astro.props;
+const t = useTranslations(locale);
+
+/** Het doel staat in config/site.ts; het script leest het uit het attribuut. */
+const target = releaseDate;
+
+function split(msLeft: number) {
+  const ms = Math.max(0, msLeft); // klemmen op nul
+  const minute = 60_000;
+  const hour = 60 * minute;
+  const day = 24 * hour;
+  return {
+    days: Math.floor(ms / day),
+    hours: Math.floor((ms % day) / hour),
+    minutes: Math.floor((ms % hour) / minute),
+  };
+}
+
+const initial = split(new Date(target).getTime() - Date.now());
+const pad = (n: number) => String(n).padStart(2, '0');
+
+/*
+ * De zin voor de schermlezer. De eenheden staan als {du} {hu} {mu} in het
+ * patroon, zodat elke taal zijn eigen enkelvoud kan gebruiken: "1 uur" en
+ * niet "1 uren".
+ */
+const units = {
+  d: [t('countdown.daysOne'), t('countdown.daysMany')],
+  h: [t('countdown.hoursOne'), t('countdown.hoursMany')],
+  m: [t('countdown.minutesOne'), t('countdown.minutesMany')],
+};
+
+const fill = (pattern: string, d: number, h: number, m: number) =>
+  pattern
+    .replace('{d}', String(d))
+    .replace('{h}', String(h))
+    .replace('{m}', String(m))
+    .replace('{du}', d === 1 ? units.d[0] : units.d[1])
+    .replace('{hu}', h === 1 ? units.h[0] : units.h[1])
+    .replace('{mu}', m === 1 ? units.m[0] : units.m[1]);
+
+const ariaText = fill(t('countdown.aria'), initial.days, initial.hours, initial.minutes);
+---
+
+<div
+  class:list={['mm-countdown', { 'is-compact': compact }]}
+  data-mm-countdown
+  data-target={target}
+  data-units={JSON.stringify(units)}
+>
+  <div class="mm-countdown__inner">
+    {!compact && <span class="mm-countdown__label">{t('countdown.label')}</span>}
+
+    <!--
+      De cijfers zijn voor het oog. Een schermlezer krijgt één rustige zin
+      in plaats van een teller die elke seconde opnieuw praat.
+    -->
+    <p class="mm-sr" data-mm-countdown-sr data-pattern={t('countdown.aria')}>
+      {ariaText}
+    </p>
+
+    <div class="mm-countdown__digits mm-nums" aria-hidden="true">
+      <span class="mm-countdown__pair">
+        <span class="mm-countdown__num is-days" data-mm-days>{initial.days}</span>
+        <span class="mm-countdown__unit">{t('countdown.days')}</span>
+      </span>
+      <span class="mm-countdown__pair">
+        <span class="mm-countdown__num is-hours" data-mm-hours>{pad(initial.hours)}</span>
+        <span class="mm-countdown__unit">{t('countdown.hours')}</span>
+      </span>
+      <span class="mm-countdown__pair">
+        <span class="mm-countdown__num is-minutes" data-mm-minutes>{pad(initial.minutes)}</span>
+        <span class="mm-countdown__unit">{t('countdown.minutes')}</span>
+      </span>
+    </div>
+
+    <span class="mm-countdown__suffix">{t('countdown.suffix')}</span>
+
+    <!-- De categoriefilters komen hier in fase 2. -->
+    <div class="mm-countdown__slot"><slot /></div>
+  </div>
+</div>
+
+<style>
+  .mm-countdown {
+    background: var(--mm-bar);
+    border-top: 1px solid var(--mm-border);
+    border-bottom: 1px solid var(--mm-border);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mm-countdown__inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: var(--mm-max);
+    margin: 0 auto;
+    padding: 9px 26px;
+  }
+
+  .mm-countdown__label {
+    font-family: var(--mm-display);
+    font-size: 13px;
+    letter-spacing: .2em;
+    color: var(--mm-muted);
+    white-space: nowrap;
+  }
+
+  .mm-countdown__digits {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .mm-countdown__pair {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+  }
+
+  .mm-countdown__num {
+    font-family: var(--mm-display);
+    font-size: 26px;
+    line-height: 1;
+  }
+
+  .is-days {
+    color: var(--mm-accent-pink);
+    text-shadow: var(--mm-glow-days);
+    animation: mmFlicker 4s ease-in-out infinite;
+  }
+
+  .is-hours {
+    color: var(--mm-accent-cyan);
+    text-shadow: var(--mm-glow-hours);
+  }
+
+  .is-minutes {
+    color: var(--mm-accent-yellow);
+    text-shadow: var(--mm-glow-minutes);
+  }
+
+  .mm-countdown__unit {
+    font-size: 12px;
+    letter-spacing: .14em;
+    color: var(--mm-muted);
+  }
+
+  /* Het achtervoegsel hoort bij de smalle en de compacte weergave. */
+  .mm-countdown__suffix { display: none; }
+
+  .mm-countdown__slot {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  /* --- Compact: de postpagina --- */
+  .is-compact .mm-countdown__inner {
+    justify-content: center;
+    padding: 7px 26px;
+  }
+
+  .is-compact .mm-countdown__num { font-size: 20px; }
+  .is-compact .mm-countdown__unit { font-size: 11px; }
+
+  .is-compact .mm-countdown__suffix {
+    display: inline;
+    font-size: 11px;
+    letter-spacing: .16em;
+    color: var(--mm-muted);
+  }
+
+  .is-compact .mm-countdown__slot { margin-left: 0; }
+
+  /* --- Mobiel: gecentreerd, met het achtervoegsel erbij --- */
+  @media (max-width: 899px) {
+    .mm-countdown__inner {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 16px;
+    }
+
+    .mm-countdown__label { display: none; }
+    .mm-countdown__num { font-size: 22px; }
+    .mm-countdown__unit { font-size: 11.5px; }
+
+    .mm-countdown__suffix {
+      display: inline;
+      font-size: 11.5px;
+      letter-spacing: .16em;
+      color: var(--mm-muted);
+    }
+
+    .mm-countdown__slot {
+      margin-left: 0;
+      flex-basis: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .is-days { animation: none; }
+  }
+</style>
+
+<script>
+  // Tikt elke seconde. Klemt op nul, loopt nooit negatief.
+  const root = document.querySelector<HTMLElement>('[data-mm-countdown]');
+
+  if (root) {
+    const target = new Date(root.dataset.target ?? '').getTime();
+    const daysEl = root.querySelector<HTMLElement>('[data-mm-days]');
+    const hoursEl = root.querySelector<HTMLElement>('[data-mm-hours]');
+    const minutesEl = root.querySelector<HTMLElement>('[data-mm-minutes]');
+    const srEl = root.querySelector<HTMLElement>('[data-mm-countdown-sr]');
+
+    const pad = (n: number) => String(n).padStart(2, '0');
+
+    // Enkelvoud en meervoud per eenheid, uit de vertaalbestanden.
+    type Units = { d: [string, string]; h: [string, string]; m: [string, string] };
+    const units: Units = JSON.parse(root.dataset.units ?? '{}');
+
+    const tick = () => {
+      const ms = Math.max(0, target - Date.now());
+      const minute = 60_000;
+      const hour = 60 * minute;
+      const day = 24 * hour;
+
+      const days = Math.floor(ms / day);
+      const hours = Math.floor((ms % day) / hour);
+      const minutes = Math.floor((ms % hour) / minute);
+
+      if (daysEl) daysEl.textContent = String(days);
+      if (hoursEl) hoursEl.textContent = pad(hours);
+      if (minutesEl) minutesEl.textContent = pad(minutes);
+
+      // Dezelfde zin voor de schermlezer, stil bijgewerkt: geen aria-live,
+      // dus dit praat niet elke seconde mee.
+      if (srEl) {
+        const pattern = srEl.dataset.pattern ?? '';
+        srEl.textContent = pattern
+          .replace('{d}', String(days))
+          .replace('{h}', String(hours))
+          .replace('{m}', String(minutes))
+          .replace('{du}', days === 1 ? units.d[0] : units.d[1])
+          .replace('{hu}', hours === 1 ? units.h[0] : units.h[1])
+          .replace('{mu}', minutes === 1 ? units.m[0] : units.m[1]);
+      }
+    };
+
+    tick();
+    window.setInterval(tick, 1000);
+  }
+</script>

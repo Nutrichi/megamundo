@@ -1,0 +1,192 @@
+---
+/*
+ * Taalkiezer, zes talen (PROJECT_SPEC.md §11).
+ *
+ * Het ontwerp tekende vier vakken omdat er vier in de rij pasten; er zijn
+ * er zes, dus op mobiel twee rijen van drie.
+ *
+ * Gebouwd met <details> en echte links: werkt zonder JavaScript, en een
+ * crawler ziet de zes URL's staan. Geen automatische doorverwijzing op
+ * browsertaal — de bezoeker kiest zelf.
+ */
+import { locales, localeNames, localeShort, type Locale } from '../i18n/ui';
+import { localizePath, stripLocale, useTranslations } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+  /** Het taalloze pad van de huidige pagina, zodat we erop blijven staan. */
+  pathname: string;
+  variant?: 'bar' | 'grid';
+}
+
+const { locale, pathname, variant = 'bar' } = Astro.props;
+const t = useTranslations(locale);
+const bare = stripLocale(pathname);
+
+const options = locales.map((code) => ({
+  code,
+  name: localeNames[code],
+  short: localeShort[code],
+  href: localizePath(bare, code),
+  current: code === locale,
+}));
+---
+
+{variant === 'bar' ? (
+  <details class="mm-lang" data-mm-lang>
+    <summary class="mm-lang__summary" aria-label={t('lang.label')}>
+      <span>{localeShort[locale]}</span>
+    </summary>
+    <ul class="mm-lang__list">
+      {options.map((option) => (
+        <li>
+          <a
+            href={option.href}
+            hreflang={option.code}
+            lang={option.code}
+            aria-current={option.current ? 'true' : undefined}
+            class:list={['mm-lang__link', { 'is-current': option.current }]}
+            data-mm-lang-pick={option.code}
+          >
+            <span class="mm-lang__short">{option.short}</span>
+            <span class="mm-lang__name">{option.name}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </details>
+) : (
+  <div class="mm-langgrid">
+    <p class="mm-langgrid__label">{t('lang.label')}</p>
+    <ul class="mm-langgrid__list">
+      {options.map((option) => (
+        <li>
+          <a
+            href={option.href}
+            hreflang={option.code}
+            lang={option.code}
+            aria-current={option.current ? 'true' : undefined}
+            class:list={['mm-langgrid__box', { 'is-current': option.current }]}
+            data-mm-lang-pick={option.code}
+          >
+            {option.short}
+            <span class="mm-sr"> {option.name}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
+<style>
+  /* --- Het vakje in de header --- */
+  .mm-lang {
+    position: relative;
+    flex: none;
+  }
+
+  .mm-lang__summary {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field);
+    padding: 7px 11px;
+    font-size: 12.5px;
+    letter-spacing: .08em;
+    color: var(--mm-muted);
+    cursor: pointer;
+    list-style: none;
+    transition: var(--mm-transition);
+  }
+
+  /* Weg met het standaard driehoekje. */
+  .mm-lang__summary::-webkit-details-marker { display: none; }
+  .mm-lang__summary::marker { content: ''; }
+
+  .mm-lang__summary:hover {
+    border-color: var(--mm-accent-cyan);
+    color: var(--mm-ink);
+  }
+
+  .mm-lang__list {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    z-index: 40;
+    margin: 0;
+    padding: 5px;
+    list-style: none;
+    min-width: 168px;
+    background: var(--mm-raised);
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field-lg);
+    /* Zonder dit valt de lijst weg tegen de pagina op nacht. */
+    box-shadow: 0 12px 32px rgba(7, 6, 15, .55);
+  }
+
+  .mm-lang__link {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    padding: 7px 9px;
+    border-radius: var(--mm-r-field);
+    font-size: 13.5px;
+    color: var(--mm-muted);
+    transition: var(--mm-transition), color .16s ease, background-color .16s ease;
+  }
+
+  .mm-lang__link:hover {
+    background: var(--mm-accent-pink-soft);
+    color: var(--mm-ink);
+  }
+
+  .mm-lang__link.is-current {
+    color: var(--mm-ink);
+    background: var(--mm-accent-pink-soft);
+  }
+
+  .mm-lang__short {
+    flex: none;
+    width: 2.1em;
+    font-size: 12px;
+    letter-spacing: .08em;
+    color: var(--mm-accent-cyan);
+  }
+
+  /* --- Het raster in het mobiele menu: twee rijen van drie --- */
+  .mm-langgrid__label {
+    font-size: 14px;
+    color: var(--mm-muted);
+    margin-bottom: 8px;
+  }
+
+  .mm-langgrid__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mm-langgrid__box {
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field-lg);
+    font-size: 13px;
+    letter-spacing: .06em;
+    color: var(--mm-muted);
+    transition: var(--mm-transition), color .16s ease, background-color .16s ease;
+  }
+
+  .mm-langgrid__box:hover { border-color: var(--mm-accent-cyan); }
+
+  .mm-langgrid__box.is-current {
+    border-color: var(--mm-accent-pink);
+    background: var(--mm-accent-pink-soft);
+    color: var(--mm-ink);
+  }
+</style>

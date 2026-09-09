@@ -1,0 +1,183 @@
+/*
+ * Ontwerptokens — richting "1C Sunset Grid".
+ * Bron: megamundo-private/design_handoff_sunset_grid/README.md, sectie "Design Tokens".
+ * Nacht is de standaard; dag staat onder [data-theme="day"] en onder
+ * prefers-color-scheme: light zolang de bezoeker niets gekozen heeft.
+ *
+ * Voeg hier geen kleuren toe. Het palet is de zeven spectrumkleuren uit
+ * assets/favicon.svg en wordt niet uitgebreid (PROJECT_SPEC.md §13.1).
+ */
+
+:root {
+  /* --- Het spectrum: identiek in beide thema's --- */
+  --mm-pink: #d93ba1;
+  --mm-orange: #f25e3d;
+  --mm-amber: #f2a341;
+  --mm-yellow: #f2d95c;
+  --mm-green: #5cd98a;
+  --mm-cyan: #3dc5d9;
+  --mm-blue: #3068d9;
+
+  --mm-spectrum-v: linear-gradient(
+    180deg,
+    var(--mm-pink), var(--mm-orange), var(--mm-amber), var(--mm-yellow),
+    var(--mm-green), var(--mm-cyan), var(--mm-blue)
+  );
+  --mm-spectrum-h: linear-gradient(
+    90deg,
+    var(--mm-pink), var(--mm-orange), var(--mm-amber), var(--mm-yellow),
+    var(--mm-green), var(--mm-cyan), var(--mm-blue)
+  );
+
+  /* --- Nacht --- */
+  --mm-bg: #07060f;
+  --mm-raised: rgba(16, 13, 30, .9);
+  --mm-bar: #0b0917;
+  --mm-header: linear-gradient(180deg, #100d1e, #07060f);
+  --mm-border: #241f38;
+  --mm-border-inner: #241f38;
+  --mm-ink: #f2f0f6;
+  --mm-ink-soft: #e9e6f2;
+  --mm-body: #e4e1ee;
+  --mm-muted: #8d8aa3;
+  --mm-muted-dim: #5d5a72; /* nooit voor tekst; alleen het offline-bolletje */
+  --mm-quote: #c9c4dc;
+
+  /* Accenten die op tekst mogen: op nacht is dat het volle neon. */
+  --mm-accent-pink: var(--mm-pink);
+  --mm-accent-cyan: var(--mm-cyan);
+  --mm-accent-amber: var(--mm-amber);
+  --mm-accent-yellow: var(--mm-yellow);
+
+  /* Zachte vulling achter een actief item; volgt het roze accent. */
+  --mm-accent-pink-soft: rgba(217, 59, 161, .16);
+  --mm-accent-pink-wash: rgba(217, 59, 161, .20);
+
+  /* Categoriekleuren */
+  --mm-cat-news: var(--mm-accent-cyan);
+  --mm-cat-guides: var(--mm-accent-amber);
+  --mm-featured: var(--mm-accent-yellow);
+  --mm-live: var(--mm-green);
+  --mm-offline: var(--mm-muted-dim);
+
+  /* Gloed. Op dag worden deze allemaal none. */
+  --mm-glow-wordmark: 0 0 22px rgba(217, 59, 161, .75);
+  --mm-glow-logo: drop-shadow(0 0 8px rgba(217, 59, 161, .55));
+  --mm-glow-days: 0 0 20px rgba(217, 59, 161, .8);
+  --mm-glow-hours: 0 0 20px rgba(61, 197, 217, .7);
+  --mm-glow-minutes: 0 0 20px rgba(242, 217, 92, .6);
+  --mm-glow-pill: 0 0 22px rgba(61, 197, 217, .2);
+  --mm-glow-primary: 0 0 26px rgba(217, 59, 161, .4);
+  --mm-glow-like: 0 0 22px rgba(217, 59, 161, .3);
+  --mm-glow-featured: 0 0 30px rgba(242, 217, 92, .14);
+  --mm-glow-h1: 0 0 40px rgba(217, 59, 161, .22);
+
+  /* Sfeerlagen achter beelden */
+  --mm-wash-featured: radial-gradient(120% 90% at 50% 120%, rgba(217, 59, 161, .30), transparent 60%);
+  --mm-wash-post: radial-gradient(120% 100% at 50% 130%, rgba(217, 59, 161, .34), transparent 62%);
+  --mm-wash-clips: radial-gradient(120% 90% at 50% 120%, rgba(242, 163, 65, .22), transparent 60%);
+  --mm-wash-streams: radial-gradient(120% 90% at 50% 120%, rgba(48, 104, 217, .25), transparent 60%);
+  --mm-wash-menu: radial-gradient(120% 70% at 50% 0%, rgba(217, 59, 161, .14), transparent 60%);
+
+  /* Lege beeldplek, zolang er geen eigen artwork is */
+  --mm-slot-a: #100d1e;
+  --mm-slot-b: #15112a;
+
+  /* --- Typografie --- */
+  --mm-display: "Bebas Neue", "Haettenschweiler", "Arial Narrow", sans-serif;
+  --mm-text: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+
+  /* --- Radii --- */
+  --mm-r-pill: 999px;
+  --mm-r-card: 12px;
+  --mm-r-card-sm: 11px;
+  --mm-r-badge: 5px;
+  --mm-r-field: 6px;
+  --mm-r-field-lg: 8px;
+  --mm-r-field-xl: 10px;
+
+  /* --- Overgangen --- */
+  --mm-transition: border-color .16s ease, box-shadow .16s ease;
+
+  /* Breedte van de contentkolom */
+  --mm-max: 1180px;
+}
+
+/* --- Dag: expliciete keuze --- */
+:root[data-theme="day"] {
+  --mm-bg: #fdf4ec;
+  --mm-raised: #ffffff;
+  --mm-bar: linear-gradient(90deg, #ffe6d2, #ffd9e8 60%, #d8f0f7);
+  --mm-header: #fff8f1;
+  --mm-border: #ead9c9;
+  --mm-border-inner: #f0e3d6;
+  --mm-ink: #191426;
+  --mm-ink-soft: #191426;
+  --mm-body: #4a4360;
+  --mm-muted: #6a6280;
+  --mm-quote: #4a4360;
+
+  /* Donkerder accenten: op een lichte grond moet tekst 4,5:1 halen. */
+  --mm-accent-pink: #c22f8c;
+  --mm-accent-cyan: #147f95;
+  --mm-accent-amber: #a86a12;
+  --mm-accent-yellow: #a86a12;
+  --mm-accent-pink-soft: rgba(194, 47, 140, .12);
+  --mm-accent-pink-wash: rgba(194, 47, 140, .16);
+
+  /* Geen gloed op dag; hover wordt een schaduw. */
+  --mm-glow-wordmark: none;
+  --mm-glow-logo: none;
+  --mm-glow-days: none;
+  --mm-glow-hours: none;
+  --mm-glow-minutes: none;
+  --mm-glow-pill: 0 4px 14px rgba(25, 20, 38, .08);
+  --mm-glow-primary: none;
+  --mm-glow-like: none;
+  --mm-glow-featured: none;
+  --mm-glow-h1: none;
+
+  --mm-slot-a: #ffffff;
+  --mm-slot-b: #f7ece1;
+}
+
+/*
+ * Dag zonder keuze: volg het systeem. De selector sluit alleen een
+ * uitdrukkelijke nachtkeuze uit, zodat de schakelaar in beide richtingen wint.
+ */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="night"]):not([data-theme="day"]) {
+    --mm-bg: #fdf4ec;
+    --mm-raised: #ffffff;
+    --mm-bar: linear-gradient(90deg, #ffe6d2, #ffd9e8 60%, #d8f0f7);
+    --mm-header: #fff8f1;
+    --mm-border: #ead9c9;
+    --mm-border-inner: #f0e3d6;
+    --mm-ink: #191426;
+    --mm-ink-soft: #191426;
+    --mm-body: #4a4360;
+    --mm-muted: #6a6280;
+    --mm-quote: #4a4360;
+
+    --mm-accent-pink: #c22f8c;
+    --mm-accent-cyan: #147f95;
+    --mm-accent-amber: #a86a12;
+    --mm-accent-yellow: #a86a12;
+    --mm-accent-pink-soft: rgba(194, 47, 140, .12);
+    --mm-accent-pink-wash: rgba(194, 47, 140, .16);
+
+    --mm-glow-wordmark: none;
+    --mm-glow-logo: none;
+    --mm-glow-days: none;
+    --mm-glow-hours: none;
+    --mm-glow-minutes: none;
+    --mm-glow-pill: 0 4px 14px rgba(25, 20, 38, .08);
+    --mm-glow-primary: none;
+    --mm-glow-like: none;
+    --mm-glow-featured: none;
+    --mm-glow-h1: none;
+
+    --mm-slot-a: #ffffff;
+    --mm-slot-b: #f7ece1;
+  }
+}

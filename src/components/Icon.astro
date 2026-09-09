@@ -1,0 +1,44 @@
+---
+/*
+ * Lijniconen als inline SVG, geen icoonfont. Alle lijnen stroke-width 2,
+ * fill none, zoals de handoff voorschrijft. Decoratief tenzij een
+ * bovenliggend element een naam geeft.
+ */
+interface Props {
+  name: 'search' | 'heart' | 'chevron';
+  size?: number;
+  filled?: boolean;
+  class?: string;
+}
+
+const { name, size = 14, filled = false, class: className } = Astro.props;
+---
+
+<svg
+  class:list={['mm-icon', className]}
+  width={size}
+  height={size}
+  viewBox={name === 'heart' ? '0 0 24 24' : '0 0 24 24'}
+  fill={filled ? 'currentColor' : 'none'}
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {name === 'search' && (
+    <>
+      <circle cx="11" cy="11" r="7" />
+      <line x1="16" y1="16" x2="21" y2="21" />
+    </>
+  )}
+  {name === 'heart' && (
+    <path d="M12 20s-7-4.6-7-9.4A4.1 4.1 0 0 1 12 7.7a4.1 4.1 0 0 1 7 2.9C19 15.4 12 20 12 20Z" />
+  )}
+  {name === 'chevron' && <polyline points="6 9 12 15 18 9" />}
+</svg>
+
+<style>
+  .mm-icon { flex: none; }
+</style>

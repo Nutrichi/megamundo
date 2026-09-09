@@ -5,3 +5,12 @@
 *.md
 !src/content/**/*.md
 !src/content/**/*.mdx
+
+# Astro
+dist/
+.astro/
+node_modules/
+
+# Sleutels (vertaalscript, fase 2)
+.env
+.env.production

@@ -1,0 +1,20 @@
+---
+/*
+ * De verticale spectrumbalk links van de inhoud, 4 px breed en over de
+ * volle hoogte. Puur decoratief; de zeven kleuren komen uit het logo.
+ */
+---
+<div class="mm-spectrum" aria-hidden="true"></div>
+
+<style>
+  .mm-spectrum {
+    flex: 0 0 4px;
+    align-self: stretch;
+    background: var(--mm-spectrum-v);
+  }
+
+  /* Op smalle schermen zou de balk enkel breedte opeten. */
+  @media (max-width: 599px) {
+    .mm-spectrum { display: none; }
+  }
+</style>

@@ -1,0 +1,207 @@
+---
+/*
+ * De gedeelde layout. Elke pagina van de site loopt hierlangs.
+ *
+ * Twee dingen die hier bewust op één plek staan:
+ *
+ * 1. De GA4-tag (§17.1). Die zit achter `index`. Aan betekent indexeerbaar
+ *    plus de tag; uit betekent noindex en géén tag. Nooit allebei, nooit
+ *    geen van beide, en nooit meer met de hand in een losse pagina.
+ * 2. Het thema. Een klein inline scriptje zet data-theme vóór de eerste
+ *    paint, zodat er geen lichtflits is.
+ */
+import { defaultLocale, localeTags, type Locale } from '../i18n/ui';
+import { alternateLinks, useTranslations } from '../i18n/utils';
+import { getNav } from '../config/nav';
+import { ga4Id } from '../config/site';
+import Header from '../components/Header.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import CountdownBar from '../components/CountdownBar.astro';
+import SpectrumBar from '../components/SpectrumBar.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+interface Props {
+  locale: Locale;
+  title?: string;
+  description?: string;
+  /** Aan: GA4 en indexeerbaar. Uit: noindex en geen GA4. */
+  index?: boolean;
+  /** De compacte aftelbalk, voor de postpagina. */
+  compactCountdown?: boolean;
+  /** Zet de aftelbalk uit. Na de release kan hij hiermee in één keer weg. */
+  countdown?: boolean;
+}
+
+const {
+  locale,
+  title,
+  description,
+  index = true,
+  compactCountdown = false,
+  countdown = true,
+} = Astro.props;
+
+const t = useTranslations(locale);
+const pathname = Astro.url.pathname;
+const nav = await getNav(locale);
+
+const pageTitle = title ? `${title} · ${t('site.title')}` : t('site.title');
+const pageDescription = description ?? t('site.description');
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://megamundo.be').href;
+const alternates = alternateLinks(pathname, Astro.site);
+const xDefault = alternates.find((a) => a.locale === defaultLocale);
+const ogImage = new URL('/assets/og-image.png', Astro.site ?? 'https://megamundo.be').href;
+
+/** Woordelijk de snippet uit §17.1, met het meet-ID uit config/site.ts. */
+const gtagSnippet = `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', '${ga4Id}');`;
+---
+
+<!doctype html>
+<html lang={localeTags[locale]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--
+      Google tag (gtag.js). Staat hoog in de head, meteen na charset en
+      viewport en vóór de title, en alleen op een indexeerbare pagina.
+      Aan sluit noindex uit, uit sluit de tag uit (PROJECT_SPEC.md §17.1).
+    -->
+    {index && (
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
+    )}
+    {index && <script is:inline set:html={gtagSnippet} />}
+    {!index && <meta name="robots" content="noindex, nofollow" />}
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="canonical" href={canonical} />
+    {alternates.map((alt) => (
+      <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+    ))}
+    {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
+
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={t('site.title')} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={localeTags[locale]} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    />
+
+    <script is:inline>
+      // Vóór de eerste paint: is er een keuze bewaard, pas die dan meteen toe.
+      // Zonder keuze blijft het attribuut weg en beslist prefers-color-scheme.
+      (function () {
+        try {
+          var saved = localStorage.getItem('mm-theme');
+          if (saved === 'night' || saved === 'day') {
+            document.documentElement.setAttribute('data-theme', saved);
+          }
+        } catch (error) {
+          // Privémodus of geblokkeerde opslag: dan doet het systeemthema het werk.
+        }
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="mm-skip" href="#mm-content">{t('skip.content')}</a>
+
+    <Header locale={locale} nav={nav} pathname={pathname} />
+    {countdown && <CountdownBar locale={locale} compact={compactCountdown} />}
+
+    <div class="mm-shell">
+      <SpectrumBar />
+      <main class="mm-main" id="mm-content">
+        <slot />
+      </main>
+    </div>
+
+    <Footer locale={locale} />
+    <MobileMenu locale={locale} nav={nav} pathname={pathname} />
+
+    <script>
+      /*
+       * De themaschakelaar. Het inline scriptje in de head heeft het thema al
+       * gezet; dit zorgt voor het wisselen en houdt de labels gelijk.
+       */
+      const KEY = 'mm-theme';
+      const root = document.documentElement;
+      const toggles = document.querySelectorAll<HTMLElement>('[data-mm-theme-toggle]');
+      const values = document.querySelectorAll<HTMLElement>('[data-mm-theme-value]');
+      const system = window.matchMedia('(prefers-color-scheme: light)');
+
+      const read = () => {
+        try {
+          const saved = localStorage.getItem(KEY);
+          return saved === 'night' || saved === 'day' ? saved : null;
+        } catch (error) {
+          return null;
+        }
+      };
+
+      /** Wat er nu op het scherm staat, gekozen of van het systeem. */
+      const active = (): 'night' | 'day' => {
+        const attr = root.getAttribute('data-theme');
+        if (attr === 'night' || attr === 'day') return attr;
+        return system.matches ? 'day' : 'night';
+      };
+
+      const label = (theme: 'night' | 'day') => {
+        const first = toggles[0];
+        if (!first) return theme;
+        return theme === 'day'
+          ? (first.dataset.labelDay ?? 'Day')
+          : (first.dataset.labelNight ?? 'Night');
+      };
+
+      const sync = () => {
+        const current = active();
+        values.forEach((el) => { el.textContent = label(current); });
+      };
+
+      toggles.forEach((toggle) => {
+        toggle.addEventListener('click', () => {
+          const next = active() === 'night' ? 'day' : 'night';
+          root.setAttribute('data-theme', next);
+          try {
+            localStorage.setItem(KEY, next);
+          } catch (error) {
+            // Niets bewaren kan; het thema geldt dan alleen voor deze pagina.
+          }
+          sync();
+        });
+      });
+
+      // Verandert het systeemthema en heeft de bezoeker zelf niets gekozen,
+      // dan schuift de site mee.
+      system.addEventListener('change', () => {
+        if (!read()) sync();
+      });
+
+      sync();
+    </script>
+  </body>
+</html>

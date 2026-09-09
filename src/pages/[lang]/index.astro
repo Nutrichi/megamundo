@@ -1,0 +1,23 @@
+---
+/*
+ * De homepage in de vijf niet-standaardtalen: /nl/, /fr/, /es/, /it/, /de/.
+ * Engels heeft geen voorvoegsel en staat in ../index.astro (§11).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HomeGrid from '../../components/HomeGrid.astro';
+import { getNewsCount } from '../../config/nav';
+import { defaultLocale, locales, type Locale } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return locales
+    .filter((locale) => locale !== defaultLocale)
+    .map((locale) => ({ params: { lang: locale } }));
+}
+
+const locale = Astro.params.lang as Locale;
+const count = await getNewsCount();
+---
+
+<BaseLayout locale={locale}>
+  <HomeGrid locale={locale} count={count} />
+</BaseLayout>

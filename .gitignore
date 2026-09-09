@@ -1,2 +1,7 @@
 .DS_Store
+
+# Documentatie hoort in megamundo-private, nooit hier (PROJECT_SPEC.md §2.3).
+# Uitzondering: de content-collecties van Astro, dat is de site zelf en geen documentatie.
 *.md
+!src/content/**/*.md
+!src/content/**/*.mdx

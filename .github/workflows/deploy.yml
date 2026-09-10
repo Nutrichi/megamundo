@@ -1,8 +1,16 @@
 # Bouwt de site en zet hem op GitHub Pages.
 #
-# Let op: dit werkt pas nadat de Pages-bron in de instellingen van de repo
-# van "branch" naar "GitHub Actions" is gezet. Tot dan blijft de oude
-# placeholder de live site, en dat is de bedoeling.
+# TIJDELIJK (10 september 2026): deze workflow publiceert de PLACEHOLDER en
+# niet de Astro-site. De Pages-bron blijkt op "GitHub Actions" te staan en
+# niet op "branch" zoals eerder aangenomen, dus elke push naar main zette de
+# Astro-site live. Die is nog leeg, en dat hoort megamundo.be niet te tonen.
+#
+# Terugdraaien is één ding: de stap "Zet de placeholder klaar" weghalen en
+# `path: _site` weer `path: dist` maken. Doe dat zodra de Astro-site beter is
+# dan de placeholder (§ "Twee dingen die openstaan" in STATUS.md).
+#
+# De build blijft draaien, ook nu hij niet gepubliceerd wordt: dan merkt de
+# Action het nog steeds als een post de build breekt.
 #
 # De Node-versie komt uit .nvmrc, zodat de Action en de twee machines
 # nooit uit elkaar lopen.
@@ -41,9 +49,18 @@ jobs:
 
       - uses: actions/configure-pages@v5
 
+      # TIJDELIJK: alleen de placeholder uit de wortel gaat live.
+      # Uitsluitend deze vijf dingen, zodat er geen bronbestand meelift.
+      - name: Zet de placeholder klaar
+        run: |
+          mkdir -p _site
+          cp index.html robots.txt sitemap.xml CNAME .nojekyll _site/
+          cp -R assets _site/assets
+          ls -R _site
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: _site
 
   deploy:
     needs: build

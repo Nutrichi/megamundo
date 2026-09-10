@@ -11,7 +11,7 @@
  * slotkleuren met dezelfde sfeerlaag eroverheen. Geen materiaal van
  * Rockstar, nooit (§2.4) — dus ook geen tijdelijke screenshot.
  */
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import type { Post } from '../lib/posts';
 
 interface Props {
@@ -20,10 +20,24 @@ interface Props {
   variant?: 'featured' | 'post';
   /** Het kopbeeld van een post is het grootste element boven de vouw. */
   eager?: boolean;
+  /** Aanklikbaar om het beeld groot te bekijken. Voor het kopbeeld. */
+  zoomable?: boolean;
 }
 
-const { image, alt = '', variant = 'featured', eager = false } = Astro.props;
+const {
+  image, alt = '', variant = 'featured', eager = false, zoomable = false,
+} = Astro.props;
 const isPost = variant === 'post';
+
+/*
+ * De grote versie voor het uitvergroten. Apart opgevraagd omdat het kopbeeld
+ * op maximaal 1600 pixels staat en dat op een groot scherm te klein is om
+ * details in te zien. Astro maakt hem bij het bouwen; hij wordt pas geladen
+ * als iemand het beeld aanklikt.
+ */
+const big = image && zoomable
+  ? await getImage({ src: image, width: 2400, format: 'webp' })
+  : undefined;
 
 /** Wat de browser aan breedte mag verwachten; scheelt gedownloade bytes. */
 const sizes = isPost ? '(max-width: 899px) 100vw, 1180px' : '(max-width: 899px) 100vw, 600px';
@@ -46,8 +60,25 @@ const widths = isPost ? [640, 960, 1280, 1600] : [420, 640, 900, 1400];
   )}
 
   <span class="mm-shot__wash" aria-hidden="true"></span>
+
+  {big && (
+    <button type="button" class="mm-shot__zoom" data-mm-zoom={big.src} aria-label={alt || 'Bekijk het beeld groot'}></button>
+  )}
+
   <slot />
 </div>
+
+{big && (
+  <dialog class="mm-lightbox" data-mm-lightbox>
+    <button type="button" class="mm-lightbox__close" data-mm-lightbox-close aria-label="Sluiten">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+        <line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" />
+      </svg>
+    </button>
+    <img class="mm-lightbox__img" data-mm-lightbox-img alt={alt} />
+  </dialog>
+)}
 
 <style>
   .mm-shot {
@@ -91,6 +122,19 @@ const widths = isPost ? [640, 960, 1280, 1600] : [420, 640, 900, 1400];
     background: var(--mm-wash-featured);
   }
 
+  /* Het hele beeld is de knop; hij ligt erover en heeft zelf geen uiterlijk. */
+  .mm-shot__zoom {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    cursor: zoom-in;
+  }
+
+  .mm-shot__zoom:focus-visible {
+    outline: 2px solid var(--mm-accent-cyan);
+    outline-offset: -4px;
+  }
+
   .is-post .mm-shot__wash { background: var(--mm-wash-post); }
 
   @media (max-width: 899px) {
@@ -101,4 +145,75 @@ const widths = isPost ? [640, 960, 1280, 1600] : [420, 640, 900, 1400];
 
     .is-post { height: 200px; }
   }
+
+  /* --- Het beeld groot --- */
+  .mm-lightbox {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    overflow: hidden;
+  }
+
+  .mm-lightbox::backdrop { background: rgba(5, 4, 12, .92); }
+
+  .mm-lightbox__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: zoom-out;
+  }
+
+  .mm-lightbox__close {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    background: var(--mm-raised);
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field);
+    color: var(--mm-ink);
+    transition: var(--mm-transition);
+  }
+
+  .mm-lightbox__close:hover { border-color: var(--mm-accent-cyan); }
 </style>
+
+<script>
+  /*
+   * Het kopbeeld groot bekijken. Met een <dialog>, zodat de browser zelf de
+   * focus vasthoudt, Escape afhandelt en de rest van de pagina afschermt.
+   * Geen bibliotheek nodig.
+   *
+   * Het grote beeld wordt pas geladen bij de eerste klik: tot dan staat er
+   * geen src en kost het niets.
+   */
+  const dialog = document.querySelector<HTMLDialogElement>('[data-mm-lightbox]');
+  const img = document.querySelector<HTMLImageElement>('[data-mm-lightbox-img]');
+  const opener = document.querySelector<HTMLElement>('[data-mm-zoom]');
+  const close = document.querySelector<HTMLElement>('[data-mm-lightbox-close]');
+
+  if (dialog && img && opener) {
+    opener.addEventListener('click', () => {
+      if (!img.src) img.src = opener.dataset.mmZoom ?? '';
+      dialog.showModal();
+    });
+
+    // Klikken op het beeld of ernaast sluit. De knop rechtsboven ook.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === close || close?.contains(event.target as Node)) {
+        dialog.close();
+        return;
+      }
+      if (event.target === img || event.target === dialog) dialog.close();
+    });
+  }
+</script>

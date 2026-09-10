@@ -11,6 +11,15 @@ html {
   /* Vertelt de browser welke kant het op gaat, voor scrollbars en formulieren. */
   color-scheme: dark;
   -webkit-text-size-adjust: 100%;
+
+  /*
+   * Houd de ruimte voor de schuifbalk altijd vrij, ook op een pagina die
+   * niet scrollt. Zonder dit springt de hele site een schuifbalkbreedte
+   * opzij zodra je van een korte naar een lange pagina gaat, en dat leest
+   * onrustig. Kost een strook van een pixel of vijftien die altijd leeg is;
+   * dat is het waard.
+   */
+  scrollbar-gutter: stable;
 }
 
 :root[data-theme="day"] { color-scheme: light; }

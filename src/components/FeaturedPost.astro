@@ -20,7 +20,13 @@ interface Props {
 }
 
 const { post, locale } = Astro.props;
-const postId = `${post.category}/${post.slug}`;
+/*
+ * De sleutel waaronder de likes van deze post in de database staan. Bewust
+ * de collectie en niet de categorie: een categorie kan veranderen (een post
+ * verhuist van GTA Online naar GTA VI) en dan zouden de likes eraan
+ * verdwijnen. De collectie ligt vast zolang de post bestaat.
+ */
+const postId = `${post.collection}/${post.slug}`;
 ---
 
 <article class="mm-featured">

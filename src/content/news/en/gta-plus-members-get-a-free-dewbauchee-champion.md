@@ -2,6 +2,7 @@
 title: "GTA+ members get the Dewbauchee Champion at no cost"
 description: "GTA+ members can claim the Dewbauchee Champion until 4 March and drive the Grotti Itali Classic a week before everyone else. Both cars are at The Vinewood Car Club."
 date: 2026-02-05
+category: gta-online
 lang: en
 image: ../../../assets/posts/get-a-free-dewbauchee-champion-supercar-and-early-access-to-the-grotti.jpg
 imageAlt: "The Dewbauchee Champion in GTA Online."

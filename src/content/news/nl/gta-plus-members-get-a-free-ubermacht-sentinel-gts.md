@@ -2,6 +2,7 @@
 title: "GTA+-leden krijgen de Übermacht Sentinel GTS gratis"
 description: "GTA+-leden kunnen de Übermacht Sentinel GTS tot 10 juni gratis claimen in GTA Online. De maand brengt ook gratis chameleonlak, racekleding en korting op Executive Offices."
 date: 2026-05-07
+category: gta-online
 lang: nl
 image: ../../../assets/posts/claim-a-free-ubermacht-sentinel-gts-with-gta.jpg
 imageAlt: "De Übermacht Sentinel GTS in GTA Online."

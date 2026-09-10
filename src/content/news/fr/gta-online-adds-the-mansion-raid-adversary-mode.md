@@ -2,6 +2,7 @@
 title: "GTA Online ajoute le mode Mansion Raid"
 description: "Les attaquants se fraient un chemin à l'explosif jusqu'au coffre d'une villa, les défenseurs tentent de les arrêter. Le mode rapporte le double la première semaine et GTA$200 000 en cas de victoire."
 date: 2026-01-15
+category: gta-online
 lang: fr
 image: ../../../assets/posts/redefine-breaking-and-entering-in-gta-online-s-new-mansion-raid.jpg
 imageAlt: "Le mode Mansion Raid dans GTA Online."

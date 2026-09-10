@@ -2,6 +2,7 @@
 title: "Rockstar lance l’événement Brand Wars dans GTA Online"
 description: "L’événement Brand Wars dure deux semaines dans GTA Online. Les joueurs choisissent leur camp entre Sprunk et eCola et s’affrontent en courses, en événements freemode et en défis hebdomadaires."
 date: 2026-08-13
+category: gta-online
 lang: fr
 image: ../../../assets/posts/declare-your-allegiance-and-determine-who-owns-los-santos-in-the-brand.jpg
 imageAlt: "Image promotionnelle de l’événement Brand Wars dans GTA Online."

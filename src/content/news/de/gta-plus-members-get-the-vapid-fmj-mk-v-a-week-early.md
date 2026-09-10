@@ -2,6 +2,7 @@
 title: "GTA+-Mitglieder bekommen den Vapid FMJ MK V eine Woche früher"
 description: "GTA+-Mitglieder können den neuen Vapid FMJ MK V gratis holen, eine Woche vor dem öffentlichen Verkauf. Mansions sind für sie bis zum 7. Januar eine Million günstiger."
 date: 2025-12-10
+category: gta-online
 lang: de
 image: ../../../assets/posts/get-early-access-to-claim-the-new-vapid-fmj-mk-v-supercar-with-gta.jpg
 imageAlt: "Der Vapid FMJ MK V in GTA Online."

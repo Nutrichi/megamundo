@@ -14,7 +14,7 @@
  */
 
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { categories, categoryKeys, type CategoryKey } from '../config/categories';
+import { categoryKeys, collectionPath, type CategoryKey } from '../config/categories';
 import { defaultLocale, locales, type Locale } from '../i18n/ui';
 import { isLocale, localizePath } from '../i18n/utils';
 
@@ -24,6 +24,9 @@ type PostEntry = CollectionEntry<'news'> | CollectionEntry<'guides'>;
 
 export type Post = {
   slug: string;
+  /** Waar de post staat: news of guides. Bepaalt de URL. */
+  collection: PostCollection;
+  /** Het spel waar hij over gaat. Bepaalt kleur, label en filter (§6). */
   category: CategoryKey;
   /** Het pad naar deze post in de gevraagde taal. */
   href: string;
@@ -93,7 +96,7 @@ function loadAll() {
  */
 function toPost(
   entry: PostEntry,
-  category: CategoryKey,
+  collection: PostCollection,
   slug: string,
   lang: Locale,
   wanted: Locale,
@@ -101,8 +104,9 @@ function toPost(
   const data = entry.data;
   return {
     slug,
-    category,
-    href: localizePath(`${categories[category].path}/${slug}`, wanted),
+    collection,
+    category: data.category as CategoryKey,
+    href: localizePath(`${collectionPath[collection]}/${slug}`, wanted),
     lang,
     isFallback: lang !== wanted,
     title: data.title,
@@ -127,11 +131,11 @@ export async function getPosts(locale: Locale): Promise<Post[]> {
   const all = await loadAll();
   const posts: Post[] = [];
 
-  for (const category of Object.keys(all) as PostCollection[]) {
+  for (const collection of Object.keys(all) as PostCollection[]) {
     /** Per slug de bestanden per taal; concepten gaan er meteen uit. */
     const bySlug = new Map<string, Map<Locale, PostEntry>>();
 
-    for (const entry of all[category]) {
+    for (const entry of all[collection]) {
       if (entry.data.draft) continue;
       const { lang, slug } = splitId(entry);
       if (!bySlug.has(slug)) bySlug.set(slug, new Map());
@@ -151,7 +155,7 @@ export async function getPosts(locale: Locale): Promise<Post[]> {
           : undefined;
       if (!chosenLang) continue;
 
-      posts.push(toPost(byLang.get(chosenLang)!, category, slug, chosenLang, locale));
+      posts.push(toPost(byLang.get(chosenLang)!, collection, slug, chosenLang, locale));
     }
   }
 
@@ -173,18 +177,18 @@ export function pickFeatured(posts: Post[]): Post | undefined {
 export function withoutFeatured(posts: Post[], featured: Post | undefined): Post[] {
   if (!featured) return posts;
   return posts.filter(
-    (post) => !(post.slug === featured.slug && post.category === featured.category),
+    (post) => !(post.slug === featured.slug && post.collection === featured.collection),
   );
 }
 
 /** Eén post opzoeken, voor de postpagina. */
 export async function getPost(
-  category: CategoryKey,
+  collection: PostCollection,
   slug: string,
   locale: Locale,
 ): Promise<Post | undefined> {
   const posts = await getPosts(locale);
-  return posts.find((post) => post.category === category && post.slug === slug);
+  return posts.find((post) => post.collection === collection && post.slug === slug);
 }
 
 /**
@@ -192,9 +196,9 @@ export async function getPost(
  * taal gebouwd, ook als de vertaling nog ontbreekt: de pagina toont dan de
  * Engelse tekst en blijft vindbaar.
  */
-export async function getSlugs(category: CategoryKey): Promise<string[]> {
+export async function getSlugs(collection: PostCollection): Promise<string[]> {
   const posts = await getPosts(defaultLocale);
-  return posts.filter((post) => post.category === category).map((post) => post.slug);
+  return posts.filter((post) => post.collection === collection).map((post) => post.slug);
 }
 
 /**

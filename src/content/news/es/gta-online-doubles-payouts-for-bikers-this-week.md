@@ -2,6 +2,7 @@
 title: "GTA Online duplica las ganancias de los moteros esta semana"
 description: "Las ventas a los camellos pagan el doble y las fábricas de dinero falso están rebajadas. La semana coincide con el Año Nuevo lunar y sus 36 coleccionables."
 date: 2026-02-19
+category: gta-online
 lang: es
 image: ../../../assets/posts/bikers-earn-double-on-counterfeit-cash-and-completing-street-dealer-sa.jpg
 imageAlt: "Un clubhouse de moteros en GTA Online."

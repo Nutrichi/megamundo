@@ -85,8 +85,6 @@ export const ui = {
     'list.countMany': '{n} posts',
     'featured.label': 'FEATURED',
 
-    'cat.news': 'News',
-    'cat.guides': 'Guides',
 
     'filter.label': 'Filter posts by category',
     'filter.all': 'All',
@@ -184,8 +182,6 @@ export const ui = {
     'list.countMany': '{n} posts',
     'featured.label': 'UITGELICHT',
 
-    'cat.news': 'Nieuws',
-    'cat.guides': 'Gidsen',
 
     'filter.label': 'Filter posts op categorie',
     'filter.all': 'Alles',
@@ -283,8 +279,6 @@ export const ui = {
     'list.countMany': '{n} articles',
     'featured.label': 'À LA UNE',
 
-    'cat.news': 'Actus',
-    'cat.guides': 'Guides',
 
     'filter.label': 'Filtrer les articles par catégorie',
     'filter.all': 'Tout',
@@ -382,8 +376,6 @@ export const ui = {
     'list.countMany': '{n} entradas',
     'featured.label': 'DESTACADO',
 
-    'cat.news': 'Noticias',
-    'cat.guides': 'Guías',
 
     'filter.label': 'Filtrar entradas por categoría',
     'filter.all': 'Todo',
@@ -481,8 +473,6 @@ export const ui = {
     'list.countMany': '{n} articoli',
     'featured.label': 'IN EVIDENZA',
 
-    'cat.news': 'Notizie',
-    'cat.guides': 'Guide',
 
     'filter.label': 'Filtra gli articoli per categoria',
     'filter.all': 'Tutto',
@@ -580,8 +570,6 @@ export const ui = {
     'list.countMany': '{n} Beiträge',
     'featured.label': 'HERVORGEHOBEN',
 
-    'cat.news': 'News',
-    'cat.guides': 'Guides',
 
     'filter.label': 'Beiträge nach Kategorie filtern',
     'filter.all': 'Alle',

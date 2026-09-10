@@ -2,6 +2,7 @@
 title: "GTA Online adds a Premier Half Camo livery for the Pfister X-Treme"
 description: "The Pfister X-Treme gets a Premier Half Camo wrap at all Vehicle Workshops. Salvage Yards pay double daily income this week and scrap twice as fast."
 date: 2026-03-05
+category: gta-online
 lang: en
 image: ../../../assets/posts/outfit-the-pfister-x-treme-in-the-new-premier-half-camo-livery.jpg
 imageAlt: "The Pfister X-Treme in the Premier Half Camo livery."

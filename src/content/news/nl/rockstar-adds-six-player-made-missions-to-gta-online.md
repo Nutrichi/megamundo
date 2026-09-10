@@ -2,6 +2,7 @@
 title: "Rockstar voegt zes spelersmissies toe aan GTA Online"
 description: "Zes nieuwe missies van spelers komen in de Community Mission Series, naast een terugkerende zevende. Wie alle zeven speelt, krijgt in twee weken twee keer een bonus."
 date: 2026-06-04
+category: gta-online
 lang: nl
 image: ../../../assets/posts/explore-fun-and-immersive-new-community-missions-in-gta-online.jpg
 imageAlt: "Een missie van een speler in GTA Online."

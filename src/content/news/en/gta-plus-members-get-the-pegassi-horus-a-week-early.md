@@ -2,6 +2,7 @@
 title: "GTA+ members get the Pegassi Horus a week before everyone else"
 description: "The Pegassi Horus is free for GTA+ members at The Vinewood Car Club. After a week the supercar goes on sale to everyone at Legendary Motorsport."
 date: 2026-09-10
+category: gta-online
 lang: en
 image: ../../../assets/posts/gta-members-enjoy-one-week-of-early-access-to-the-new-pegassi-horus-su.jpg
 imageAlt: "The Pegassi Horus supercar in GTA Online."

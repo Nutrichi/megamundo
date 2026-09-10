@@ -2,6 +2,7 @@
 title: "Rockstar verschenkt eine Autowaschanlage in GTA Online"
 description: "Spieler können bis zum 14. Januar kostenlos eine Hands On Car Wash abholen. Legale Fronten zahlen diese Woche dreifach, und Rockstar kündigt drei neue Odd Jobs für später im Monat an."
 date: 2026-01-08
+category: gta-online
 lang: de
 image: ../../../assets/posts/claim-a-free-hands-on-car-wash-property-and-get-3x-rewards-on-legal-mo.jpg
 imageAlt: "Die Hands On Car Wash in GTA Online."

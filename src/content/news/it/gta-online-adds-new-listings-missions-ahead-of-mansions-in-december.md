@@ -2,6 +2,7 @@
 title: "GTA Online aggiunge le missioni New Listings prima delle mansion di dicembre"
 description: "Tre nuove missioni in GTA Online preparano l’arrivo delle proprietà mansion a dicembre. Completarle tutte e tre entro il 7 dicembre dà uno sconto su quelle case."
 date: 2025-11-13
+category: gta-online
 lang: it
 image: ../../../assets/posts/lay-a-proper-foundation-in-new-listings.jpg
 imageAlt: "Una proprietà Prix Luxury Real Estate in GTA Online."

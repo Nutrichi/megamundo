@@ -2,6 +2,7 @@
 title: "Rockstar añade seis misiones hechas por jugadores a GTA Online"
 description: "Seis misiones nuevas de jugadores entran en la Community Mission Series, junto a una séptima que vuelve. Completarlas todas da un bonus dos semanas seguidas."
 date: 2026-06-04
+category: gta-online
 lang: es
 image: ../../../assets/posts/explore-fun-and-immersive-new-community-missions-in-gta-online.jpg
 imageAlt: "Una misión hecha por un jugador en GTA Online."

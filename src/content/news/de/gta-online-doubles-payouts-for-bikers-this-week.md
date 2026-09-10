@@ -2,6 +2,7 @@
 title: "GTA Online verdoppelt diese Woche die Einnahmen der Biker"
 description: "Verkäufe an Straßendealer zahlen doppelt und Fabriken für Falschgeld sind reduziert. In dieselbe Woche fällt das Mondneujahr mit 36 Sammelobjekten."
 date: 2026-02-19
+category: gta-online
 lang: de
 image: ../../../assets/posts/bikers-earn-double-on-counterfeit-cash-and-completing-street-dealer-sa.jpg
 imageAlt: "Ein Biker-Clubhaus in GTA Online."

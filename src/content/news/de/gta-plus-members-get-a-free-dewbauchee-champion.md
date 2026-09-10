@@ -2,6 +2,7 @@
 title: "GTA+-Mitglieder erhalten die Dewbauchee Champion kostenlos"
 description: "GTA+-Mitglieder können die Dewbauchee Champion bis zum 4. März abholen und die Grotti Itali Classic eine Woche früher fahren. Beide Wagen stehen bei The Vinewood Car Club."
 date: 2026-02-05
+category: gta-online
 lang: de
 image: ../../../assets/posts/get-a-free-dewbauchee-champion-supercar-and-early-access-to-the-grotti.jpg
 imageAlt: "Die Dewbauchee Champion in GTA Online."

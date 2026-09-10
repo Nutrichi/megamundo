@@ -43,9 +43,13 @@ const readingLabel = t('post.readingTime').replace('{n}', String(post.readingMin
 /*
  * De bronregel (§7.1). Bij een gids wijst hij naar de eigen gidspagina op
  * deze site; bij nieuws naar het originele artikel, extern. Ontbreekt de
- * bron, dan staat er niets — geen lege regel en geen "onbekend".
+ * bron, dan staat er niets: geen lege regel en geen "onbekend".
+ *
+ * Dit kijkt naar de collectie en niet naar de categorie. Sinds 10 september
+ * 2026 is een categorie het spel (GTA VI, GTA Online, GTA V) en zegt ze
+ * niets over waar de post staat.
  */
-const isExternal = post.category !== 'guides';
+const isExternal = post.collection !== 'guides';
 
 /** Gestructureerde data (§17). Het beeld alleen als het er is. */
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://megamundo.be').href;
@@ -90,7 +94,7 @@ const jsonLd = {
       <nav class="mm-crumb" aria-label={t('crumb.label')}>
         <a href={home}>{t('crumb.home')}</a>
         <span aria-hidden="true">/</span>
-        <span>{t(category.labelKey)}</span>
+        <span>{category.label}</span>
       </nav>
 
       <CategoryBadge category={post.category} locale={locale} />

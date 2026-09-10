@@ -2,6 +2,7 @@
 title: "Voorbestellingen van GTA VI zijn wereldwijd open"
 description: "De voorbestellingen van GTA VI zijn open, om middernacht lokale tijd. Er is een standaardeditie en een Ultimate Edition, en wie voor 20 november koopt krijgt een bonuspakket."
 date: 2026-06-24
+category: gta6
 lang: nl
 image: ../../../assets/posts/pre-order-grand-theft-auto-vi-on-june-25.jpg
 imageAlt: "De Ultimate Edition van Grand Theft Auto VI."

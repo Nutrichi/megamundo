@@ -2,6 +2,7 @@
 title: "Rockstar lanza A Safehouse in the Hills en GTA Online el 10 de diciembre"
 description: "La nueva actualización de GTA Online añade mansiones en las colinas de Los Santos, una trama sobre una red de vigilancia y un editor de misiones."
 date: 2025-12-05
+category: gta-online
 lang: es
 image: ../../../assets/posts/gta-online-a-safehouse-in-the-hills-coming-december-10.jpg
 imageAlt: "Una mansión de A Safehouse in the Hills en GTA Online."

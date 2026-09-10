@@ -2,6 +2,7 @@
 title: "Rockstar brengt The Kortz Center Heist uit in GTA Online"
 description: "The Kortz Center Heist staat live in GTA Online. Spelers beroven een kunstmuseum en kunnen het schilderij verkopen of in hun eigen villa hangen."
 date: 2026-07-14
+category: gta-online
 lang: nl
 image: ../../../assets/posts/the-kortz-center-heist-now-available-in-gta-online.jpg
 imageAlt: "Het Kortz Center in GTA Online."

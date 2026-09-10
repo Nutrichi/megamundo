@@ -2,6 +2,7 @@
 title: "Rockstar officially supports the nopixel V roleplay server"
 description: "Rockstar is officially backing nopixel V, a roleplay server for Grand Theft Auto V. The closed beta starts on 8 September and runs through the Rockstar Games Launcher."
 date: 2026-09-01
+category: gta5
 lang: en
 image: ../../../assets/posts/introducing-nopixel-v.jpg
 imageAlt: "Promotional image for nopixel V."

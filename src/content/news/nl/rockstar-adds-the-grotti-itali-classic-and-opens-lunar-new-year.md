@@ -2,6 +2,7 @@
 title: "Rockstar voegt de Grotti Itali Classic toe en opent Lunar New Year in GTA Online"
 description: "De Grotti Itali Classic ligt in de verkoop bij Legendary Motorsport. GTA Online start ook het Jaar van het Paard, met een nieuwe stuntrace en 36 verborgen Yuanbao."
 date: 2026-02-12
+category: gta-online
 lang: nl
 image: ../../../assets/posts/cozy-up-in-the-new-grotti-itali-classic.jpg
 imageAlt: "De Grotti Itali Classic in GTA Online."

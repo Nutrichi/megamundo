@@ -2,6 +2,7 @@
 title: "GTA Online añade dos vehículos policiales Bravado Buffalo"
 description: "El evento Neighborhood Watch trae dos nuevos vehículos policiales. Los miembros de GTA+ reciben uno gratis, una semana antes que el resto el 9 de abril."
 date: 2026-04-02
+category: gta-online
 lang: es
 image: ../../../assets/posts/protect-los-santos-and-acquire-new-law-enforcement-vehicles-during-the.jpg
 imageAlt: "Los nuevos vehículos policiales Bravado Buffalo en GTA Online."

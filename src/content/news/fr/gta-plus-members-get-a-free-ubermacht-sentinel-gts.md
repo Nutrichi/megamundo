@@ -2,6 +2,7 @@
 title: "Les membres GTA+ reçoivent l’Übermacht Sentinel GTS sans frais"
 description: "Les membres GTA+ peuvent réclamer l’Übermacht Sentinel GTS jusqu’au 10 juin dans GTA Online. Le mois apporte aussi des peintures caméléon, une tenue de course et des remises sur les Executive Offices."
 date: 2026-05-07
+category: gta-online
 lang: fr
 image: ../../../assets/posts/claim-a-free-ubermacht-sentinel-gts-with-gta.jpg
 imageAlt: "L’Übermacht Sentinel GTS dans GTA Online."

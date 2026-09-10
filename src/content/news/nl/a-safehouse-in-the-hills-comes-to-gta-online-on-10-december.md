@@ -2,6 +2,7 @@
 title: "Rockstar brengt A Safehouse in the Hills op 10 december naar GTA Online"
 description: "De nieuwe update van GTA Online voegt villa's in de heuvels van Los Santos toe, een verhaal over een afluisternetwerk en een missie-editor. Hij komt naar vijf platforms."
 date: 2025-12-05
+category: gta-online
 lang: nl
 image: ../../../assets/posts/gta-online-a-safehouse-in-the-hills-coming-december-10.jpg
 imageAlt: "Een villa uit A Safehouse in the Hills in GTA Online."

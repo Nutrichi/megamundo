@@ -2,6 +2,7 @@
 title: "Los miembros de GTA+ reciben el Gallivanter Warden una semana antes"
 description: "El nuevo Gallivanter Warden es gratuito para los miembros de GTA+, una semana antes que el resto. Rockstar no indica cuándo llegará el SUV a todos los jugadores."
 date: 2026-08-13
+category: gta-online
 lang: es
 image: ../../../assets/posts/gta-members-can-claim-the-new-gallivanter-warden-suv-for-free-one-week.jpg
 imageAlt: "El Gallivanter Warden en GTA Online."

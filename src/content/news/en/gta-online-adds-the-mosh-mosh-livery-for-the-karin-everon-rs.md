@@ -2,6 +2,7 @@
 title: "GTA Online adds the Mosh Mosh livery for the Karin Everon RS"
 description: "A new livery for the Karin Everon RS is available at every Vehicle Workshop in GTA Online. Auto Shop work and Madrazo Hits pay a bonus this week."
 date: 2026-01-22
+category: gta-online
 lang: en
 image: ../../../assets/posts/wrap-the-karin-everon-rs-in-the-new-mosh-mosh-livery.jpg
 imageAlt: "The Karin Everon RS with the Mosh Mosh livery."

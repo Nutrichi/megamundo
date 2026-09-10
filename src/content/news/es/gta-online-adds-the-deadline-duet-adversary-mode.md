@@ -2,6 +2,7 @@
 title: "GTA Online añade el modo Enfrentamiento Deadline Duet"
 description: "Deadline Duet es un nuevo modo Enfrentamiento para equipos de dos sobre motos Nagasaki Shotaro. Paga el triple durante dos semanas."
 date: 2026-02-05
+category: gta-online
 lang: es
 image: ../../../assets/posts/break-up-rival-couples-in-the-new-deadline-duet-mode-for-triple-reward.jpg
 imageAlt: "Dos jugadores en motos Shotaro en Deadline Duet."

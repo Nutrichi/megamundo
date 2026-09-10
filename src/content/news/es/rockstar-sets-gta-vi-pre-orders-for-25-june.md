@@ -2,6 +2,7 @@
 title: "Rockstar fija las reservas de GTA VI para el 25 de junio"
 description: "Las reservas de GTA VI empiezan el 25 de junio, en tiendas digitales y en algunos comercios. Rockstar muestra también la portada, descargable desde la web oficial."
 date: 2026-06-18
+category: gta6
 lang: es
 image: ../../../assets/posts/grand-theft-auto-vi-pre-orders-begin-on-june-25.jpg
 imageAlt: "La portada de Grand Theft Auto VI."

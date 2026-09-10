@@ -2,6 +2,7 @@
 title: "I preordini di GTA VI sono aperti in tutto il mondo"
 description: "I preordini di GTA VI sono aperti, a mezzanotte ora locale. Ci sono un’edizione standard e una Ultimate Edition, e chi acquista prima del 20 novembre riceve un pacchetto bonus."
 date: 2026-06-24
+category: gta6
 lang: it
 image: ../../../assets/posts/pre-order-grand-theft-auto-vi-on-june-25.jpg
 imageAlt: "La Ultimate Edition di Grand Theft Auto VI."

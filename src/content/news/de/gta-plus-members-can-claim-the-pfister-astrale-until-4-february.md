@@ -2,6 +2,7 @@
 title: "GTA+-Mitglieder können den Pfister Astrale bis zum 4. Februar abholen"
 description: "Der Pfister Astrale ist im Vinewood Car Club für GTA+-Mitglieder gratis. Der Sports Classic bleibt bis zum 4. Februar Mitgliedern vorbehalten."
 date: 2026-01-08
+category: gta-online
 lang: de
 image: ../../../assets/posts/get-early-access-to-the-new-pfister-astrale-sports-classic-with-gta.jpg
 imageAlt: "Der Sports Classic Pfister Astrale in GTA Online."

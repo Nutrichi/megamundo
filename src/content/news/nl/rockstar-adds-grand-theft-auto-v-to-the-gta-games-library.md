@@ -2,6 +2,7 @@
 title: "Rockstar zet Grand Theft Auto V in de GTA+ Games Library"
 description: "Grand Theft Auto V zit nu in de GTA+ Games Library, ook op de pc. Leden kunnen daarnaast tot 13 juli een gratis Ocelot Stromberg ophalen."
 date: 2026-06-11
+category: gta5
 lang: nl
 image: ../../../assets/posts/claim-a-versatile-ocelot-stromberg-free-with-gta.jpg
 imageAlt: "De Ocelot Stromberg in een straat van Los Santos."

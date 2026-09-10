@@ -2,6 +2,7 @@
 title: "Rockstar añade ropa y objetos de colección a su tienda"
 description: "La nueva colección incluye ropa, pósteres, pegatinas y dos velas aromáticas. Completar las misiones New Listings antes del 7 de diciembre da la sudadera dentro del juego."
 date: 2025-12-05
+category: gta-online
 lang: es
 image: ../../../assets/posts/new-at-the-rockstar-store-apparel-collectibles-and-more.jpg
 imageAlt: "Nuevos artículos en la Rockstar Store."

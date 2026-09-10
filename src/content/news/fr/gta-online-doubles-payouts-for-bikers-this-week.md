@@ -2,6 +2,7 @@
 title: "GTA Online double les gains des bikers cette semaine"
 description: "Les ventes aux dealers de rue rapportent le double et les ateliers de fausse monnaie sont en promotion. La semaine coïncide avec le Nouvel An lunaire et ses 36 objets à trouver."
 date: 2026-02-19
+category: gta-online
 lang: fr
 image: ../../../assets/posts/bikers-earn-double-on-counterfeit-cash-and-completing-street-dealer-sa.jpg
 imageAlt: "Un clubhouse de bikers dans GTA Online."

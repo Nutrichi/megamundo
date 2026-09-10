@@ -2,6 +2,7 @@
 title: "GTA Online krijgt de Progen Luiva-supercar voor de feestdagen"
 description: "De Progen Luiva heeft geen dak, geen voorruit en geen ramen. Hij ligt bij Legendary Motorsport, naast een reeks feestdagengeschenken en terugkerende modi."
 date: 2025-12-18
+category: gta-online
 lang: nl
 image: ../../../assets/posts/the-futuristic-new-progen-luiva-supercar-arrives-for-the-holidays-in-g.jpg
 imageAlt: "De Progen Luiva-supercar in GTA Online."

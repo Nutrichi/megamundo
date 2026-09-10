@@ -2,6 +2,7 @@
 title: "GTA Online voegt twee politievoertuigen van Bravado Buffalo toe"
 description: "Het Neighborhood Watch-evenement brengt twee nieuwe politievoertuigen. GTA+-leden krijgen er een gratis, een week voor de rest hem op 9 april kan kopen."
 date: 2026-04-02
+category: gta-online
 lang: nl
 image: ../../../assets/posts/protect-los-santos-and-acquire-new-law-enforcement-vehicles-during-the.jpg
 imageAlt: "De nieuwe politievoertuigen van Bravado Buffalo in GTA Online."

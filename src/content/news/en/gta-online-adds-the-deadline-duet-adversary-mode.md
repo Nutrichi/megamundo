@@ -2,6 +2,7 @@
 title: "GTA Online adds the Deadline Duet adversary mode"
 description: "Deadline Duet is a new adversary mode for two-player teams on Nagasaki Shotaro bikes. It pays triple rewards for two weeks."
 date: 2026-02-05
+category: gta-online
 lang: en
 image: ../../../assets/posts/break-up-rival-couples-in-the-new-deadline-duet-mode-for-triple-reward.jpg
 imageAlt: "Two players on Shotaro bikes in Deadline Duet."

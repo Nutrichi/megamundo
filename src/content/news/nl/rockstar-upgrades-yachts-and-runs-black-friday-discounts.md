@@ -2,6 +2,7 @@
 title: "Rockstar geeft jachten een upgrade en houdt Black Friday-kortingen in GTA Online"
 description: "Wie een Galaxy Super Yacht heeft, kan gratis naar het duurste model. Rockstar houdt in GTA Online ook Black Friday-kortingen van 27 november tot 3 december."
 date: 2025-11-27
+category: gta-online
 lang: nl
 image: ../../../assets/posts/live-a-superyacht-life-with-lavish-rewards.jpg
 imageAlt: "Een Galaxy Super Yacht voor de kust van Los Santos in GTA Online."

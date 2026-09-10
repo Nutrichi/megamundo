@@ -2,6 +2,7 @@
 title: "GTA Online krijgt de spelmodus Deadline Duet"
 description: "Deadline Duet is een nieuwe spelmodus voor teams van twee op Nagasaki Shotaro-motoren. De modus keert twee weken lang drie keer uit."
 date: 2026-02-05
+category: gta-online
 lang: nl
 image: ../../../assets/posts/break-up-rival-couples-in-the-new-deadline-duet-mode-for-triple-reward.jpg
 imageAlt: "Twee spelers op Shotaro-motoren in Deadline Duet."

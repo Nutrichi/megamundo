@@ -2,6 +2,7 @@
 title: "GTA+ members get the Übermacht Sentinel GTS at no cost"
 description: "GTA+ members can claim the Übermacht Sentinel GTS in GTA Online until 10 June. The month also brings free chameleon paints, racing gear and discounts on Executive Office properties."
 date: 2026-05-07
+category: gta-online
 lang: en
 image: ../../../assets/posts/claim-a-free-ubermacht-sentinel-gts-with-gta.jpg
 imageAlt: "The Übermacht Sentinel GTS in GTA Online."

@@ -2,6 +2,7 @@
 title: "GTA Online schenkt Waschanlagenbesitzern ein Helitours-Geschäft"
 description: "Wer die Hands On Car Wash besitzt, kann die Tarnfirma Higgins Helitours bis zum 3. Juni gratis holen. Geldwäschemissionen zahlen in derselben Woche das Vierfache."
 date: 2026-05-28
+category: gta-online
 lang: de
 image: ../../../assets/posts/launder-your-bottom-line-with-money-fronts-bonuses.jpg
 imageAlt: "Higgins Helitours in GTA Online."

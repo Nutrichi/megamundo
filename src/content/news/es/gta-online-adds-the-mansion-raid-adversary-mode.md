@@ -2,6 +2,7 @@
 title: "GTA Online añade el modo enfrentamiento Mansion Raid"
 description: "Los atacantes se abren paso a explosivos hasta la cámara acorazada de una mansión y los defensores intentan impedirlo. El modo paga el doble la primera semana y GTA$200.000 por victoria."
 date: 2026-01-15
+category: gta-online
 lang: es
 image: ../../../assets/posts/redefine-breaking-and-entering-in-gta-online-s-new-mansion-raid.jpg
 imageAlt: "El modo Mansion Raid en GTA Online."

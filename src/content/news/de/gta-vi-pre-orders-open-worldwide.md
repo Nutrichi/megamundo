@@ -2,6 +2,7 @@
 title: "Die Vorbestellungen für GTA VI sind weltweit offen"
 description: "Die Vorbestellungen für GTA VI laufen, ab Mitternacht Ortszeit. Es gibt eine Standardfassung und eine Ultimate Edition, und wer vor dem 20. November kauft, bekommt ein Bonuspaket."
 date: 2026-06-24
+category: gta6
 lang: de
 image: ../../../assets/posts/pre-order-grand-theft-auto-vi-on-june-25.jpg
 imageAlt: "Die Ultimate Edition von Grand Theft Auto VI."

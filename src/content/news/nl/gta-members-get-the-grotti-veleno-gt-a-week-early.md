@@ -2,6 +2,7 @@
 title: "GTA+-leden krijgen de Grotti Veleno GT een week eerder"
 description: "GTA+-leden kunnen de Grotti Veleno GT gratis ophalen, een week voor hij bij Legendary Motorsport komt. De meeste kortingen deze week wijzen naar The Kortz Center Heist."
 date: 2026-07-14
+category: gta-online
 lang: nl
 image: ../../../assets/posts/claim-the-new-grotti-veleno-gt-a-week-early-with-gta.jpg
 imageAlt: "De Grotti Veleno GT in de Attack-livery."

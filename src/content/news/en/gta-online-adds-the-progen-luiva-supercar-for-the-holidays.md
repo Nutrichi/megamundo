@@ -2,6 +2,7 @@
 title: "GTA Online adds the Progen Luiva supercar for the holidays"
 description: "The Progen Luiva has no roof, no windshield and no windows. It is on sale at Legendary Motorsport, alongside a run of holiday gifts and returning modes."
 date: 2025-12-18
+category: gta-online
 lang: en
 image: ../../../assets/posts/the-futuristic-new-progen-luiva-supercar-arrives-for-the-holidays-in-g.jpg
 imageAlt: "The Progen Luiva supercar in GTA Online."

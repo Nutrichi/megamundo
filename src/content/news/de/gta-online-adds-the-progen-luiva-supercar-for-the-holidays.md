@@ -2,6 +2,7 @@
 title: "GTA Online ergänzt den Supersportwagen Progen Luiva zu den Feiertagen"
 description: "Der Progen Luiva hat kein Dach, keine Windschutzscheibe und keine Fenster. Er steht bei Legendary Motorsport, neben einer Reihe Geschenke und zurückkehrender Modi."
 date: 2025-12-18
+category: gta-online
 lang: de
 image: ../../../assets/posts/the-futuristic-new-progen-luiva-supercar-arrives-for-the-holidays-in-g.jpg
 imageAlt: "Der Supersportwagen Progen Luiva in GTA Online."

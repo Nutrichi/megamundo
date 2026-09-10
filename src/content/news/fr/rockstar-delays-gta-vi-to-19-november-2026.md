@@ -2,6 +2,7 @@
 title: "Rockstar reporte GTA VI au 19 novembre 2026"
 description: "GTA VI est de nouveau reporté et est désormais attendu le 19 novembre 2026. Rockstar s’excuse et dit avoir besoin de ces mois pour peaufiner le jeu."
 date: 2025-11-06
+category: gta6
 lang: fr
 image: ../../../assets/posts/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026.jpg
 imageAlt: "Key art de Grand Theft Auto VI."

@@ -2,6 +2,7 @@
 title: "Rockstar legt die Vorbestellungen für GTA VI auf den 25. Juni"
 description: "Die Vorbestellungen für GTA VI beginnen am 25. Juni, in digitalen Shops und bei ausgewählten Händlern. Rockstar zeigt auch das Cover, das von der offiziellen Seite geladen werden kann."
 date: 2026-06-18
+category: gta6
 lang: de
 image: ../../../assets/posts/grand-theft-auto-vi-pre-orders-begin-on-june-25.jpg
 imageAlt: "Das Cover von Grand Theft Auto VI."

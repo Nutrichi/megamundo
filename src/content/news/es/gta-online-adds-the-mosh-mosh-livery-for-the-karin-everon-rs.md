@@ -2,6 +2,7 @@
 title: "GTA Online añade la decoración Mosh Mosh para el Karin Everon RS"
 description: "Una nueva decoración para el Karin Everon RS está disponible en cualquier Vehicle Workshop de GTA Online. El trabajo en el Auto Shop y los Madrazo Hits dan un bonus esta semana."
 date: 2026-01-22
+category: gta-online
 lang: es
 image: ../../../assets/posts/wrap-the-karin-everon-rs-in-the-new-mosh-mosh-livery.jpg
 imageAlt: "El Karin Everon RS con la decoración Mosh Mosh."

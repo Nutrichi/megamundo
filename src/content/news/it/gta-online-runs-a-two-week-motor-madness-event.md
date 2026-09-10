@@ -2,6 +2,7 @@
 title: "GTA Online organizza un evento Motor Madness di due settimane"
 description: "Motor Madness va dal 14 al 27 maggio. La prima settimana riguarda i Salvage Yard, la seconda l'LS Car Meet, la cui iscrizione è gratuita durante l'evento."
 date: 2026-05-14
+category: gta-online
 lang: it
 image: ../../../assets/posts/buckle-up-for-two-weeks-of-motor-madness-in-gta-online.jpg
 imageAlt: "L'evento Motor Madness in GTA Online."

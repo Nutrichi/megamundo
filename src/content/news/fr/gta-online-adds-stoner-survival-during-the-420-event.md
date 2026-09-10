@@ -2,6 +2,7 @@
 title: "GTA Online ajoute Stoner Survival pendant l’événement 420"
 description: "Rockstar ajoute un nouveau mode Survie à GTA Online pour l’événement 420. Stoner Survival démarre à 16h20 en temps de jeu et paie quatre fois le tarif habituel."
 date: 2026-04-16
+category: gta-online
 lang: fr
 image: ../../../assets/posts/new-stoner-survival-dealing-4x-rewards-as-ld-organics-presents-the-420.jpg
 imageAlt: "Image promotionnelle de l’événement 420 dans GTA Online."

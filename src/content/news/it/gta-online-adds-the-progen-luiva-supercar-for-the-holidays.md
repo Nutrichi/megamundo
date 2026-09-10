@@ -2,6 +2,7 @@
 title: "GTA Online aggiunge la supercar Progen Luiva per le feste"
 description: "La Progen Luiva non ha tetto, né parabrezza, né finestrini. È in vendita da Legendary Motorsport, insieme a una serie di regali e modalità che tornano."
 date: 2025-12-18
+category: gta-online
 lang: it
 image: ../../../assets/posts/the-futuristic-new-progen-luiva-supercar-arrives-for-the-holidays-in-g.jpg
 imageAlt: "La supercar Progen Luiva in GTA Online."

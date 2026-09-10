@@ -2,6 +2,7 @@
 title: "Las reservas de GTA VI están abiertas en todo el mundo"
 description: "Las reservas de GTA VI están abiertas, a medianoche hora local. Hay una edición estándar y una Ultimate Edition, y quien compre antes del 20 de noviembre recibe un pack de bonus."
 date: 2026-06-24
+category: gta6
 lang: es
 image: ../../../assets/posts/pre-order-grand-theft-auto-vi-on-june-25.jpg
 imageAlt: "La Ultimate Edition de Grand Theft Auto VI."

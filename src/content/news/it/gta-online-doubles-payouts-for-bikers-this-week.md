@@ -2,6 +2,7 @@
 title: "GTA Online raddoppia i guadagni dei biker questa settimana"
 description: "Le vendite agli spacciatori pagano il doppio e le fabbriche di denaro falso sono scontate. La settimana coincide con il Capodanno lunare e i suoi 36 collezionabili."
 date: 2026-02-19
+category: gta-online
 lang: it
 image: ../../../assets/posts/bikers-earn-double-on-counterfeit-cash-and-completing-street-dealer-sa.jpg
 imageAlt: "Un clubhouse dei biker in GTA Online."

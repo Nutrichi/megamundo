@@ -2,6 +2,7 @@
 title: "GTA Online añade el superdeportivo Progen Luiva para las fiestas"
 description: "El Progen Luiva no tiene techo, ni parabrisas, ni ventanillas. Está a la venta en Legendary Motorsport, junto a una tanda de regalos y modos que vuelven."
 date: 2025-12-18
+category: gta-online
 lang: es
 image: ../../../assets/posts/the-futuristic-new-progen-luiva-supercar-arrives-for-the-holidays-in-g.jpg
 imageAlt: "El superdeportivo Progen Luiva en GTA Online."

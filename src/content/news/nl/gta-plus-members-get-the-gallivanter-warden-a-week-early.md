@@ -2,6 +2,7 @@
 title: "GTA+-leden krijgen de Gallivanter Warden een week eerder"
 description: "De nieuwe Gallivanter Warden is gratis op te halen voor GTA+-leden, een week voor de rest. Rockstar noemt geen datum waarop de SUV voor iedereen beschikbaar komt."
 date: 2026-08-13
+category: gta-online
 lang: nl
 image: ../../../assets/posts/gta-members-can-claim-the-new-gallivanter-warden-suv-for-free-one-week.jpg
 imageAlt: "De Gallivanter Warden in GTA Online."

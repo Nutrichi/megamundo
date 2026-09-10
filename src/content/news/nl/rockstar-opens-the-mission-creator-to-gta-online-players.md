@@ -2,6 +2,7 @@
 title: "Rockstar stelt de Mission Creator open voor spelers van GTA Online"
 description: "Met de Rockstar Mission Creator bouwen spelers hun eigen missies in GTA Online, voor maximaal acht spelers, en delen ze die. De eerste uitgelichte creatie verschijnt op 30 april."
 date: 2026-04-28
+category: gta-online
 lang: nl
 image: ../../../assets/posts/play-thrilling-new-gta-online-experiences-built-by-the-community-with.jpg
 imageAlt: "De Rockstar Mission Creator in GTA Online."

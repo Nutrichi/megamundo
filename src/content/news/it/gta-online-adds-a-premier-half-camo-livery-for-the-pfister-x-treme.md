@@ -2,6 +2,7 @@
 title: "GTA Online aggiunge una livrea Premier Half Camo per la Pfister X-Treme"
 description: "La Pfister X-Treme riceve una livrea Premier Half Camo in tutti i Vehicle Workshops. I Salvage Yards pagano il doppio di reddito giornaliero e demoliscono il doppio più in fretta."
 date: 2026-03-05
+category: gta-online
 lang: it
 image: ../../../assets/posts/outfit-the-pfister-x-treme-in-the-new-premier-half-camo-livery.jpg
 imageAlt: "La Pfister X-Treme con la livrea Premier Half Camo."

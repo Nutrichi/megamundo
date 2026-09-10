@@ -2,6 +2,7 @@
 title: "Rockstar adds firefighting, forklifts and a paper route to GTA Online"
 description: "Three new Odd Jobs let players work as a firefighter, a forklift operator or a newspaper deliverer. All Odd Jobs pay double GTA$ and RP through 4 February."
 date: 2026-01-29
+category: gta-online
 lang: en
 image: ../../../assets/posts/make-an-honest-living-in-three-new-gta-online-odd-jobs.jpg
 imageAlt: "The new Firefighter Odd Job in GTA Online."

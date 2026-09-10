@@ -2,6 +2,7 @@
 title: "GTA Online voegt de vijandmodus Mansion Raid toe"
 description: "Aanvallers banen zich met explosieven een weg naar de kluis van een villa, verdedigers proberen dat te beletten. De modus betaalt de eerste week dubbel, plus GTA$200.000 bij winst."
 date: 2026-01-15
+category: gta-online
 lang: nl
 image: ../../../assets/posts/redefine-breaking-and-entering-in-gta-online-s-new-mansion-raid.jpg
 imageAlt: "De modus Mansion Raid in GTA Online."

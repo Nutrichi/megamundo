@@ -2,6 +2,7 @@
 title: "Rockstar stellt von Spielern gebaute Jobs in GTA Online heraus"
 description: "Die Community Series Showcase läuft vom 12. März bis 1. April. Von Spielern gebaute Jobs zahlen dreifach, wer sich einloggt erhält GTA$1.000.000, und herausgestellte Ersteller bekommen GTA$10.000.000."
 date: 2026-03-12
+category: gta-online
 lang: de
 image: ../../../assets/posts/get-triple-rewards-and-bonus-gta-during-the-gta-online-community-serie.jpg
 imageAlt: "Werbebild zur Community Series Showcase in GTA Online."

@@ -2,6 +2,7 @@
 title: "GTA Online ergänzt die Mosh-Mosh-Lackierung für den Karin Everon RS"
 description: "Eine neue Lackierung für den Karin Everon RS liegt in jedem Vehicle Workshop von GTA Online. Arbeit im Auto Shop und Madrazo Hits bringen diese Woche einen Bonus."
 date: 2026-01-22
+category: gta-online
 lang: de
 image: ../../../assets/posts/wrap-the-karin-everon-rs-in-the-new-mosh-mosh-livery.jpg
 imageAlt: "Der Karin Everon RS mit der Mosh-Mosh-Lackierung."

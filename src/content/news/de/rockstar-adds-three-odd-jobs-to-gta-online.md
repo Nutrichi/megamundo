@@ -2,6 +2,7 @@
 title: "Rockstar bringt Feuerwehr, Gabelstapler und eine Zeitungsrunde nach GTA Online"
 description: "Drei neue Odd Jobs lassen Spieler als Feuerwehrmann, Staplerfahrer oder Zeitungsausträger arbeiten. Alle Odd Jobs zahlen bis zum 4. Februar doppelt."
 date: 2026-01-29
+category: gta-online
 lang: de
 image: ../../../assets/posts/make-an-honest-living-in-three-new-gta-online-odd-jobs.jpg
 imageAlt: "Der neue Feuerwehr-Odd-Job in GTA Online."

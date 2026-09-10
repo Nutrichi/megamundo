@@ -2,6 +2,7 @@
 title: "Rockstar annonce The Kortz Center Heist pour GTA Online"
 description: "GTA Online reçoit un nouveau casse en juillet. Les joueurs braquent une galerie d’art à Pacific Bluffs, et un Art Studio dans une Mansion est nécessaire. Rockstar donne la date du 14 juillet."
 date: 2026-06-17
+category: gta-online
 lang: fr
 image: ../../../assets/posts/the-next-big-score.jpg
 imageAlt: "Le Kortz Center dans GTA Online."

@@ -2,6 +2,7 @@
 title: "Rockstar zet zelfgemaakte jobs in de kijker in GTA Online"
 description: "De Community Series Showcase loopt van 12 maart tot 1 april. Zelfgemaakte jobs betalen drievoudig, iedereen die inlogt krijgt GTA$1.000.000, en uitgelichte makers krijgen GTA$10.000.000."
 date: 2026-03-12
+category: gta-online
 lang: nl
 image: ../../../assets/posts/get-triple-rewards-and-bonus-gta-during-the-gta-online-community-serie.jpg
 imageAlt: "Promobeeld voor de Community Series Showcase in GTA Online."

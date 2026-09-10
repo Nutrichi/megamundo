@@ -2,6 +2,7 @@
 title: "GTA Online ergänzt die New-Listings-Missionen vor den Mansions im Dezember"
 description: "Drei neue Missionen in GTA Online bereiten die Ankunft der Mansion-Anwesen im Dezember vor. Wer alle drei vor dem 7. Dezember abschließt, bekommt Rabatt auf diese Häuser."
 date: 2025-11-13
+category: gta-online
 lang: de
 image: ../../../assets/posts/lay-a-proper-foundation-in-new-listings.jpg
 imageAlt: "Ein Anwesen von Prix Luxury Real Estate in GTA Online."

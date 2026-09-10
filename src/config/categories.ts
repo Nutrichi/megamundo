@@ -1,44 +1,51 @@
 /*
  * De categorieën. Eén plek, zoals §6 eist: een categorie bijzetten is hier
- * een regel erbij — sleutel, kleur, icoon, label — en geen verbouwing.
- * Navigatie, filter, pil en postpagina lezen allemaal uit deze definitie.
+ * een regel erbij en geen verbouwing. Het filter op de homepage, het ruitje
+ * in de pil en het label op de postpagina lezen allemaal hieruit.
  *
- * Twee bij de lancering. Uitbreiding is geparkeerd (§20); verzin er dus
- * geen bij. De harde bovengrens is ongeveer vijf: elke categorie is een
- * eigen kleur, en voorbij vijf communiceert het kleursysteem niets meer.
+ * **Een categorie is het spel waar de post over gaat.** Beslist door Nutri
+ * op 10 september 2026. Daarvoor waren de categorieën News en Guides, maar
+ * op een nieuwssite is alles nieuws, dus dat onderscheid zei niets.
  *
- * Let op het onderscheid uit §6.1: een categorie is het sóórt post. Een
- * bron (Rockstar Games, IGN) is iets anders en krijgt nooit een kleur,
- * een icoon of een label.
+ * Let op: de categorie bepaalt niet de URL. Een nieuwspost staat op
+ * /news/<slug> en een gids op /guides/<slug>, ongeacht het spel. Dat is
+ * bewust losgekoppeld: anders verhuist elke post zodra hij een andere
+ * categorie krijgt, en verhuizende URL's kosten zoekverkeer.
+ *
+ * De namen zijn eigennamen en worden nooit vertaald, dus ze staan hier als
+ * gewone tekst en niet in de vertaalbestanden (SCHRIJFSTIJL.md §6).
+ *
+ * De harde bovengrens is ongeveer vijf: elke categorie is een eigen kleur,
+ * en voorbij vijf communiceert het kleursysteem niets meer. GTA Trilogy komt
+ * erbij zodra er inhoud over is (§9).
  */
 
-import type { UIKey } from '../i18n/ui';
-
-export const categoryKeys = ['news', 'guides'] as const;
+export const categoryKeys = ['gta6', 'gta-online', 'gta5'] as const;
 export type CategoryKey = (typeof categoryKeys)[number];
 
 export type Category = {
   key: CategoryKey;
   /** De CSS-variabele met de kleur van het ruitje en de badge. */
   color: string;
-  /** Label in de vertaalbestanden; nooit een letterlijk label hier. */
-  labelKey: UIKey;
-  /** Het pad waaronder de posts van deze categorie staan: /news/<slug>. */
-  path: string;
+  /** Wat er op de chip en de badge staat. Nooit vertaald. */
+  label: string;
 };
 
 export const categories: Record<CategoryKey, Category> = {
-  news: {
-    key: 'news',
-    color: 'var(--mm-cat-news)',
-    labelKey: 'cat.news',
-    path: 'news',
+  gta6: {
+    key: 'gta6',
+    color: 'var(--mm-cat-gta6)',
+    label: 'GTA VI',
   },
-  guides: {
-    key: 'guides',
-    color: 'var(--mm-cat-guides)',
-    labelKey: 'cat.guides',
-    path: 'guides',
+  'gta-online': {
+    key: 'gta-online',
+    color: 'var(--mm-cat-gta-online)',
+    label: 'GTA Online',
+  },
+  gta5: {
+    key: 'gta5',
+    color: 'var(--mm-cat-gta5)',
+    label: 'GTA V',
   },
 };
 
@@ -49,3 +56,9 @@ export const categoryList: Category[] = categoryKeys.map((key) => categories[key
 export function isCategoryKey(value: string | null | undefined): value is CategoryKey {
   return !!value && (categoryKeys as readonly string[]).includes(value);
 }
+
+/**
+ * Onder welk pad een post staat. Dit volgt de collectie en niet de
+ * categorie: nieuws op /news/, gidsen op /guides/.
+ */
+export const collectionPath = { news: 'news', guides: 'guides' } as const;

@@ -2,6 +2,7 @@
 title: "GTA+-Mitglieder erhalten den Übermacht Sentinel GTS kostenlos"
 description: "GTA+-Mitglieder können den Übermacht Sentinel GTS bis zum 10. Juni in GTA Online abholen. Der Monat bringt außerdem Chamäleonlack, Rennkleidung und Rabatte auf Executive Offices."
 date: 2026-05-07
+category: gta-online
 lang: de
 image: ../../../assets/posts/claim-a-free-ubermacht-sentinel-gts-with-gta.jpg
 imageAlt: "Der Übermacht Sentinel GTS in GTA Online."

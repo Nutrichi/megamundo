@@ -2,6 +2,7 @@
 title: "GTA Online ajoute une livrée Premier Half Camo pour la Pfister X-Treme"
 description: "La Pfister X-Treme reçoit une livrée Premier Half Camo dans tous les Vehicle Workshops. Les Salvage Yards paient un revenu quotidien doublé et démontent deux fois plus vite."
 date: 2026-03-05
+category: gta-online
 lang: fr
 image: ../../../assets/posts/outfit-the-pfister-x-treme-in-the-new-premier-half-camo-livery.jpg
 imageAlt: "La Pfister X-Treme en livrée Premier Half Camo."

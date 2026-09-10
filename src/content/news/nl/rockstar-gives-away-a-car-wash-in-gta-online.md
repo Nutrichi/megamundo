@@ -2,6 +2,7 @@
 title: "Rockstar geeft een carwash weg in GTA Online"
 description: "Spelers kunnen tot 14 januari gratis een Hands On Car Wash claimen. Legale fronten betalen deze week drievoudig, en Rockstar zegt dat er later in de maand drie nieuwe Odd Jobs komen."
 date: 2026-01-08
+category: gta-online
 lang: nl
 image: ../../../assets/posts/claim-a-free-hands-on-car-wash-property-and-get-3x-rewards-on-legal-mo.jpg
 imageAlt: "De Hands On Car Wash in GTA Online."

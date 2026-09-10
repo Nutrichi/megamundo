@@ -2,6 +2,7 @@
 title: "Rockstar zet Old School Hits in het licht als eerste Community Mission"
 description: "Old School Hits is de eerste uitgelichte Community Mission en is gemaakt met de nieuwe Rockstar Mission Creator. De missie keert uit tot 6 mei."
 date: 2026-04-30
+category: gta-online
 lang: nl
 image: ../../../assets/posts/execute-old-school-hits-in-the-first-featured-community-mission.jpg
 imageAlt: "Een doelwit uit de missie Old School Hits in GTA Online."

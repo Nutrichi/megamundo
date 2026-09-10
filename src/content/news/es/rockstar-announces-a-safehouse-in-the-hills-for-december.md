@@ -2,6 +2,7 @@
 title: "Rockstar anuncia A Safehouse in the Hills para diciembre"
 description: "GTA Online: A Safehouse in the Hills llega en diciembre y añade mansiones en barrios exclusivos de Los Santos. Rockstar no da fecha ni precios."
 date: 2025-11-20
+category: gta-online
 lang: es
 image: ../../../assets/posts/own-the-extravagant-residence-of-your-dreams-in-gta-online-a-safehouse.jpg
 imageAlt: "Una mansión de A Safehouse in the Hills."

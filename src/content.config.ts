@@ -21,6 +21,7 @@ import { defineCollection, type SchemaContext } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 import { locales } from './i18n/ui';
+import { categoryKeys } from './config/categories';
 
 /** Velden die elke post deelt, in welke taal dan ook. */
 const postFields = ({ image }: SchemaContext) => ({
@@ -56,7 +57,16 @@ const postFields = ({ image }: SchemaContext) => ({
 
 const news = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/news' }),
-  schema: (context) => z.object(postFields(context)),
+  schema: (context) =>
+    z.object({
+      ...postFields(context),
+      /*
+       * Het spel waar de post over gaat (§6). Verplicht: zonder categorie
+       * heeft de pil geen kleur en valt de post buiten elk filter. De build
+       * hoort daar luid op te falen en niet stilletjes iets te kiezen.
+       */
+      category: z.enum(categoryKeys),
+    }),
 });
 
 const guides = defineCollection({
@@ -64,6 +74,8 @@ const guides = defineCollection({
   schema: (context) =>
     z.object({
       ...postFields(context),
+      /** Het spel waar de gids over gaat (§6). */
+      category: z.enum(categoryKeys),
       /** De vier gidstypes, bevestigd 9 september 2026 (§9). */
       game: z.enum(['gta5', 'gta-online', 'trilogy', 'gta6']),
     }),

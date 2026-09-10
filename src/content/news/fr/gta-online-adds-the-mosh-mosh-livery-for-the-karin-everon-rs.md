@@ -2,6 +2,7 @@
 title: "GTA Online ajoute la livrée Mosh Mosh pour la Karin Everon RS"
 description: "Une nouvelle livrée pour la Karin Everon RS est disponible dans chaque Vehicle Workshop de GTA Online. Le travail en Auto Shop et les Madrazo Hits rapportent un bonus cette semaine."
 date: 2026-01-22
+category: gta-online
 lang: fr
 image: ../../../assets/posts/wrap-the-karin-everon-rs-in-the-new-mosh-mosh-livery.jpg
 imageAlt: "La Karin Everon RS avec la livrée Mosh Mosh."

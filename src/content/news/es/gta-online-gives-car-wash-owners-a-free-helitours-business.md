@@ -2,6 +2,7 @@
 title: "GTA Online regala un negocio Helitours a los dueños del túnel de lavado"
 description: "Quien tenga el Hands On Car Wash puede reclamar gratis la tapadera Higgins Helitours hasta el 3 de junio. Las misiones de blanqueo pagan el cuádruple esa semana."
 date: 2026-05-28
+category: gta-online
 lang: es
 image: ../../../assets/posts/launder-your-bottom-line-with-money-fronts-bonuses.jpg
 imageAlt: "Higgins Helitours en GTA Online."

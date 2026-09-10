@@ -2,6 +2,7 @@
 title: "Rockstar met en avant les jobs créés par les joueurs dans GTA Online"
 description: "La Community Series Showcase court du 12 mars au 1er avril. Les jobs créés par les joueurs rapportent le triple, tout joueur qui se connecte reçoit GTA$1 000 000, et les créateurs mis en avant reçoivent GTA$10 000 000."
 date: 2026-03-12
+category: gta-online
 lang: fr
 image: ../../../assets/posts/get-triple-rewards-and-bonus-gta-during-the-gta-online-community-serie.jpg
 imageAlt: "Image promotionnelle de la Community Series Showcase dans GTA Online."

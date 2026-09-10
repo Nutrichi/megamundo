@@ -2,6 +2,7 @@
 title: "GTA Online aggiunge la livrea Mosh Mosh per la Karin Everon RS"
 description: "Una nuova livrea per la Karin Everon RS è disponibile in ogni Vehicle Workshop di GTA Online. Il lavoro in Auto Shop e i Madrazo Hits danno un bonus questa settimana."
 date: 2026-01-22
+category: gta-online
 lang: it
 image: ../../../assets/posts/wrap-the-karin-everon-rs-in-the-new-mosh-mosh-livery.jpg
 imageAlt: "La Karin Everon RS con la livrea Mosh Mosh."

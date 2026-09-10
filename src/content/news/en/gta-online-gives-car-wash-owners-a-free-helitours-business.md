@@ -2,6 +2,7 @@
 title: "GTA Online gives car wash owners a free Helitours business"
 description: "Owners of the Hands On Car Wash can claim the Higgins Helitours front for free until 3 June. Money laundering missions pay four times the usual amount that week."
 date: 2026-05-28
+category: gta-online
 lang: en
 image: ../../../assets/posts/launder-your-bottom-line-with-money-fronts-bonuses.jpg
 imageAlt: "Higgins Helitours in GTA Online."

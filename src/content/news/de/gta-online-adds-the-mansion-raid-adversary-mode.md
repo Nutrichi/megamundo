@@ -2,6 +2,7 @@
 title: "GTA Online fügt den Gegnermodus Mansion Raid hinzu"
 description: "Angreifer sprengen sich den Weg zum Tresor einer Villa, Verteidiger versuchen das zu verhindern. Der Modus zahlt in der ersten Woche doppelt und GTA$200.000 für einen Sieg."
 date: 2026-01-15
+category: gta-online
 lang: de
 image: ../../../assets/posts/redefine-breaking-and-entering-in-gta-online-s-new-mansion-raid.jpg
 imageAlt: "Der Modus Mansion Raid in GTA Online."

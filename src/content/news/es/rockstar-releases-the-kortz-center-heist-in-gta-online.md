@@ -2,6 +2,7 @@
 title: "Rockstar lanza The Kortz Center Heist en GTA Online"
 description: "The Kortz Center Heist ya está en GTA Online. Los jugadores roban un museo de arte y pueden vender el cuadro o colgarlo en su propia mansión."
 date: 2026-07-14
+category: gta-online
 lang: es
 image: ../../../assets/posts/the-kortz-center-heist-now-available-in-gta-online.jpg
 imageAlt: "El Kortz Center en GTA Online."

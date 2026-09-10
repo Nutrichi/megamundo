@@ -2,6 +2,7 @@
 title: "GTA Online offre une société Helitours aux propriétaires de lavage auto"
 description: "Les propriétaires du Hands On Car Wash peuvent réclamer la façade Higgins Helitours gratuitement jusqu’au 3 juin. Les missions de blanchiment paient quatre fois plus cette semaine-là."
 date: 2026-05-28
+category: gta-online
 lang: fr
 image: ../../../assets/posts/launder-your-bottom-line-with-money-fronts-bonuses.jpg
 imageAlt: "Higgins Helitours dans GTA Online."

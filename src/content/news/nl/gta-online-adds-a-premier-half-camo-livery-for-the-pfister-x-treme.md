@@ -2,6 +2,7 @@
 title: "GTA Online krijgt een Premier Half Camo-livery voor de Pfister X-Treme"
 description: "De Pfister X-Treme krijgt een Premier Half Camo-wrap bij alle Vehicle Workshops. Salvage Yards keren deze week dubbel dagloon uit en slopen twee keer zo snel."
 date: 2026-03-05
+category: gta-online
 lang: nl
 image: ../../../assets/posts/outfit-the-pfister-x-treme-in-the-new-premier-half-camo-livery.jpg
 imageAlt: "De Pfister X-Treme in de Premier Half Camo-livery."

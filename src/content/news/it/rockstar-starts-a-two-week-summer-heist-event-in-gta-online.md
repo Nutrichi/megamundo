@@ -2,6 +2,7 @@
 title: "Rockstar avvia un Summer Heist Event di due settimane in GTA Online"
 description: "Il Summer Heist Event va dal 30 luglio al 12 agosto. Due colpi originali pagano il doppio la prima settimana e la Panther Statue torna a Cayo Perico."
 date: 2026-07-30
+category: gta-online
 lang: it
 image: ../../../assets/posts/plan-the-perfect-getaway-during-the-summer-heist-event.jpg
 imageAlt: "Cayo Perico in GTA Online."

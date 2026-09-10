@@ -54,7 +54,7 @@ const show = used.length > 1;
       href={`${home}${home.endsWith('/') ? '' : '/'}?cat=${category.key}`}
       data-cat={category.key}
       style={`--mm-chip-hover: ${category.color};`}
-    >{t(category.labelKey)}</a>
+    >{category.label}</a>
   ))}
 </div>
 )}

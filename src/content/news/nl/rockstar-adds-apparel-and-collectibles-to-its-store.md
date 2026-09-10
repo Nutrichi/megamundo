@@ -2,6 +2,7 @@
 title: "Rockstar zet nieuwe kleding en verzamelobjecten in zijn winkel"
 description: "De nieuwe collectie bevat kleding, posters, stickers en twee geurkaarsen. Wie de New Listings-missies voor 7 december afrondt, krijgt de trui ook in het spel."
 date: 2025-12-05
+category: gta-online
 lang: nl
 image: ../../../assets/posts/new-at-the-rockstar-store-apparel-collectibles-and-more.jpg
 imageAlt: "Nieuwe artikelen in de Rockstar Store."

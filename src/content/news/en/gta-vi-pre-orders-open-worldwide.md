@@ -2,6 +2,7 @@
 title: "GTA VI pre-orders open worldwide"
 description: "Pre-orders for GTA VI are open at midnight local time. There is a standard edition and an Ultimate Edition, and everyone who buys before 20 November gets a bonus pack."
 date: 2026-06-24
+category: gta6
 lang: en
 image: ../../../assets/posts/pre-order-grand-theft-auto-vi-on-june-25.jpg
 imageAlt: "The Ultimate Edition of Grand Theft Auto VI."

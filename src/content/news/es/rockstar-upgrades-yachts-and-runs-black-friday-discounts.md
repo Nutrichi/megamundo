@@ -2,6 +2,7 @@
 title: "Rockstar mejora los yates y lanza descuentos de Black Friday en GTA Online"
 description: "Quien tenga un Galaxy Super Yacht puede pasar al modelo más caro sin coste. Rockstar lanza además descuentos de Black Friday del 27 de noviembre al 3 de diciembre."
 date: 2025-11-27
+category: gta-online
 lang: es
 image: ../../../assets/posts/live-a-superyacht-life-with-lavish-rewards.jpg
 imageAlt: "Un Galaxy Super Yacht frente a la costa de Los Santos en GTA Online."

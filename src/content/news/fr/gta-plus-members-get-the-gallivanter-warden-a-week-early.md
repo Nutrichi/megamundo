@@ -2,6 +2,7 @@
 title: "Les membres GTA+ obtiennent le Gallivanter Warden une semaine plus tôt"
 description: "Le nouveau Gallivanter Warden est offert aux membres GTA+, une semaine avant les autres joueurs. Rockstar ne donne pas la date de sortie pour tout le monde."
 date: 2026-08-13
+category: gta-online
 lang: fr
 image: ../../../assets/posts/gta-members-can-claim-the-new-gallivanter-warden-suv-for-free-one-week.jpg
 imageAlt: "Le Gallivanter Warden dans GTA Online."

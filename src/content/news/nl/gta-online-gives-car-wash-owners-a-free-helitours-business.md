@@ -2,6 +2,7 @@
 title: "GTA Online geeft carwash-eigenaars een gratis Helitours-zaak"
 description: "Wie de Hands On Car Wash bezit, kan tot 3 juni de Higgins Helitours-zaak gratis claimen. Witwasmissies betalen die week vier keer zoveel uit."
 date: 2026-05-28
+category: gta-online
 lang: nl
 image: ../../../assets/posts/launder-your-bottom-line-with-money-fronts-bonuses.jpg
 imageAlt: "Higgins Helitours in GTA Online."

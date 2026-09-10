@@ -2,6 +2,7 @@
 title: "GTA Online regala un’attività Helitours a chi possiede l’autolavaggio"
 description: "Chi possiede il Hands On Car Wash può ottenere gratis la copertura Higgins Helitours fino al 3 giugno. Le missioni di riciclaggio pagano il quadruplo in quella settimana."
 date: 2026-05-28
+category: gta-online
 lang: it
 image: ../../../assets/posts/launder-your-bottom-line-with-money-fronts-bonuses.jpg
 imageAlt: "Higgins Helitours in GTA Online."

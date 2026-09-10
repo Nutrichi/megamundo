@@ -2,6 +2,7 @@
 title: "Rockstar mette in vetrina i lavori creati dai giocatori in GTA Online"
 description: "La Community Series Showcase va dal 12 marzo al 1 aprile. I lavori creati dai giocatori pagano il triplo, chi accede riceve GTA$1.000.000 e i creatori in vetrina ricevono GTA$10.000.000."
 date: 2026-03-12
+category: gta-online
 lang: it
 image: ../../../assets/posts/get-triple-rewards-and-bonus-gta-during-the-gta-online-community-serie.jpg
 imageAlt: "Immagine promozionale della Community Series Showcase in GTA Online."

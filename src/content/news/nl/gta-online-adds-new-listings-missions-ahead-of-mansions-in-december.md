@@ -2,6 +2,7 @@
 title: "GTA Online voegt New Listings-missies toe voor de mansions in december"
 description: "Drie nieuwe missies in GTA Online bereiden de komst van mansion-eigendommen in december voor. Wie ze alle drie voor 7 december afrondt, krijgt korting op die woningen."
 date: 2025-11-13
+category: gta-online
 lang: nl
 image: ../../../assets/posts/lay-a-proper-foundation-in-new-listings.jpg
 imageAlt: "Een eigendom van Prix Luxury Real Estate in GTA Online."

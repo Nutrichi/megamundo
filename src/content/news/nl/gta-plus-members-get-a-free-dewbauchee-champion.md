@@ -2,6 +2,7 @@
 title: "GTA+-leden krijgen de Dewbauchee Champion gratis"
 description: "GTA+-leden kunnen de Dewbauchee Champion tot 4 maart claimen en rijden een week eerder in de Grotti Itali Classic. Beide auto's staan bij The Vinewood Car Club."
 date: 2026-02-05
+category: gta-online
 lang: nl
 image: ../../../assets/posts/get-a-free-dewbauchee-champion-supercar-and-early-access-to-the-grotti.jpg
 imageAlt: "De Dewbauchee Champion in GTA Online."

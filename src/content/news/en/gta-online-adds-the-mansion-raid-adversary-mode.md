@@ -2,6 +2,7 @@
 title: "GTA Online adds the Mansion Raid adversary mode"
 description: "Attackers blow their way down to a mansion vault while defenders try to stop them. The mode pays double in its first week, plus GTA$200,000 for a win."
 date: 2026-01-15
+category: gta-online
 lang: en
 image: ../../../assets/posts/redefine-breaking-and-entering-in-gta-online-s-new-mansion-raid.jpg
 imageAlt: "The Mansion Raid mode in GTA Online."

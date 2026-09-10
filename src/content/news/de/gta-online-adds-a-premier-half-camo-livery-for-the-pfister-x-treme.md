@@ -2,6 +2,7 @@
 title: "GTA Online ergänzt eine Premier-Half-Camo-Lackierung für den Pfister X-Treme"
 description: "Der Pfister X-Treme bekommt eine Premier-Half-Camo-Lackierung in allen Vehicle Workshops. Salvage Yards zahlen diese Woche doppeltes Tageseinkommen und verschrotten doppelt so schnell."
 date: 2026-03-05
+category: gta-online
 lang: de
 image: ../../../assets/posts/outfit-the-pfister-x-treme-in-the-new-premier-half-camo-livery.jpg
 imageAlt: "Der Pfister X-Treme in der Premier-Half-Camo-Lackierung."

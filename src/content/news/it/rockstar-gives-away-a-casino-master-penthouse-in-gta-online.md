@@ -2,6 +2,7 @@
 title: "Rockstar regala un Casino Master Penthouse in GTA Online"
 description: "Il Master Penthouse sopra The Diamond Casino and Resort è gratuito questa settimana. Il lavoro al casinò paga il doppio, come la dotazione giornaliera di fiches."
 date: 2025-11-20
+category: gta-online
 lang: it
 image: ../../../assets/posts/double-down-on-luxury-at-the-diamond-casino-resort.jpg
 imageAlt: "The Diamond Casino and Resort in GTA Online."

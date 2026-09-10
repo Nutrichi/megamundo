@@ -2,6 +2,7 @@
 title: "Rockstar geeft GTA+-leden een gratis Bravado Buffalo STX Pursuit"
 description: "De Bravado Buffalo STX Pursuit is vanaf 2 april gratis voor GTA+-leden. De rest moet tot 9 april wachten op het politievoertuig."
 date: 2026-04-02
+category: gta-online
 lang: nl
 image: ../../../assets/posts/gta-members-can-claim-a-free-bravado-buffalo-stx-pursuit-law-enforceme.jpg
 imageAlt: "Het politievoertuig Bravado Buffalo STX Pursuit."

@@ -2,6 +2,7 @@
 title: "Rockstar mostrará nuevas imágenes de GTA VI el 27 de agosto"
 description: "Rockstar muestra nuevas imágenes de GTA VI el 27 de agosto. El vídeo se estrena en Netflix a las 21.00 y llega a YouTube seis horas después."
 date: 2026-08-06
+category: gta6
 lang: es
 image: ../../../assets/posts/grand-theft-auto-vi-an-extended-look.jpg
 imageAlt: "Imagen promocional del extended look de GTA VI."

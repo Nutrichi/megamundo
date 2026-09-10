@@ -2,6 +2,7 @@
 title: "Rockstar ajoute pompiers, chariots élévateurs et tournée de journaux à GTA Online"
 description: "Trois nouveaux Odd Jobs permettent de travailler comme pompier, cariste ou livreur de journaux. Tous les Odd Jobs rapportent le double jusqu’au 4 février."
 date: 2026-01-29
+category: gta-online
 lang: fr
 image: ../../../assets/posts/make-an-honest-living-in-three-new-gta-online-odd-jobs.jpg
 imageAlt: "Le nouvel Odd Job de pompier dans GTA Online."

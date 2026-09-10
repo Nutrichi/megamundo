@@ -2,6 +2,7 @@
 title: "Rockstar potenzia gli yacht e lancia gli sconti del Black Friday in GTA Online"
 description: "Chi possiede un Galaxy Super Yacht può passare al modello più costoso senza costi. Rockstar lancia anche gli sconti del Black Friday dal 27 novembre al 3 dicembre."
 date: 2025-11-27
+category: gta-online
 lang: it
 image: ../../../assets/posts/live-a-superyacht-life-with-lavish-rewards.jpg
 imageAlt: "Un Galaxy Super Yacht al largo di Los Santos in GTA Online."

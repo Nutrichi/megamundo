@@ -2,6 +2,7 @@
 title: "Rockstar announces an extended look at GTA VI for 27 August"
 description: "Rockstar shows new footage of GTA VI on 27 August. The video premieres on Netflix at 21.00 Belgian time and comes to YouTube six hours later."
 date: 2026-08-06
+category: gta6
 lang: en
 image: ../../../assets/posts/grand-theft-auto-vi-an-extended-look.jpg
 imageAlt: "Promotional image for the extended look at GTA VI."

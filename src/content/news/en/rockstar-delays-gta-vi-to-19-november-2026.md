@@ -2,6 +2,7 @@
 title: "Rockstar delays GTA VI to 19 November 2026"
 description: "GTA VI is delayed again and is now due on 19 November 2026. Rockstar apologises and says the extra months are needed for polish. It gives no other reason."
 date: 2025-11-06
+category: gta6
 lang: en
 image: ../../../assets/posts/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026.jpg
 imageAlt: "Key art for Grand Theft Auto VI."

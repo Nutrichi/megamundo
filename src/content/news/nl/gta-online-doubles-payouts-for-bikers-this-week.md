@@ -2,6 +2,7 @@
 title: "GTA Online verdubbelt deze week de opbrengsten voor bikers"
 description: "Verkopen aan straatdealers betalen dubbel en fabrieken voor vals geld zijn in korting. Diezelfde week valt het Chinees Nieuwjaar, met 36 verzamelobjecten in Los Santos."
 date: 2026-02-19
+category: gta-online
 lang: nl
 image: ../../../assets/posts/bikers-earn-double-on-counterfeit-cash-and-completing-street-dealer-sa.jpg
 imageAlt: "Een clubhuis van bikers in GTA Online."

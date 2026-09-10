@@ -21,7 +21,6 @@
 import type { Post } from '../lib/posts';
 import { categories } from '../config/categories';
 import type { Locale } from '../i18n/ui';
-import { useTranslations } from '../i18n/utils';
 import LikeButton from './LikeButton.astro';
 
 interface Props {
@@ -30,7 +29,6 @@ interface Props {
 }
 
 const { post, locale } = Astro.props;
-const t = useTranslations(locale);
 const category = categories[post.category];
 const postId = `${post.category}/${post.slug}`;
 
@@ -39,7 +37,7 @@ const postId = `${post.category}/${post.slug}`;
  * kleur alleen mag nooit de enige drager van betekenis zijn; een
  * schermlezer hoort dus "News, <titel>".
  */
-const categoryLabel = t(category.labelKey);
+const categoryLabel = category.label;
 ---
 
 <li

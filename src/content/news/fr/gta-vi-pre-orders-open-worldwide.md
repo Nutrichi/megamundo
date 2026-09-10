@@ -2,6 +2,7 @@
 title: "Les précommandes de GTA VI sont ouvertes dans le monde entier"
 description: "Les précommandes de GTA VI sont ouvertes, à minuit heure locale. Il y a une édition standard et une Ultimate Edition, et tout achat avant le 20 novembre donne un pack bonus."
 date: 2026-06-24
+category: gta6
 lang: fr
 image: ../../../assets/posts/pre-order-grand-theft-auto-vi-on-june-25.jpg
 imageAlt: "L’Ultimate Edition de Grand Theft Auto VI."

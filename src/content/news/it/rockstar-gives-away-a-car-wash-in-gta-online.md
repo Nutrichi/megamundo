@@ -2,6 +2,7 @@
 title: "Rockstar regala un autolavaggio in GTA Online"
 description: "I giocatori possono reclamare un Hands On Car Wash senza costi fino al 14 gennaio. I front legali pagano il triplo questa settimana, e Rockstar annuncia tre nuovi Odd Job più avanti nel mese."
 date: 2026-01-08
+category: gta-online
 lang: it
 image: ../../../assets/posts/claim-a-free-hands-on-car-wash-property-and-get-3x-rewards-on-legal-mo.jpg
 imageAlt: "L’Hands On Car Wash in GTA Online."

@@ -2,6 +2,7 @@
 title: "Rockstar doubles payouts for several GTA Online mission types"
 description: "Base payouts for Mobile Operations, Casino Work, story missions and Project Overthrow are doubling. Rockstar is also lowering the price of more than 30 vehicles."
 date: 2026-05-07
+category: gta-online
 lang: en
 image: ../../../assets/posts/boost-your-nightclub-s-popularity-and-bring-in-doubled-daily-income.jpg
 imageAlt: "A nightclub in GTA Online."

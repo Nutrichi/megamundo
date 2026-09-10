@@ -2,6 +2,7 @@
 title: "Rockstar pubblica The Kortz Center Heist in GTA Online"
 description: "The Kortz Center Heist è disponibile in GTA Online. I giocatori svaligiano un museo d’arte e possono vendere il quadro o appenderlo nella propria villa."
 date: 2026-07-14
+category: gta-online
 lang: it
 image: ../../../assets/posts/the-kortz-center-heist-now-available-in-gta-online.jpg
 imageAlt: "Il Kortz Center in GTA Online."

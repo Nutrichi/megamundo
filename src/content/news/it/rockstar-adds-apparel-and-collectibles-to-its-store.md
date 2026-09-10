@@ -2,6 +2,7 @@
 title: "Rockstar aggiunge abbigliamento e oggetti da collezione al suo negozio"
 description: "La nuova collezione comprende abbigliamento, poster, adesivi e due candele profumate. Completare le missioni New Listings entro il 7 dicembre dà la felpa nel gioco."
 date: 2025-12-05
+category: gta-online
 lang: it
 image: ../../../assets/posts/new-at-the-rockstar-store-apparel-collectibles-and-more.jpg
 imageAlt: "Nuovi articoli nel Rockstar Store."

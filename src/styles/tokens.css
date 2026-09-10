@@ -48,14 +48,20 @@
   --mm-accent-cyan: var(--mm-cyan);
   --mm-accent-amber: var(--mm-amber);
   --mm-accent-yellow: var(--mm-yellow);
+  --mm-accent-green: var(--mm-green);
 
   /* Zachte vulling achter een actief item; volgt het roze accent. */
   --mm-accent-pink-soft: rgba(217, 59, 161, .16);
   --mm-accent-pink-wash: rgba(217, 59, 161, .20);
 
-  /* Categoriekleuren */
-  --mm-cat-news: var(--mm-accent-cyan);
-  --mm-cat-guides: var(--mm-accent-amber);
+  /*
+   * Categoriekleuren. Sinds 10 september 2026 is een categorie het spel
+   * waar de post over gaat en niet het soort post (§6). Drie stuks, elk een
+   * eigen kleur uit het spectrum.
+   */
+  --mm-cat-gta6: var(--mm-accent-cyan);
+  --mm-cat-gta-online: var(--mm-accent-amber);
+  --mm-cat-gta5: var(--mm-accent-green);
   --mm-featured: var(--mm-accent-yellow);
   --mm-live: var(--mm-green);
   --mm-offline: var(--mm-muted-dim);
@@ -124,6 +130,7 @@
   --mm-accent-cyan: #147f95;
   --mm-accent-amber: #a86a12;
   --mm-accent-yellow: #a86a12;
+  --mm-accent-green: #1f7a45;
   --mm-accent-pink-soft: rgba(194, 47, 140, .12);
   --mm-accent-pink-wash: rgba(194, 47, 140, .16);
 
@@ -166,6 +173,7 @@
     --mm-accent-cyan: #147f95;
     --mm-accent-amber: #a86a12;
     --mm-accent-yellow: #a86a12;
+    --mm-accent-green: #1f7a45;
     --mm-accent-pink-soft: rgba(194, 47, 140, .12);
     --mm-accent-pink-wash: rgba(194, 47, 140, .16);
 

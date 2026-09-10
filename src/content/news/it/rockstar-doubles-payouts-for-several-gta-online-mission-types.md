@@ -2,6 +2,7 @@
 title: "Rockstar raddoppia i guadagni di diversi tipi di missione in GTA Online"
 description: "I guadagni base di Mobile Operations, Casino Work, missioni della storia e Project Overthrow raddoppiano. Rockstar abbassa anche il prezzo di oltre 30 veicoli."
 date: 2026-05-07
+category: gta-online
 lang: it
 image: ../../../assets/posts/boost-your-nightclub-s-popularity-and-bring-in-doubled-daily-income.jpg
 imageAlt: "Un locale notturno in GTA Online."

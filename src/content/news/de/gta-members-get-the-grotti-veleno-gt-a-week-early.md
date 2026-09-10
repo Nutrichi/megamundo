@@ -2,6 +2,7 @@
 title: "GTA+-Mitglieder bekommen den Grotti Veleno GT eine Woche früher"
 description: "GTA+-Mitglieder können den Grotti Veleno GT gratis abholen, eine Woche bevor er zu Legendary Motorsport kommt. Die meisten Rabatte zielen auf The Kortz Center Heist."
 date: 2026-07-14
+category: gta-online
 lang: de
 image: ../../../assets/posts/claim-the-new-grotti-veleno-gt-a-week-early-with-gta.jpg
 imageAlt: "Der Grotti Veleno GT in der Attack-Lackierung."

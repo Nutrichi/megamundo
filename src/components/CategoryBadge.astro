@@ -6,20 +6,22 @@
  *
  * Een bron krijgt zoiets nooit (§6.1). Alleen categorieën hebben een kleur
  * en een vorm; Rockstar Games of IGN is platte tekst onderaan de post.
+ *
+ * Het label is een eigennaam (GTA VI, GTA Online, GTA V) en gaat daarom niet
+ * door de vertaalbestanden.
  */
 import { categories, type CategoryKey } from '../config/categories';
 import type { Locale } from '../i18n/ui';
-import { useTranslations } from '../i18n/utils';
 
 interface Props {
   category: CategoryKey;
-  locale: Locale;
+  /** Alleen nog voor de vorm; het label is een eigennaam en vertaalt niet. */
+  locale?: Locale;
   /** Over een beeld heen staat hij absoluut in de linkerbovenhoek. */
   overlay?: boolean;
 }
 
-const { category, locale, overlay = false } = Astro.props;
-const t = useTranslations(locale);
+const { category, overlay = false } = Astro.props;
 const definition = categories[category];
 ---
 
@@ -28,7 +30,7 @@ const definition = categories[category];
   style={`--mm-badge-color: ${definition.color};`}
 >
   <span class="mm-badge__diamond" aria-hidden="true"></span>
-  {t(definition.labelKey)}
+  {definition.label}
 </span>
 
 <style>

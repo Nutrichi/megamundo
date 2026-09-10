@@ -2,6 +2,7 @@
 title: "GTA Online doubles payouts for bikers this week"
 description: "Street dealer sales pay double and counterfeit cash factories are discounted. The week also marks the Lunar New Year, with 36 collectibles hidden across Los Santos."
 date: 2026-02-19
+category: gta-online
 lang: en
 image: ../../../assets/posts/bikers-earn-double-on-counterfeit-cash-and-completing-street-dealer-sa.jpg
 imageAlt: "A biker clubhouse in GTA Online."

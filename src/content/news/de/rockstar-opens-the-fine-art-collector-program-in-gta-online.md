@@ -2,6 +2,7 @@
 title: "Rockstar öffnet das Fine Art Collector Program in GTA Online"
 description: "Das Programm läuft vom 18. Juni bis zum 13. Juli und bereitet auf The Kortz Center Heist vor. Es hat drei Stufen und zahlt bis zu GTA$1.500.000 an Boni."
 date: 2026-06-18
+category: gta-online
 lang: de
 image: ../../../assets/posts/earn-special-rewards-in-gta-online-with-the-fine-art-collector-program.jpg
 imageAlt: "Das Diamond Casino in GTA Online."

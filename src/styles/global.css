@@ -190,5 +190,6 @@ button {
 }
 
 @media (max-width: 899px) {
-  .mm-main { padding: 16px 16px 44px; }
+  /* Geen extra ruimte nodig: op mobiel plakt de voettekst niet vast. */
+  .mm-main { padding: 16px 16px 20px; }
 }

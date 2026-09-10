@@ -145,10 +145,25 @@ const categoryLabel = category.label;
     z-index: 1;
     flex: none;
     width: 76px;
+    align-self: stretch;
     display: flex;
-    align-items: center;
-    justify-content: center;
   }
+
+  /*
+   * De knop vult de hele waardekolom. Anders raakt een klik naast het
+   * hartje, maar nog wel binnen het vakje, de link die over de pil ligt en
+   * ga je naar de post in plaats van te liken.
+   *
+   * `:global`, want de knop komt uit LikeButton en draagt het
+   * scope-attribuut van dit bestand niet.
+   */
+  .mm-pill__value :global(.mm-like),
+  .mm-pill__value :global(.mm-like__button) {
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .mm-pill__value :global(.mm-like__button) { cursor: pointer; }
 
   /* De focusring van de link hoort om de pil, niet om het onzichtbare vlak. */
   .mm-pill__link:focus-visible { outline: none; }

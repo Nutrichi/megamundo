@@ -1,0 +1,23 @@
+---
+/*
+ * Een news-post in de vijf niet-standaardtalen: /nl/news/<slug> enzovoort.
+ * Engels heeft geen voorvoegsel en staat in ../../news/[slug].astro (§11).
+ */
+import PostLayout from '../../../layouts/PostLayout.astro';
+import { getPost, getSlugs, otherLocales } from '../../../lib/posts';
+import type { Locale } from '../../../i18n/ui';
+
+export async function getStaticPaths() {
+  const slugs = await getSlugs('news');
+  return otherLocales.flatMap((lang) =>
+    slugs.map((slug) => ({ params: { lang, slug } })),
+  );
+}
+
+const locale = Astro.params.lang as Locale;
+const post = await getPost('news', Astro.params.slug!, locale);
+
+if (!post) throw new Error(`Onbekende news-post: ${Astro.params.slug}`);
+---
+
+<PostLayout post={post} locale={locale} />

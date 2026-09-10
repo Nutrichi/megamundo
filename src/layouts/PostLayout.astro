@@ -1,0 +1,258 @@
+---
+/*
+ * De postpagina (§7). De belangrijkste pagina van de site: hier landt het
+ * zoekverkeer.
+ *
+ * Elke post is een eigen pagina met een eigen URL, op elk toestel. Geen
+ * modal, geen uitklapkaart: een post die alleen als overlay bestaat is
+ * onzichtbaar voor crawlers, en vindbaarheid is het hele punt.
+ *
+ * Dit is ook het enige scherm waar het neon zich terugtrekt. Lopende tekst
+ * staat nooit in een accentkleur en heeft geen gloed.
+ *
+ * Eén afwijking van de handoff, bewust: de broodkruimel staat boven de
+ * titel en niet rechts in de koptekst. De koptekst draagt al de navigatie,
+ * het zoekveld, de taalkiezer en de themaknop; daar past op 1180 px geen
+ * vijfde ding meer bij zonder dat de tabs gaan schuiven.
+ */
+import type { Post } from '../lib/posts';
+import type { Locale } from '../i18n/ui';
+import { localizePath, useTranslations } from '../i18n/utils';
+import { categories } from '../config/categories';
+import { longDate, isoDate } from '../lib/date';
+import { render } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import CategoryBadge from '../components/CategoryBadge.astro';
+import PostImage from '../components/PostImage.astro';
+import LikeButton from '../components/LikeButton.astro';
+
+interface Props {
+  post: Post;
+  locale: Locale;
+}
+
+const { post, locale } = Astro.props;
+const t = useTranslations(locale);
+const { Content } = await render(post.entry);
+
+const category = categories[post.category];
+const postId = `${post.category}/${post.slug}`;
+const home = localizePath('', locale);
+const readingLabel = t('post.readingTime').replace('{n}', String(post.readingMinutes));
+
+/*
+ * De bronregel (§7.1). Bij een gids wijst hij naar de eigen gidspagina op
+ * deze site; bij nieuws naar het originele artikel, extern. Ontbreekt de
+ * bron, dan staat er niets — geen lege regel en geen "onbekend".
+ */
+const isExternal = post.category !== 'guides';
+
+/** Gestructureerde data (§17). Het beeld alleen als het er is. */
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://megamundo.be').href;
+const imageUrl = post.image
+  ? new URL(post.image.src, Astro.site ?? 'https://megamundo.be').href
+  : undefined;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  description: post.description,
+  datePublished: isoDate(post.date),
+  inLanguage: post.lang,
+  mainEntityOfPage: canonical,
+  ...(imageUrl ? { image: [imageUrl] } : {}),
+  ...(post.source ? { citation: post.source } : {}),
+};
+---
+
+<BaseLayout
+  locale={locale}
+  title={post.title}
+  description={post.description}
+  image={imageUrl}
+  ogType="article"
+  compactCountdown
+>
+  <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
+
+  <article class="mm-post">
+    <div class="mm-post__hero">
+      <PostImage
+        image={post.image}
+        alt={post.imageAlt ?? ''}
+        variant="post"
+        eager
+      />
+    </div>
+
+    <div class="mm-post__body">
+      <nav class="mm-crumb" aria-label={t('crumb.label')}>
+        <a href={home}>{t('crumb.home')}</a>
+        <span aria-hidden="true">/</span>
+        <span>{t(category.labelKey)}</span>
+      </nav>
+
+      <CategoryBadge category={post.category} locale={locale} />
+
+      <h1 class="mm-post__title">{post.title}</h1>
+
+      <p class="mm-post__meta">
+        <time datetime={isoDate(post.date)}>{longDate(post.date, locale)}</time>
+        <span aria-hidden="true"> · </span>
+        <span>{readingLabel}</span>
+      </p>
+
+      <div class="mm-prose">
+        <Content />
+      </div>
+
+      <div class="mm-post__like">
+        <LikeButton postId={postId} locale={locale} variant="post" />
+      </div>
+
+      {post.source && (
+        <p class="mm-post__source">
+          {t('post.source')}{' '}
+          {post.sourceUrl ? (
+            <a
+              href={post.sourceUrl}
+              rel={isExternal ? 'noopener nofollow' : undefined}
+              target={isExternal ? '_blank' : undefined}
+            >{post.source}</a>
+          ) : post.source}
+        </p>
+      )}
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Het kopbeeld loopt door tot de randen van de contentkolom. */
+  .mm-post__hero { margin: -24px -26px 0; }
+
+  .mm-post__body {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 28px 0 40px;
+  }
+
+  .mm-crumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: var(--mm-muted);
+  }
+
+  .mm-crumb a:hover { color: var(--mm-ink); }
+
+  .mm-post__title {
+    font-size: 44px;
+    line-height: 1.02;
+    margin: 14px 0 8px;
+    text-shadow: var(--mm-glow-h1);
+  }
+
+  .mm-post__meta {
+    margin-bottom: 24px;
+    font-size: 13.5px;
+    color: var(--mm-muted);
+  }
+
+  .mm-post__like { margin-top: 28px; }
+
+  .mm-post__source {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--mm-border);
+    font-size: 13.5px;
+    color: var(--mm-muted);
+  }
+
+  /*
+   * In rust mag de bron niet als link lezen: geen accentkleur, geen
+   * onderstreping, geen icoon. Pas bij hover blijkt dat het er een is (§7.1).
+   */
+  .mm-post__source a { color: inherit; }
+  .mm-post__source a:hover { text-decoration: underline; }
+
+  /* --- De lopende tekst --- */
+  .mm-prose {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 17.5px;
+    line-height: 1.75;
+    color: var(--mm-body);
+  }
+
+  .mm-prose :global(h2) { font-size: 30px; margin-top: 12px; }
+  .mm-prose :global(h3) { font-size: 23px; margin-top: 8px; }
+
+  .mm-prose :global(a) {
+    color: var(--mm-accent-cyan);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .mm-prose :global(ul),
+  .mm-prose :global(ol) {
+    margin: 0;
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mm-prose :global(blockquote) {
+    margin: 0;
+    border-left: 3px solid var(--mm-accent-cyan);
+    padding: 2px 0 2px 16px;
+    color: var(--mm-quote);
+    font-style: italic;
+  }
+
+  .mm-prose :global(img) {
+    border-radius: var(--mm-r-card-sm);
+    border: 1px solid var(--mm-border);
+  }
+
+  .mm-prose :global(code) {
+    font-size: .9em;
+    background: var(--mm-raised);
+    border: 1px solid var(--mm-border);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+
+  .mm-prose :global(pre) {
+    overflow-x: auto;
+    background: var(--mm-raised);
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field-lg);
+    padding: 14px 16px;
+  }
+
+  .mm-prose :global(pre code) {
+    background: none;
+    border: 0;
+    padding: 0;
+  }
+
+  .mm-prose :global(hr) {
+    border: 0;
+    border-top: 1px solid var(--mm-border);
+    width: 100%;
+  }
+
+  @media (max-width: 899px) {
+    .mm-post__hero { margin: -16px -16px 0; }
+    .mm-post__body { padding: 20px 0 28px; }
+    .mm-post__title { font-size: 32px; }
+    .mm-prose { font-size: 16.5px; }
+    .mm-prose :global(h2) { font-size: 25px; }
+    .mm-prose :global(h3) { font-size: 20px; }
+  }
+</style>

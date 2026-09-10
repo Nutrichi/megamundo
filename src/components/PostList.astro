@@ -1,0 +1,256 @@
+---
+/*
+ * De rechterkolom van de homepage: het volledige archief als pillijst, met
+ * LOAD MORE eronder (§5).
+ *
+ * Er is geen tweede pagina waar de rest staat. Elke post staat in de HTML —
+ * dat is wat een crawler ziet en straks ook wat Pagefind indexeert (§15) —
+ * en wat nog niet aan de beurt is, staat er verborgen bij. LOAD MORE toont
+ * de volgende reeks; bestaande pillen blijven staan. Geen paginering, geen
+ * oneindig scrollen.
+ *
+ * Filteren en zoeken gebeuren in dezelfde lijst en op dezelfde manier: niets
+ * wordt opnieuw opgehaald, er verandert alleen wat zichtbaar is.
+ */
+import type { Post } from '../lib/posts';
+import type { Locale } from '../i18n/ui';
+import { localizePath, useTranslations } from '../i18n/utils';
+import { submitPath } from '../config/site';
+import Pill from './Pill.astro';
+
+interface Props {
+  posts: Post[];
+  locale: Locale;
+}
+
+const { posts, locale } = Astro.props;
+const t = useTranslations(locale);
+
+/**
+ * Hoeveel pillen er meteen staan, en hoeveel LOAD MORE erbij zet. Eén getal
+ * voor allebei: dan is de knop voorspelbaar.
+ */
+const STEP = 15;
+
+/*
+ * De knop naar het insturformulier verschijnt pas als die pagina bestaat
+ * (fase 4, §5.3). Dezelfde regel als bij de sociale links in de voettekst:
+ * een lege waarde betekent geen knop, dus nooit een link naar het niets.
+ */
+const submitHref = submitPath ? localizePath(submitPath, locale) : '';
+---
+
+<div class="mm-list" data-mm-list data-step={STEP}>
+  {posts.length === 0 ? (
+    <p class="mm-list__empty">{t('list.empty')}</p>
+  ) : (
+    <>
+      <ul class="mm-list__items" data-mm-items>
+        {posts.map((post) => <Pill post={post} locale={locale} />)}
+      </ul>
+
+      <p class="mm-list__empty" data-mm-noresults hidden>{t('list.noResults')}</p>
+
+      <div class="mm-list__actions">
+        <button type="button" class="mm-btn is-secondary" data-mm-more hidden>
+          {t('list.loadMore')}
+        </button>
+
+        {submitHref && (
+          <a class="mm-btn is-primary" href={submitHref}>{t('list.submit')}</a>
+        )}
+      </div>
+    </>
+  )}
+</div>
+
+<style>
+  .mm-list {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .mm-list__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  .mm-list__empty {
+    font-size: 13.5px;
+    color: var(--mm-muted);
+    padding: 12px 0;
+  }
+
+  .mm-list__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-top: 14px;
+  }
+
+  .mm-btn {
+    border-radius: var(--mm-r-pill);
+    padding: 9px 0;
+    text-align: center;
+    font-family: var(--mm-display);
+    font-size: 16px;
+    letter-spacing: .12em;
+    transition: var(--mm-transition);
+  }
+
+  .is-secondary {
+    border: 1px solid var(--mm-border);
+    color: var(--mm-ink);
+  }
+
+  .is-secondary:hover { border-color: var(--mm-accent-cyan); }
+
+  .is-primary {
+    background: var(--mm-accent-pink);
+    color: var(--mm-bg);
+    box-shadow: var(--mm-glow-primary);
+    border: 1px solid var(--mm-accent-pink);
+  }
+
+  @media (max-width: 899px) {
+    .mm-btn { padding: 11px 0; }
+  }
+</style>
+
+<script>
+  /*
+   * Filteren, zoeken en bijladen. Alles gebeurt op de pillen die er al
+   * staan; er wordt niets opgehaald en niets herladen.
+   *
+   * De staat:
+   *   category — in de URL (?cat=), deelbaar en terug-knop-vriendelijk
+   *   query    — alleen in het geheugen, zoals de handoff voorschrijft
+   *   visible  — hoeveel pillen er getoond zijn; groeit per LOAD MORE
+   */
+  const list = document.querySelector<HTMLElement>('[data-mm-list]');
+  const items = list?.querySelector<HTMLElement>('[data-mm-items]');
+
+  if (list && items) {
+    const step = Number(list.dataset.step ?? '15');
+    const pills = Array.from(items.querySelectorAll<HTMLElement>('[data-mm-post]'));
+    const more = list.querySelector<HTMLButtonElement>('[data-mm-more]');
+    const noResults = list.querySelector<HTMLElement>('[data-mm-noresults]');
+    const chips = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>('[data-mm-filter] [data-cat]'),
+    );
+    const searchInputs = Array.from(
+      document.querySelectorAll<HTMLInputElement>('input[name="q"]'),
+    );
+    const counter = document.querySelector<HTMLElement>('[data-mm-count]');
+
+    const params = new URLSearchParams(window.location.search);
+    const known = new Set(chips.map((chip) => chip.dataset.cat));
+
+    let category = params.get('cat') ?? 'all';
+    if (!known.has(category)) category = 'all';
+
+    let query = (params.get('q') ?? '').trim().toLowerCase();
+    let visible = step;
+
+    /** Welke pillen door het filter en de zoekterm komen, in volgorde. */
+    const matching = () =>
+      pills.filter((pill) => {
+        const inCategory = category === 'all' || pill.dataset.category === category;
+        const inQuery = !query || (pill.dataset.title ?? '').includes(query);
+        return inCategory && inQuery;
+      });
+
+    /** "1 post" of "143 posts", in de taal van de pagina. */
+    const setCount = (n: number) => {
+      if (!counter) return;
+      const pattern = n === 1 ? counter.dataset.one : counter.dataset.many;
+      counter.textContent = (pattern ?? '').replace('{n}', String(n));
+    };
+
+    const render = (markNew = false) => {
+      const shown = matching();
+      const cutoff = Math.min(visible, shown.length);
+      const visibleSet = new Set(shown.slice(0, cutoff));
+
+      pills.forEach((pill) => {
+        const show = visibleSet.has(pill);
+        // Was hij verborgen en komt hij er nu bij, dan mag hij binnenkomen.
+        if (show && markNew && pill.hidden) pill.classList.add('is-new');
+        else if (!show) pill.classList.remove('is-new');
+        pill.hidden = !show;
+      });
+
+      if (more) more.hidden = cutoff >= shown.length;
+      if (noResults) noResults.hidden = shown.length > 0;
+      setCount(shown.length);
+
+      return shown.slice(0, cutoff);
+    };
+
+    /** De URL bijwerken zonder de pagina aan te raken. */
+    const syncUrl = () => {
+      const next = new URLSearchParams(window.location.search);
+      if (category === 'all') next.delete('cat');
+      else next.set('cat', category);
+
+      const search = next.toString();
+      const url = `${window.location.pathname}${search ? `?${search}` : ''}`;
+      window.history.replaceState({}, '', url);
+    };
+
+    const syncChips = () => {
+      chips.forEach((chip) => {
+        if (chip.dataset.cat === category) chip.setAttribute('aria-current', 'true');
+        else chip.removeAttribute('aria-current');
+      });
+    };
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', (event) => {
+        event.preventDefault();
+        category = chip.dataset.cat ?? 'all';
+        // Een andere categorie begint weer bovenaan de lijst.
+        visible = step;
+        syncChips();
+        syncUrl();
+        render();
+      });
+    });
+
+    searchInputs.forEach((input) => {
+      // Stond er een ?q= in de URL, dan staat die term ook in het veld.
+      if (query && !input.value) input.value = query;
+
+      input.addEventListener('input', () => {
+        query = input.value.trim().toLowerCase();
+        visible = step;
+        // Twee velden (koptekst en mobiel menu) blijven gelijk.
+        searchInputs.forEach((other) => {
+          if (other !== input) other.value = input.value;
+        });
+        render();
+      });
+
+      // Met JavaScript hoeft het formulier nergens heen; er is al gefilterd.
+      input.form?.addEventListener('submit', (event) => event.preventDefault());
+    });
+
+    more?.addEventListener('click', () => {
+      visible += step;
+      const shown = render(true);
+      // De focus naar de eerste nieuwe pil, anders staat hij op een knop
+      // die misschien net verdwenen is.
+      const first = shown.find((pill) => pill.classList.contains('is-new'));
+      first?.querySelector<HTMLAnchorElement>('a')?.focus();
+    });
+
+    syncChips();
+    render();
+  }
+</script>

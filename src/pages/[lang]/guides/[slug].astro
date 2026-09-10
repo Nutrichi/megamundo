@@ -1,0 +1,23 @@
+---
+/*
+ * Een guides-post in de vijf niet-standaardtalen: /nl/guides/<slug> enzovoort.
+ * Engels heeft geen voorvoegsel en staat in ../../guides/[slug].astro (§11).
+ */
+import PostLayout from '../../../layouts/PostLayout.astro';
+import { getPost, getSlugs, otherLocales } from '../../../lib/posts';
+import type { Locale } from '../../../i18n/ui';
+
+export async function getStaticPaths() {
+  const slugs = await getSlugs('guides');
+  return otherLocales.flatMap((lang) =>
+    slugs.map((slug) => ({ params: { lang, slug } })),
+  );
+}
+
+const locale = Astro.params.lang as Locale;
+const post = await getPost('guides', Astro.params.slug!, locale);
+
+if (!post) throw new Error(`Onbekende guides-post: ${Astro.params.slug}`);
+---
+
+<PostLayout post={post} locale={locale} />

@@ -145,11 +145,10 @@ export async function getNav(locale: Locale): Promise<NavItem[]> {
   return items;
 }
 
-/** Hoeveel nieuwsposts er staan; de feed in fase 2 gebruikt dit ook. */
-export async function getNewsCount(): Promise<number> {
-  const { news } = await loadCollections();
-  return published(news).length;
-}
+/*
+ * De teller van de feed staat niet meer hier maar in lib/posts.ts: die telt
+ * posts en niet bestanden, en één post is zes bestanden zodra hij vertaald is.
+ */
 
 /**
  * Is dit navigatie-item de huidige pagina? Vergelijkt zonder slashes zodat

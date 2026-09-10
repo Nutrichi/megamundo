@@ -67,6 +67,8 @@
   --mm-glow-hours: 0 0 20px rgba(61, 197, 217, .7);
   --mm-glow-minutes: 0 0 20px rgba(242, 217, 92, .6);
   --mm-glow-pill: 0 0 22px rgba(61, 197, 217, .2);
+  /* De gloed om het ruitje van de pil; de kleur komt uit de categorie. */
+  --mm-glow-diamond: 10px;
   --mm-glow-primary: 0 0 26px rgba(217, 59, 161, .4);
   --mm-glow-like: 0 0 22px rgba(217, 59, 161, .3);
   --mm-glow-featured: 0 0 30px rgba(242, 217, 92, .14);
@@ -132,6 +134,7 @@
   --mm-glow-hours: none;
   --mm-glow-minutes: none;
   --mm-glow-pill: 0 4px 14px rgba(25, 20, 38, .08);
+  --mm-glow-diamond: 0;
   --mm-glow-primary: none;
   --mm-glow-like: none;
   --mm-glow-featured: none;
@@ -172,6 +175,7 @@
     --mm-glow-hours: none;
     --mm-glow-minutes: none;
     --mm-glow-pill: 0 4px 14px rgba(25, 20, 38, .08);
+    --mm-glow-diamond: 0;
     --mm-glow-primary: none;
     --mm-glow-like: none;
     --mm-glow-featured: none;

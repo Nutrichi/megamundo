@@ -1,0 +1,104 @@
+---
+/*
+ * Het beeld van een post. Twee maten: het uitgelichte blok op de homepage
+ * en het kopbeeld van de postpagina.
+ *
+ * Astro schaalt en comprimeert het bij het bouwen, schrijft breedte en
+ * hoogte mee tegen layout shift en laadt lui waar dat mag (§14). Nutri hoeft
+ * niet aan bestandsgrootte te denken.
+ *
+ * Zolang er geen eigen artwork is, komt er een gestreepte plek in de twee
+ * slotkleuren met dezelfde sfeerlaag eroverheen. Geen materiaal van
+ * Rockstar, nooit (§2.4) — dus ook geen tijdelijke screenshot.
+ */
+import { Image } from 'astro:assets';
+import type { Post } from '../lib/posts';
+
+interface Props {
+  image?: Post['image'];
+  alt?: string;
+  variant?: 'featured' | 'post';
+  /** Het kopbeeld van een post is het grootste element boven de vouw. */
+  eager?: boolean;
+}
+
+const { image, alt = '', variant = 'featured', eager = false } = Astro.props;
+const isPost = variant === 'post';
+
+/** Wat de browser aan breedte mag verwachten; scheelt gedownloade bytes. */
+const sizes = isPost ? '(max-width: 899px) 100vw, 1180px' : '(max-width: 899px) 100vw, 600px';
+const widths = isPost ? [640, 960, 1280, 1600] : [420, 640, 900, 1400];
+---
+
+<div class:list={['mm-shot', isPost ? 'is-post' : 'is-featured']}>
+  {image ? (
+    <Image
+      class="mm-shot__img"
+      src={image}
+      alt={alt}
+      widths={widths}
+      sizes={sizes}
+      loading={eager ? 'eager' : 'lazy'}
+      decoding={eager ? 'sync' : 'async'}
+    />
+  ) : (
+    <div class="mm-shot__slot" aria-hidden="true"></div>
+  )}
+
+  <span class="mm-shot__wash" aria-hidden="true"></span>
+  <slot />
+</div>
+
+<style>
+  .mm-shot {
+    position: relative;
+    overflow: hidden;
+    background: var(--mm-slot-a);
+  }
+
+  .is-featured {
+    height: 296px;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-card);
+  }
+
+  .is-post {
+    height: 280px;
+    border-bottom: 1px solid var(--mm-border);
+  }
+
+  .mm-shot__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* De lege plek: rustige diagonale strepen in de twee slotkleuren. */
+  .mm-shot__slot {
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      135deg,
+      var(--mm-slot-a) 0 14px,
+      var(--mm-slot-b) 14px 28px
+    );
+  }
+
+  .mm-shot__wash {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: var(--mm-wash-featured);
+  }
+
+  .is-post .mm-shot__wash { background: var(--mm-wash-post); }
+
+  @media (max-width: 899px) {
+    .is-featured {
+      height: 180px;
+      border-radius: var(--mm-r-card-sm);
+    }
+
+    .is-post { height: 200px; }
+  }
+</style>

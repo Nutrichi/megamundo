@@ -3,28 +3,44 @@
  * Het tweekoloms-grid van richting 1C: links één uitgelicht item groot,
  * rechts het volledige archief als pillijst.
  *
- * Fase 1 zet het raster en de lege staat; fase 2 vult de twee slots met
- * echte posts. Boven 900 px twee kolommen, daaronder gestapeld met
- * uitgelicht boven. `min-width: 0` op beide kolommen is essentieel: zonder
- * dat breekt straks de ellipsis van de pillen.
+ * Fase 2 vult de twee slots met echte posts. Boven 900 px twee kolommen,
+ * daaronder gestapeld met uitgelicht boven. `min-width: 0` op beide kolommen
+ * is essentieel: zonder dat breekt de ellipsis van de pillen.
+ *
+ * Het grid blijft twee kolommen, ook bij honderden posts. Uitdrukkelijke
+ * keuze (§5): niet omschakelen naar een kaartengrid als het archief groeit.
+ *
+ * De teller rechts telt wat er ná het filter en de zoekterm overblijft. Het
+ * script van PostList werkt hem bij; de twee patronen staan als attribuut
+ * mee, zodat daar geen vertaling in de JavaScript hoeft.
  */
 import type { Locale } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
 
 interface Props {
   locale: Locale;
-  /** Aantal posts, voor de teller rechts in de lijstkop. */
+  /**
+   * Hoeveel posts er in de lijst rechts staan — dus zonder het uitgelichte
+   * artikel, dat eruit gefilterd is. De teller hoort te tellen wat eronder
+   * staat, en dat is ook wat het script doet zodra er gefilterd wordt.
+   */
   count?: number;
+  /**
+   * Of de twee kolommen inhoud hebben. Expliciet, en niet met
+   * `Astro.slots.has()`: die zegt ook ja als de slot wel meegegeven is maar
+   * niets rendert, en dan blijft er een kop staan zonder iets eronder.
+   */
+  hasFeatured?: boolean;
+  hasList?: boolean;
 }
 
-const { locale, count = 0 } = Astro.props;
+const { locale, count = 0, hasFeatured = false, hasList = false } = Astro.props;
 const t = useTranslations(locale);
 /** "1 post" of "143 posts", in de taal van de pagina. */
-const countLabel = (count === 1 ? t('list.countOne') : t('list.countMany'))
-  .replace('{n}', String(count));
+const one = t('list.countOne');
+const many = t('list.countMany');
+const countLabel = (count === 1 ? one : many).replace('{n}', String(count));
 
-const hasFeatured = Astro.slots.has('featured');
-const hasList = Astro.slots.has('list');
 ---
 
 <div class="mm-home">
@@ -36,7 +52,14 @@ const hasList = Astro.slots.has('list');
   <section class="mm-home__col" aria-label={t('list.heading')}>
     <div class="mm-home__listhead">
       <h2 class="mm-home__label">{t('list.heading')}</h2>
-      {hasList && count > 0 && <span class="mm-home__count mm-nums">{countLabel}</span>}
+      {hasList && count > 0 && (
+        <span
+          class="mm-home__count mm-nums"
+          data-mm-count
+          data-one={one}
+          data-many={many}
+        >{countLabel}</span>
+      )}
     </div>
     {hasList ? <slot name="list" /> : <p class="mm-home__empty">{t('list.empty')}</p>}
   </section>

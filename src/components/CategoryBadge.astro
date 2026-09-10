@@ -1,0 +1,70 @@
+---
+/*
+ * Het categorielabel: een ruitje in de categoriekleur plus de naam. Dezelfde
+ * vorm op het uitgelichte beeld en boven de titel van een postpagina, zodat
+ * het soort post meteen herkenbaar is (§7).
+ *
+ * Een bron krijgt zoiets nooit (§6.1). Alleen categorieën hebben een kleur
+ * en een vorm; Rockstar Games of IGN is platte tekst onderaan de post.
+ */
+import { categories, type CategoryKey } from '../config/categories';
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  category: CategoryKey;
+  locale: Locale;
+  /** Over een beeld heen staat hij absoluut in de linkerbovenhoek. */
+  overlay?: boolean;
+}
+
+const { category, locale, overlay = false } = Astro.props;
+const t = useTranslations(locale);
+const definition = categories[category];
+---
+
+<span
+  class:list={['mm-badge', overlay && 'is-overlay']}
+  style={`--mm-badge-color: ${definition.color};`}
+>
+  <span class="mm-badge__diamond" aria-hidden="true"></span>
+  {t(definition.labelKey)}
+</span>
+
+<style>
+  .mm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--mm-raised);
+    border: 1px solid var(--mm-badge-color);
+    border-radius: var(--mm-r-badge);
+    padding: 3px 11px;
+    font-family: var(--mm-display);
+    font-size: 13.5px;
+    letter-spacing: .16em;
+    color: var(--mm-badge-color);
+  }
+
+  .mm-badge__diamond {
+    width: 8px;
+    height: 8px;
+    background: var(--mm-badge-color);
+    transform: rotate(45deg);
+  }
+
+  .is-overlay {
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    z-index: 1;
+    font-size: 13px;
+    letter-spacing: .14em;
+    /* Over een beeld moet het label dekkend blijven, ook op licht. */
+    background: var(--mm-bg);
+  }
+
+  @media (max-width: 899px) {
+    .is-overlay { font-size: 11.5px; }
+  }
+</style>

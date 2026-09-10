@@ -83,6 +83,26 @@ export const ui = {
     'list.countOne': '{n} post',
     'list.countMany': '{n} posts',
     'featured.label': 'FEATURED',
+
+    'cat.news': 'News',
+    'cat.guides': 'Guides',
+
+    'filter.label': 'Filter posts by category',
+    'filter.all': 'All',
+
+    'list.loadMore': 'LOAD MORE',
+    'list.submit': 'SUBMIT NEWS',
+    'list.noResults': 'No posts match.',
+
+    'pill.likes': '{n} likes',
+
+    'crumb.label': 'Breadcrumb',
+    'crumb.home': 'Home',
+
+    'post.readingTime': '{n} min read',
+    'post.source': 'Source:',
+    'post.like': 'Like this post',
+    'post.liked': 'You liked this post',
   },
 
   nl: {
@@ -132,6 +152,26 @@ export const ui = {
     'list.countOne': '{n} post',
     'list.countMany': '{n} posts',
     'featured.label': 'UITGELICHT',
+
+    'cat.news': 'Nieuws',
+    'cat.guides': 'Gidsen',
+
+    'filter.label': 'Filter posts op categorie',
+    'filter.all': 'Alles',
+
+    'list.loadMore': 'MEER LADEN',
+    'list.submit': 'NIEUWS INSTUREN',
+    'list.noResults': 'Geen posts gevonden.',
+
+    'pill.likes': '{n} likes',
+
+    'crumb.label': 'Kruimelpad',
+    'crumb.home': 'Home',
+
+    'post.readingTime': '{n} min lezen',
+    'post.source': 'Bron:',
+    'post.like': 'Deze post liken',
+    'post.liked': 'Je vindt deze post leuk',
   },
 
   fr: {
@@ -181,6 +221,26 @@ export const ui = {
     'list.countOne': '{n} article',
     'list.countMany': '{n} articles',
     'featured.label': 'À LA UNE',
+
+    'cat.news': 'Actus',
+    'cat.guides': 'Guides',
+
+    'filter.label': 'Filtrer les articles par catégorie',
+    'filter.all': 'Tout',
+
+    'list.loadMore': 'VOIR PLUS',
+    'list.submit': 'PROPOSER UNE ACTU',
+    'list.noResults': 'Aucun article ne correspond.',
+
+    'pill.likes': '{n} j’aime',
+
+    'crumb.label': 'Fil d’Ariane',
+    'crumb.home': 'Accueil',
+
+    'post.readingTime': '{n} min de lecture',
+    'post.source': 'Source :',
+    'post.like': 'Aimer cet article',
+    'post.liked': 'Vous aimez cet article',
   },
 
   es: {
@@ -230,6 +290,26 @@ export const ui = {
     'list.countOne': '{n} entrada',
     'list.countMany': '{n} entradas',
     'featured.label': 'DESTACADO',
+
+    'cat.news': 'Noticias',
+    'cat.guides': 'Guías',
+
+    'filter.label': 'Filtrar entradas por categoría',
+    'filter.all': 'Todo',
+
+    'list.loadMore': 'VER MÁS',
+    'list.submit': 'ENVIAR NOTICIA',
+    'list.noResults': 'No hay entradas que coincidan.',
+
+    'pill.likes': '{n} me gusta',
+
+    'crumb.label': 'Ruta de navegación',
+    'crumb.home': 'Inicio',
+
+    'post.readingTime': '{n} min de lectura',
+    'post.source': 'Fuente:',
+    'post.like': 'Dar me gusta a esta entrada',
+    'post.liked': 'Te gusta esta entrada',
   },
 
   it: {
@@ -279,6 +359,26 @@ export const ui = {
     'list.countOne': '{n} articolo',
     'list.countMany': '{n} articoli',
     'featured.label': 'IN EVIDENZA',
+
+    'cat.news': 'Notizie',
+    'cat.guides': 'Guide',
+
+    'filter.label': 'Filtra gli articoli per categoria',
+    'filter.all': 'Tutto',
+
+    'list.loadMore': 'MOSTRA ALTRO',
+    'list.submit': 'PROPONI UNA NOTIZIA',
+    'list.noResults': 'Nessun articolo corrisponde.',
+
+    'pill.likes': '{n} mi piace',
+
+    'crumb.label': 'Percorso di navigazione',
+    'crumb.home': 'Home',
+
+    'post.readingTime': '{n} min di lettura',
+    'post.source': 'Fonte:',
+    'post.like': 'Metti mi piace a questo articolo',
+    'post.liked': 'Ti piace questo articolo',
   },
 
   de: {
@@ -328,6 +428,26 @@ export const ui = {
     'list.countOne': '{n} Beitrag',
     'list.countMany': '{n} Beiträge',
     'featured.label': 'HERVORGEHOBEN',
+
+    'cat.news': 'News',
+    'cat.guides': 'Guides',
+
+    'filter.label': 'Beiträge nach Kategorie filtern',
+    'filter.all': 'Alle',
+
+    'list.loadMore': 'MEHR LADEN',
+    'list.submit': 'NEWS EINSENDEN',
+    'list.noResults': 'Keine Beiträge gefunden.',
+
+    'pill.likes': '{n} Likes',
+
+    'crumb.label': 'Brotkrumennavigation',
+    'crumb.home': 'Start',
+
+    'post.readingTime': '{n} Min. Lesezeit',
+    'post.source': 'Quelle:',
+    'post.like': 'Diesen Beitrag liken',
+    'post.liked': 'Du magst diesen Beitrag',
   },
 } as const;
 

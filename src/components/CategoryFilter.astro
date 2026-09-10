@@ -1,0 +1,89 @@
+---
+/*
+ * De categoriefilters, rechts in de aftelbalk (§5.2). Uiterst subtiel en met
+ * bijna geen verticale ruimte: ze mogen geen ruis maken en de feed niet naar
+ * beneden duwen.
+ *
+ * Het zijn echte links naar `?cat=news`, zodat de keuze deelbaar en
+ * terug-knop-vriendelijk is. PostList vangt de klik op en filtert meteen,
+ * zonder herladen. De site is statisch, dus de server kan niet meefilteren:
+ * zonder JavaScript staat de volledige lijst er gewoon, en dat is de juiste
+ * terugval — er valt niets weg, er wordt alleen niets weggelaten.
+ *
+ * Welke chip actief is, weet alleen de browser (de URL bestaat pas bij het
+ * bezoek). Bij het bouwen staat `All` aan; het script zet hem meteen goed.
+ *
+ * De chips komen uit config/categories.ts. Een categorie erbij is daar één
+ * regel; hier hoeft niets te veranderen (§6).
+ */
+import { categoryList } from '../config/categories';
+import type { Locale } from '../i18n/ui';
+import { localizePath, useTranslations } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const home = localizePath('', locale);
+---
+
+<div class="mm-filter" role="group" aria-label={t('filter.label')} data-mm-filter>
+  <a
+    class="mm-filter__chip"
+    href={home}
+    data-cat="all"
+    aria-current="true"
+  >{t('filter.all')}</a>
+
+  {categoryList.map((category) => (
+    <a
+      class="mm-filter__chip"
+      href={`${home}${home.endsWith('/') ? '' : '/'}?cat=${category.key}`}
+      data-cat={category.key}
+      style={`--mm-chip-hover: ${category.color};`}
+    >{t(category.labelKey)}</a>
+  ))}
+</div>
+
+<style>
+  .mm-filter {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  .mm-filter__chip {
+    flex: none;
+    font-size: 12px;
+    padding: 3px 11px;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-pill);
+    color: var(--mm-muted);
+    white-space: nowrap;
+    transition: var(--mm-transition), color .16s ease, background-color .16s ease;
+  }
+
+  .mm-filter__chip:hover { border-color: var(--mm-chip-hover, var(--mm-accent-cyan)); }
+
+  .mm-filter__chip[aria-current="true"] {
+    background: var(--mm-accent-pink-wash);
+    border-color: var(--mm-accent-pink);
+    color: var(--mm-ink);
+  }
+
+  /* Mobiel: horizontaal schuiven in plaats van een tweede regel. */
+  @media (max-width: 899px) {
+    .mm-filter {
+      width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 2px 0;
+      justify-content: center;
+    }
+
+    .mm-filter::-webkit-scrollbar { display: none; }
+  }
+</style>

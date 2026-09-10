@@ -1,0 +1,171 @@
+---
+/*
+ * De pil (§5.1) — het belangrijkste component van de site. Deze vorm komt
+ * overal terug: archief, clips, streams.
+ *
+ * De herziene vorm, niet de eerste. Van links naar rechts: een kolom van
+ * vaste breedte met één klein ruitje in de categoriekleur, een scheidingslijn,
+ * de titel op één regel, dezelfde scheidingslijn nog eens, en een kolom van
+ * vaste breedte met het hartje en de telling.
+ *
+ * Twee dingen zijn uitdrukkelijk afgekeurd en staan hier dus niet: de
+ * linkerkolom vullen met de categoriekleur als achtergrond, en de
+ * waardekolom laten meebewegen. Die kolom heeft een vaste breedte en een
+ * lijn aan beide kanten, juist zodat alle hartjes netjes onder elkaar
+ * uitlijnen. Dat is het hele punt van die kolom.
+ *
+ * Mobiel: de titel kapt af met een ellipsis; links en rechts krimpen nooit.
+ * `min-width: 0` op de titelcel is daarvoor essentieel — zonder dat werkt
+ * de ellipsis niet.
+ */
+import type { Post } from '../lib/posts';
+import { categories } from '../config/categories';
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import LikeButton from './LikeButton.astro';
+
+interface Props {
+  post: Post;
+  locale: Locale;
+}
+
+const { post, locale } = Astro.props;
+const t = useTranslations(locale);
+const category = categories[post.category];
+const postId = `${post.category}/${post.slug}`;
+
+/*
+ * De categorie staat ook als tekst in de link. Het ruitje is kleur, en
+ * kleur alleen mag nooit de enige drager van betekenis zijn; een
+ * schermlezer hoort dus "News, <titel>".
+ */
+const categoryLabel = t(category.labelKey);
+---
+
+<li
+  class="mm-pill"
+  data-mm-post
+  data-category={post.category}
+  data-title={post.title.toLowerCase()}
+>
+  <span class="mm-pill__cat" aria-hidden="true">
+    <span class="mm-pill__diamond" style={`--mm-diamond: ${category.color};`}></span>
+  </span>
+
+  <span class="mm-pill__rule" aria-hidden="true"></span>
+
+  <a class="mm-pill__link" href={post.href}>
+    <span class="mm-sr">{categoryLabel}, </span>
+    <span class="mm-pill__title">{post.title}</span>
+  </a>
+
+  <span class="mm-pill__rule" aria-hidden="true"></span>
+
+  <span class="mm-pill__value">
+    <LikeButton postId={postId} locale={locale} />
+  </span>
+</li>
+
+<style>
+  .mm-pill {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    min-height: 42px;
+    background: var(--mm-raised);
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-pill);
+    overflow: hidden;
+    transition: var(--mm-transition);
+  }
+
+  .mm-pill:hover,
+  .mm-pill:focus-within {
+    border-color: var(--mm-accent-cyan);
+    box-shadow: var(--mm-glow-pill);
+  }
+
+  /* Vaste kolom met alleen een ruitje. Nooit een gevuld kleurvlak. */
+  .mm-pill__cat {
+    flex: none;
+    width: 40px;
+    align-self: stretch;
+    display: grid;
+    place-items: center;
+  }
+
+  .mm-pill__diamond {
+    width: 10px;
+    height: 10px;
+    background: var(--mm-diamond);
+    transform: rotate(45deg);
+    box-shadow: 0 0 var(--mm-glow-diamond) var(--mm-diamond);
+  }
+
+  .mm-pill__rule {
+    flex: none;
+    width: 1px;
+    align-self: stretch;
+    background: var(--mm-border);
+  }
+
+  .mm-pill__link {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0 14px;
+    font-size: 14.5px;
+    color: var(--mm-ink-soft);
+  }
+
+  /*
+   * De hele pil is klikbaar, zonder de knop erin te omvatten: de link legt
+   * een onzichtbaar vlak over de pil en het hartje ligt daarboven.
+   */
+  .mm-pill__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .mm-pill__title {
+    display: block;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mm-pill__value {
+    position: relative;
+    z-index: 1;
+    flex: none;
+    width: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* De focusring van de link hoort om de pil, niet om het onzichtbare vlak. */
+  .mm-pill__link:focus-visible { outline: none; }
+
+  .mm-pill:has(.mm-pill__link:focus-visible) {
+    outline: 2px solid var(--mm-accent-cyan);
+    outline-offset: 2px;
+  }
+
+  /* Nieuw bijgeladen pillen komen rustig binnen (§ "LOAD MORE"). */
+  .mm-pill.is-new { animation: mmRise .4s ease both; }
+
+  @media (max-width: 899px) {
+    .mm-pill { min-height: 44px; } /* raakvlak */
+    .mm-pill__cat { width: 34px; }
+    .mm-pill__diamond { width: 9px; height: 9px; }
+    .mm-pill__link { font-size: 13.5px; }
+    .mm-pill__value { width: 62px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mm-pill.is-new { animation: none; }
+  }
+</style>

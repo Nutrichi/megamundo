@@ -1,0 +1,27 @@
+---
+/*
+ * Een news-post in het Engels: /news/<slug>. De vijf andere talen komen
+ * uit [lang]/news/[slug].astro.
+ *
+ * De routes worden per slug gebouwd, niet per bestand: een post die nog
+ * niet vertaald is, heeft toch een pagina in elke taal en toont daar de
+ * Engelse tekst (§11). Concepten komen hier nooit langs, want getSlugs
+ * leest uit dezelfde lijst die de feed gebruikt.
+ */
+import PostLayout from '../../layouts/PostLayout.astro';
+import { getPost, getSlugs } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const slugs = await getSlugs('news');
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const locale = 'en' as const;
+const post = await getPost('news', Astro.params.slug!, locale);
+
+// Kan niet gebeuren: de slug komt uit dezelfde lijst. Faalt hij toch, dan
+// faalt de build luid in plaats van een halve pagina te publiceren (§14).
+if (!post) throw new Error(`Onbekende news-post: ${Astro.params.slug}`);
+---
+
+<PostLayout post={post} locale={locale} />

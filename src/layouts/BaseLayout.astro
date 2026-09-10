@@ -17,6 +17,7 @@ import { ga4Id } from '../config/site';
 import Header from '../components/Header.astro';
 import MobileMenu from '../components/MobileMenu.astro';
 import CountdownBar from '../components/CountdownBar.astro';
+import CategoryFilter from '../components/CategoryFilter.astro';
 import SpectrumBar from '../components/SpectrumBar.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/tokens.css';
@@ -32,6 +33,12 @@ interface Props {
   compactCountdown?: boolean;
   /** Zet de aftelbalk uit. Na de release kan hij hiermee in één keer weg. */
   countdown?: boolean;
+  /** De categoriefilters in de aftelbalk. Alleen de homepage heeft een lijst. */
+  filter?: boolean;
+  /** Het deelbeeld. Een post geeft zijn eigen beeld mee (§17). */
+  image?: string;
+  /** `article` op een postpagina, `website` op de rest. */
+  ogType?: 'website' | 'article';
 }
 
 const {
@@ -41,6 +48,9 @@ const {
   index = true,
   compactCountdown = false,
   countdown = true,
+  filter = false,
+  image,
+  ogType = 'website',
 } = Astro.props;
 
 const t = useTranslations(locale);
@@ -53,7 +63,8 @@ const pageDescription = description ?? t('site.description');
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://megamundo.be').href;
 const alternates = alternateLinks(pathname, Astro.site);
 const xDefault = alternates.find((a) => a.locale === defaultLocale);
-const ogImage = new URL('/assets/og-image.png', Astro.site ?? 'https://megamundo.be').href;
+const fallbackImage = '/assets/og-image.png';
+const ogImage = new URL(image ?? fallbackImage, Astro.site ?? 'https://megamundo.be').href;
 
 /** Woordelijk de snippet uit §17.1, met het meet-ID uit config/site.ts. */
 const gtagSnippet = `window.dataLayer = window.dataLayer || [];
@@ -94,7 +105,7 @@ gtag('config', '${ga4Id}');`;
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={t('site.title')} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
@@ -109,6 +120,9 @@ gtag('config', '${ga4Id}');`;
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap"
     />
+
+    <!-- Gestructureerde data en wat een losse pagina verder nodig heeft (§17). -->
+    <slot name="head" />
 
     <script is:inline>
       // Vóór de eerste paint: is er een keuze bewaard, pas die dan meteen toe.
@@ -130,7 +144,11 @@ gtag('config', '${ga4Id}');`;
     <a class="mm-skip" href="#mm-content">{t('skip.content')}</a>
 
     <Header locale={locale} nav={nav} pathname={pathname} />
-    {countdown && <CountdownBar locale={locale} compact={compactCountdown} />}
+    {countdown && (
+      <CountdownBar locale={locale} compact={compactCountdown}>
+        {filter && <CategoryFilter locale={locale} />}
+      </CountdownBar>
+    )}
 
     <div class="mm-shell">
       <SpectrumBar />

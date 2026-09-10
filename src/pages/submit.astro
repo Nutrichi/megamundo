@@ -1,0 +1,41 @@
+---
+/*
+ * De inzendpagina (§5.3), in het Engels: /submit.
+ *
+ * Staat in geen enkel menu en is alleen bereikbaar via de knop onder de
+ * feed. `index={false}` zet in één keer twee dingen: noindex, en géén GA4.
+ * Die twee sluiten elkaar uit, nooit allebei en nooit geen van beide (§17.1).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SubmitForm from '../components/SubmitForm.astro';
+import { defaultLocale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+const locale = defaultLocale;
+const t = useTranslations(locale);
+---
+
+<BaseLayout locale={locale} title={t('submit.title')} index={false} compactCountdown>
+  <div class="mm-submitpage">
+    <h1 class="mm-submitpage__title">{t('submit.title')}</h1>
+    <SubmitForm locale={locale} />
+  </div>
+</BaseLayout>
+
+<style>
+  .mm-submitpage {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 8px 0 40px;
+  }
+
+  .mm-submitpage__title {
+    font-size: 40px;
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 899px) {
+    .mm-submitpage__title { font-size: 30px; }
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+/*
+ * De inzendpagina (§5.3) in de vijf niet-standaardtalen: /nl/submit enzovoort.
+ * Engels heeft geen voorvoegsel en staat in ../submit.astro (§11).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SubmitForm from '../../components/SubmitForm.astro';
+import { defaultLocale, locales, type Locale } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return locales
+    .filter((locale) => locale !== defaultLocale)
+    .map((lang) => ({ params: { lang } }));
+}
+
+const locale = Astro.params.lang as Locale;
+const t = useTranslations(locale);
+---
+
+<BaseLayout locale={locale} title={t('submit.title')} index={false} compactCountdown>
+  <div class="mm-submitpage">
+    <h1 class="mm-submitpage__title">{t('submit.title')}</h1>
+    <SubmitForm locale={locale} />
+  </div>
+</BaseLayout>
+
+<style>
+  .mm-submitpage {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 8px 0 40px;
+  }
+
+  .mm-submitpage__title {
+    font-size: 40px;
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 899px) {
+    .mm-submitpage__title { font-size: 30px; }
+  }
+</style>

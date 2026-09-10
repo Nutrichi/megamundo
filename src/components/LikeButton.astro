@@ -17,11 +17,14 @@
  * ontwerphandoff liet een tweede klik de like ongedaan maken; Nutri heeft
  * dat ingetrokken. Eén keer geliked blijft geliked.
  *
- * De telling komt in fase 4 uit Supabase (§8). Zolang die er niet is, is de
- * basis nul en telt alleen de eigen like mee, lokaal bewaard zoals de
- * handoff het beschrijft ("likes: per post-id, met de eigen like lokaal
- * bewaard zodat de gelikete staat terugkomt na herladen"). Er gaat nog geen
- * enkel verzoek de deur uit; het is één attribuut dat fase 4 moet vullen.
+ * De telling komt uit Supabase (§8). In de HTML staat nul; zodra de pagina
+ * geladen is haalt het script de echte tellingen op, voor alle zichtbare
+ * posts in één verzoek. Lukt dat niet, dan blijft er nul staan en werkt de
+ * rest van de pagina gewoon door (§8.2).
+ *
+ * Welke posts deze bezoeker zelf geliked heeft, staat lokaal. Dat is nodig
+ * omdat er geen account is om het aan op te hangen: zonder die lijst zou een
+ * gevuld hartje na het herladen weer leeg zijn.
  */
 import type { Locale } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
@@ -154,10 +157,17 @@ const readLabel = t('pill.likes').replace('{n}', String(count));
 
 <script>
   /*
-   * De eigen like, per post, in localStorage. Optimistisch: de teller gaat
-   * meteen mee. Fase 4 hangt hier het verzoek aan Supabase achter; de
-   * weergave hoeft dan niet te veranderen.
+   * De likes. Twee dingen tegelijk:
+   *
+   *   1. de tellingen uit Supabase halen, voor alles wat op de pagina staat;
+   *   2. de eigen likes onthouden, want zonder account is er niets anders om
+   *      een gevuld hartje aan op te hangen.
+   *
+   * Alles faalt zacht. Ligt Supabase eruit, dan blijven de tellingen op nul
+   * staan en gebeurt er verder niets (§8.2).
    */
+  import { addLike, likeCounts } from '../lib/supabase';
+
   const KEY = 'mm-likes';
 
   type Liked = Record<string, true>;
@@ -176,36 +186,60 @@ const readLabel = t('pill.likes').replace('{n}', String(count));
     try {
       localStorage.setItem(KEY, JSON.stringify(liked));
     } catch (error) {
-      // Niets bewaren kan; de like geldt dan alleen voor deze pagina.
+      // Niets bewaren kan; de like staat dan wel in de database, maar het
+      // hartje is na het herladen weer leeg.
     }
   };
 
   let liked = read();
 
-  const paint = (button: HTMLElement) => {
-    const id = button.dataset.postId ?? '';
-    const base = Number(button.dataset.base ?? '0');
+  const paint = (el: HTMLElement) => {
+    const id = el.dataset.postId ?? '';
+    const base = Number(el.dataset.base ?? '0');
     const isLiked = liked[id] === true;
 
     // Alleen de knop op de postpagina is een knop; de rest is weergave.
-    if (button.dataset.static === undefined) {
-      button.setAttribute('aria-pressed', String(isLiked));
+    if (el.dataset.static === undefined) {
+      el.setAttribute('aria-pressed', String(isLiked));
     } else {
-      button.classList.toggle('is-liked', isLiked);
+      el.classList.toggle('is-liked', isLiked);
     }
 
-    const count = button.querySelector<HTMLElement>('[data-mm-like-count]');
-    if (count) count.textContent = String(base + (isLiked ? 1 : 0));
+    const count = el.querySelector<HTMLElement>('[data-mm-like-count]');
+    if (count) count.textContent = String(base);
 
     // De regel "je vindt deze post leuk" hoort alleen op de postpagina.
-    const note = button.parentElement?.querySelector<HTMLElement>('[data-mm-like-note]');
+    const note = el.parentElement?.querySelector<HTMLElement>('[data-mm-like-note]');
     if (note) note.hidden = !isLiked;
   };
 
-  /*
-   * Eén luisteraar op het document in plaats van één per knop: de pillen
-   * die LOAD MORE straks toont, doen dan meteen mee zonder extra werk.
+  const all = () => Array.from(document.querySelectorAll<HTMLElement>('[data-mm-like]'));
+
+  const paintAll = () => {
+    liked = read();
+    all().forEach(paint);
+  };
+
+  /**
+   * De echte tellingen ophalen. Eén verzoek voor alles wat op de pagina
+   * staat, ook voor de pillen die LOAD MORE nog verborgen houdt: die staan
+   * al in de HTML en hebben straks hetzelfde getal nodig.
    */
+  const refresh = async () => {
+    const els = all();
+    const ids = Array.from(new Set(els.map((el) => el.dataset.postId ?? '').filter(Boolean)));
+    if (ids.length === 0) return;
+
+    const counts = await likeCounts(ids);
+
+    els.forEach((el) => {
+      const id = el.dataset.postId ?? '';
+      if (id in counts) el.dataset.base = String(counts[id]);
+    });
+
+    paintAll();
+  };
+
   document.addEventListener('click', (event) => {
     const target = event.target as HTMLElement | null;
     const button = target?.closest<HTMLElement>('[data-mm-like]');
@@ -219,22 +253,32 @@ const readLabel = t('pill.likes').replace('{n}', String(count));
 
     // Een like is niet terug te nemen (§8.1, beslist 10 september 2026).
     if (liked[id]) return;
-    liked[id] = true;
 
+    /*
+     * Meteen bijwerken en pas daarna versturen. De bezoeker ziet zijn like
+     * onmiddellijk; komt er een echt getal terug, dan wint dat.
+     */
+    liked[id] = true;
     write(liked);
-    // Dezelfde post kan twee keer op de pagina staan; werk ze allebei bij.
-    document
-      .querySelectorAll<HTMLElement>(`[data-mm-like][data-post-id="${CSS.escape(id)}"]`)
-      .forEach(paint);
+    button.dataset.base = String(Number(button.dataset.base ?? '0') + 1);
+    paintAll();
+
+    void addLike(id).then((count) => {
+      if (count === null) return;
+      all()
+        .filter((el) => el.dataset.postId === id)
+        .forEach((el) => { el.dataset.base = String(count); });
+      paintAll();
+    });
   });
 
-  const paintAll = () => {
-    liked = read();
-    document.querySelectorAll<HTMLElement>('[data-mm-like]').forEach(paint);
-  };
-
   paintAll();
+  void refresh();
 
-  // Terug uit de bfcache: de opslag kan intussen veranderd zijn.
-  window.addEventListener('pageshow', paintAll);
+  // Terug uit de bfcache: de opslag en de tellingen kunnen intussen
+  // veranderd zijn.
+  window.addEventListener('pageshow', () => {
+    paintAll();
+    void refresh();
+  });
 </script>

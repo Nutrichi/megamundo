@@ -22,9 +22,8 @@ export const social = {
 };
 
 /**
- * Het pad naar de inzendpagina uit §5.3. Die pagina komt er in fase 4, samen
- * met de Supabase-tabel en de bot-drempels; zolang dit leeg is, laat de feed
- * de knop SUBMIT NEWS weg. Dezelfde regel als bij de sociale links hierboven:
- * nooit een link naar een pagina die niet bestaat (§4.1).
+ * Het pad naar de inzendpagina uit §5.3. Sinds fase 4 bestaat die pagina, dus
+ * de knop SUBMIT NEWS staat onder de feed. Leeghalen laat de knop weer
+ * verdwijnen; dezelfde regel als bij de sociale links hierboven.
  */
-export const submitPath = '';
+export const submitPath = 'submit';

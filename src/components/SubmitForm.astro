@@ -1,0 +1,278 @@
+---
+/*
+ * Het inzendformulier (PROJECT_SPEC.md §5.3).
+ *
+ * Een tip van een bezoeker is een briefje in de postbus van Nutri, geen
+ * inhoud op de site. Er wordt nooit iets automatisch gepubliceerd, en de
+ * pagina zegt dat ook.
+ *
+ * Die postbus is de tabel `submissions`. Er gaat geen mail uit; Nutri leest
+ * ze in het Supabase-dashboard. Hoe, staat in `supabase/README.md`.
+ *
+ * Drempels tegen bots, want een publiek formulier op een statische site
+ * wordt gevonden:
+ *
+ *   1. een honeypot-veld dat een mens nooit invult, maar een bot wel;
+ *   2. een minimale tijd tussen het laden en het versturen;
+ *   3. hoogstens drie inzendingen per uur per browser.
+ *
+ * De derde staat in de database en niet hier: wie het formulier omzeilt,
+ * loopt daar alsnog vast. Geen captcha van een derde partij, dat is een
+ * script van buiten (§21).
+ */
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+/** Hoeveel seconden een mens minstens nodig heeft om dit in te vullen. */
+const minSeconds = 4;
+---
+
+<form class="mm-submit" data-mm-submit data-min-seconds={minSeconds} novalidate>
+  <p class="mm-submit__intro">{t('submit.intro')}</p>
+
+  <label class="mm-submit__field">
+    <span class="mm-submit__label">{t('submit.fieldTitle')}</span>
+    <span class="mm-submit__hint">{t('submit.fieldTitleHint')}</span>
+    <input type="text" name="title" maxlength="300" required autocomplete="off" />
+  </label>
+
+  <label class="mm-submit__field">
+    <span class="mm-submit__label">{t('submit.fieldSource')}</span>
+    <span class="mm-submit__hint">{t('submit.fieldSourceHint')}</span>
+    <input type="url" name="source" maxlength="2000" inputmode="url" autocomplete="off" />
+  </label>
+
+  <label class="mm-submit__field">
+    <span class="mm-submit__label">{t('submit.fieldNote')}</span>
+    <span class="mm-submit__hint">{t('submit.fieldNoteHint')}</span>
+    <textarea name="note" rows="4" maxlength="4000"></textarea>
+  </label>
+
+  <label class="mm-submit__field">
+    <span class="mm-submit__label">{t('submit.fieldName')}</span>
+    <span class="mm-submit__hint">{t('submit.fieldNameHint')}</span>
+    <input type="text" name="nickname" maxlength="80" autocomplete="off" />
+  </label>
+
+  <!--
+    De honeypot. Onzichtbaar voor wie kijkt, maar een bot die alle velden
+    invult verraadt zichzelf. Buiten de tabvolgorde en weggehouden bij
+    schermlezers, zodat niemand hem per ongeluk invult.
+  -->
+  <div class="mm-submit__pot" aria-hidden="true">
+    <label>
+      Website
+      <input type="text" name="website" tabindex="-1" autocomplete="off" />
+    </label>
+  </div>
+
+  <div class="mm-submit__actions">
+    <button type="submit" class="mm-submit__button" data-mm-submit-button>
+      {t('submit.send')}
+    </button>
+    <p class="mm-submit__error" data-mm-submit-error role="alert" hidden></p>
+  </div>
+
+  <!-- De teksten die het script nodig heeft, zonder ze in de JavaScript te zetten. -->
+  <template
+    data-mm-submit-text
+    data-send={t('submit.send')}
+    data-sending={t('submit.sending')}
+    data-empty={t('submit.errorEmpty')}
+    data-network={t('submit.errorNetwork')}
+    data-storage={t('submit.errorStorage')}
+    data-fast={t('submit.errorTooFast')}
+  ></template>
+</form>
+
+<div class="mm-submit__done" data-mm-submit-done hidden>
+  <p class="mm-submit__thanks">{t('submit.thanks')}</p>
+  <p class="mm-submit__thanksnote">{t('submit.thanksNote')}</p>
+</div>
+
+<style>
+  .mm-submit {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 560px;
+  }
+
+  .mm-submit__intro {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--mm-muted);
+  }
+
+  .mm-submit__field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mm-submit__label {
+    font-family: var(--mm-display);
+    font-size: 16px;
+    letter-spacing: .08em;
+    color: var(--mm-ink);
+  }
+
+  .mm-submit__hint {
+    font-size: 12.5px;
+    color: var(--mm-muted);
+  }
+
+  .mm-submit input,
+  .mm-submit textarea {
+    margin-top: 4px;
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--mm-raised);
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field-lg);
+    font: inherit;
+    font-size: 15px;
+    color: var(--mm-ink);
+    transition: var(--mm-transition);
+  }
+
+  .mm-submit textarea { resize: vertical; }
+
+  .mm-submit input:focus,
+  .mm-submit textarea:focus {
+    outline: none;
+    border-color: var(--mm-accent-cyan);
+  }
+
+  /* De honeypot hoort niemand te zien, maar hij mag niet display:none zijn:
+     sommige bots slaan verborgen velden over. */
+  .mm-submit__pot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .mm-submit__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mm-submit__button {
+    align-self: flex-start;
+    padding: 10px 26px;
+    background: var(--mm-accent-pink);
+    border: 1px solid var(--mm-accent-pink);
+    border-radius: var(--mm-r-pill);
+    box-shadow: var(--mm-glow-primary);
+    font-family: var(--mm-display);
+    font-size: 16px;
+    letter-spacing: .12em;
+    color: var(--mm-bg);
+  }
+
+  .mm-submit__button[disabled] { opacity: .6; cursor: default; }
+
+  .mm-submit__error {
+    font-size: 13.5px;
+    color: var(--mm-accent-pink);
+  }
+
+  .mm-submit__done {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 560px;
+  }
+
+  .mm-submit__thanks {
+    font-family: var(--mm-display);
+    font-size: 26px;
+    color: var(--mm-ink);
+  }
+
+  .mm-submit__thanksnote {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--mm-muted);
+  }
+</style>
+
+<script>
+  import { submitNews } from '../lib/supabase';
+
+  const form = document.querySelector<HTMLFormElement>('[data-mm-submit]');
+  const done = document.querySelector<HTMLElement>('[data-mm-submit-done]');
+
+  if (form && done) {
+    const text = form.querySelector<HTMLElement>('[data-mm-submit-text]')!.dataset;
+    const button = form.querySelector<HTMLButtonElement>('[data-mm-submit-button]')!;
+    const error = form.querySelector<HTMLElement>('[data-mm-submit-error]')!;
+    const minSeconds = Number(form.dataset.minSeconds ?? '4');
+    const loadedAt = Date.now();
+
+    const fail = (message: string) => {
+      error.textContent = message;
+      error.hidden = false;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      error.hidden = true;
+
+      const data = new FormData(form);
+      const value = (name: string) => String(data.get(name) ?? '').trim();
+
+      /*
+       * De honeypot. Staat er iets in, dan was het geen mens. We doen alsof
+       * het gelukt is: een bot die een foutmelding krijgt, probeert het
+       * opnieuw met een andere aanpak.
+       */
+      if (value('website')) {
+        form.hidden = true;
+        done.hidden = false;
+        return;
+      }
+
+      if (Date.now() - loadedAt < minSeconds * 1000) {
+        fail(text.fast ?? '');
+        return;
+      }
+
+      if (value('title').length < 4) {
+        fail(text.empty ?? '');
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = text.sending ?? '';
+
+      const result = await submitNews({
+        title: value('title'),
+        sourceUrl: value('source'),
+        note: value('note'),
+        nickname: value('nickname'),
+      });
+
+      button.disabled = false;
+      button.textContent = text.send ?? '';
+
+      if (result.ok) {
+        form.hidden = true;
+        done.hidden = false;
+        return;
+      }
+
+      fail(result.reason === 'storage' ? (text.storage ?? '') : (text.network ?? ''));
+    });
+  }
+</script>

@@ -119,10 +119,12 @@ button {
   flex: 1 1 auto;
   min-width: 0;
   /*
-   * De onderrand houdt rekening met de vastgeplakte voettekst: zonder die
-   * ruimte schuift de laatste regel er tijdens het scrollen achter.
+   * De onderrand houdt rekening met de vastgeplakte voettekst. Technisch
+   * verdwijnt er niets achter: zodra je onderaan bent, staat de voettekst
+   * op zijn eigen plek. Maar zonder deze ruimte kleeft de laatste knop of
+   * alinea tegen de balk aan en dat leest slecht.
    */
-  padding: 24px 26px 32px;
+  padding: 24px 26px 56px;
 }
 
 /*
@@ -179,5 +181,5 @@ button {
 }
 
 @media (max-width: 899px) {
-  .mm-main { padding: 16px 16px 20px; }
+  .mm-main { padding: 16px 16px 44px; }
 }

@@ -4,8 +4,8 @@ description: "Dos mandos DualSense de edición limitada con la estética de GTA 
 date: 2026-09-11
 category: gta6
 lang: es
-image: ../../../assets/posts/gta-vi-dualsense-controller.webp
-imageAlt: "El mando DualSense blanco de edición limitada de GTA VI."
+image: ../../../assets/posts/gta-vi-dualsense-controller.png
+imageAlt: "El mando DualSense blanco de edición limitada de GTA VI ante el logotipo de Vice City."
 source: "PlayStation Direct"
 sourceUrl: "https://direct.playstation.com/nl-nl/buy-accessories/dualsense-wireless-controller-grand-theft-auto-vi-white-limited-edition-for-ps5-pc-mac-mobile"
 tags: ["gta-vi"]

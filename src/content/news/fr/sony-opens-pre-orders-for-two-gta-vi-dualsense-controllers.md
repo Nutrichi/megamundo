@@ -4,8 +4,8 @@ description: "Deux manettes DualSense en édition limitée aux couleurs de GTA V
 date: 2026-09-11
 category: gta6
 lang: fr
-image: ../../../assets/posts/gta-vi-dualsense-controller.webp
-imageAlt: "La manette DualSense blanche en édition limitée GTA VI."
+image: ../../../assets/posts/gta-vi-dualsense-controller.png
+imageAlt: "La manette DualSense blanche en édition limitée GTA VI devant le logo Vice City."
 source: "PlayStation Direct"
 sourceUrl: "https://direct.playstation.com/nl-nl/buy-accessories/dualsense-wireless-controller-grand-theft-auto-vi-white-limited-edition-for-ps5-pc-mac-mobile"
 tags: ["gta-vi"]

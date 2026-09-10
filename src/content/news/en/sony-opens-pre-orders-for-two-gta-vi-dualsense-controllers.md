@@ -4,8 +4,8 @@ description: "Two limited-edition DualSense controllers in GTA VI styling can be
 date: 2026-09-11
 category: gta6
 lang: en
-image: ../../../assets/posts/gta-vi-dualsense-controller.webp
-imageAlt: "The white GTA VI limited edition DualSense controller."
+image: ../../../assets/posts/gta-vi-dualsense-controller.png
+imageAlt: "The white GTA VI limited edition DualSense controller against the Vice City logo."
 source: "PlayStation Direct"
 sourceUrl: "https://direct.playstation.com/nl-nl/buy-accessories/dualsense-wireless-controller-grand-theft-auto-vi-white-limited-edition-for-ps5-pc-mac-mobile"
 tags: ["gta-vi"]

@@ -1,0 +1,421 @@
+---
+/*
+ * De kaart van Leonida. Leaflet in een plat coördinatenstelsel: geen
+ * aardbol, geen projectie, gewoon een groot beeld met x en y.
+ *
+ * Waarom Leaflet en niet zelfgebouwd: slepen met vingers, vloeiend zoomen,
+ * toetsenbordbediening en een tegelpiramide zijn alle vier dingen die je
+ * niet half wil doen. Het is een bibliotheek voor één widget, geen
+ * framework, en dat is precies wat §3 toestaat.
+ *
+ * De gebieden komen uit de content collection, één Markdown-bestand per
+ * gebied. De klikvlakken worden niet getekend: ze vangen de klik en lichten
+ * zacht op bij hover. De grenzen die je ziet zijn die van de kaart zelf, en
+ * die zijn scherper dan wat wij eroverheen zouden leggen.
+ *
+ * Zonder JavaScript blijft de lijst met gebieden onder de kaart staan, dus
+ * elke gebiedspagina blijft bereikbaar en vindbaar.
+ */
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import {
+  credit, fullBounds, islandBounds, maxNativeZoom, maxZoom, minZoom, tileUrl, version,
+} from '../data/map';
+
+export type MapRegion = {
+  slug: string;
+  href: string;
+  title: string;
+  realName?: string;
+  polygon?: [number, number][];
+  labelAt?: [number, number];
+};
+
+interface Props {
+  locale: Locale;
+  regions: MapRegion[];
+  /** De kaart vult de hoogte die er is, in plaats van een vaste hoogte. */
+  fill?: boolean;
+}
+
+const { locale, regions, fill = false } = Astro.props;
+const t = useTranslations(locale);
+
+/** Alles wat het script nodig heeft, in één attribuut. */
+const config = {
+  tileUrl,
+  bounds: islandBounds,
+  fullBounds,
+  minZoom,
+  maxZoom,
+  maxNativeZoom,
+  regions: regions.map((region) => ({
+    slug: region.slug,
+    href: region.href,
+    title: region.title,
+    polygon: region.polygon ?? null,
+    labelAt: region.labelAt ?? null,
+  })),
+};
+---
+
+<div class:list={['mm-map', fill && 'is-fill']}>
+  <div
+    class="mm-map__canvas"
+    id="mm-map"
+    data-mm-map
+    data-config={JSON.stringify(config)}
+    role="application"
+    aria-label={t('map.label')}
+  >
+    <noscript>
+      <p class="mm-map__noscript">{t('map.noscript')}</p>
+    </noscript>
+  </div>
+
+  <p class="mm-map__credit">
+    {t('map.credit')
+      .replace('{map}', credit.mapName)
+      .split('{site}')[0]}<a
+      href={credit.siteUrl}
+      rel="noopener nofollow"
+      target="_blank"
+    >{credit.siteName}</a>{t('map.credit').split('{site}')[1] ?? ''}
+    {' '}<span class="mm-map__version">{version}</span>
+  </p>
+</div>
+
+<style>
+  .mm-map {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  /* Vullend: de kaart pakt de hoogte die de pagina overhoudt. */
+  .is-fill { flex: 1 1 auto; min-height: 0; }
+  .is-fill .mm-map__canvas { height: auto; flex: 1 1 auto; min-height: 0; }
+
+  .mm-map__canvas {
+    height: min(82vh, 860px);
+    min-height: 460px;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-card);
+    overflow: hidden;
+    background: #0b1d2e; /* het water van de kaart, zodat laden niet flikkert */
+  }
+
+  .mm-map__noscript {
+    padding: 20px;
+    font-size: 14px;
+    color: var(--mm-ink);
+  }
+
+  .mm-map__credit {
+    font-size: 12px;
+    color: var(--mm-muted);
+  }
+
+  .mm-map__credit a { text-decoration: underline; text-underline-offset: 3px; }
+  .mm-map__version { opacity: .7; }
+
+  @media (max-width: 899px) {
+    .mm-map__canvas {
+      height: min(70vh, 560px);
+      border-radius: var(--mm-r-card-sm);
+    }
+  }
+
+  /* --- Leaflet in de huisstijl --- */
+  .mm-map__canvas :global(.leaflet-container) {
+    width: 100%;
+    height: 100%;
+    background: #0b1d2e;
+    font-family: var(--mm-text);
+    outline: none;
+  }
+
+  /* De eigen zoomknoppen: dezelfde vorm als de rest van de site. */
+  .mm-map__canvas :global(.leaflet-control-zoom) {
+    border: 0;
+    box-shadow: none;
+  }
+
+  .mm-map__canvas :global(.leaflet-control-zoom a) {
+    width: 34px;
+    height: 34px;
+    line-height: 32px;
+    background: var(--mm-raised);
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field);
+    color: var(--mm-ink);
+    font-family: var(--mm-text);
+    font-size: 19px;
+    margin-bottom: 6px;
+    transition: var(--mm-transition);
+  }
+
+  .mm-map__canvas :global(.leaflet-control-zoom a:hover) {
+    border-color: var(--mm-accent-cyan);
+    background: var(--mm-raised);
+    color: var(--mm-ink);
+  }
+
+  .mm-map__canvas :global(.leaflet-control-attribution) { display: none; }
+
+  /* Het klikvlak van een gebied: onzichtbaar tot je erover gaat. */
+  .mm-map__canvas :global(.mm-zone) {
+    fill: var(--mm-accent-pink);
+    fill-opacity: 0;
+    stroke: var(--mm-accent-pink);
+    stroke-width: 2;
+    stroke-opacity: 0;
+    transition: fill-opacity .16s ease, stroke-opacity .16s ease;
+    cursor: pointer;
+  }
+
+  .mm-map__canvas :global(.mm-zone.is-active) {
+    fill-opacity: .14;
+    stroke-opacity: .85;
+  }
+
+  /* Het naamplaatje van een gebied. */
+  .mm-map__canvas :global(.mm-zone-label) {
+    background: none;
+    border: 0;
+    box-shadow: none;
+    font-family: var(--mm-display);
+    font-size: 15px;
+    letter-spacing: .12em;
+    color: var(--mm-ink);
+    text-shadow: 0 0 3px #05131f, 0 0 10px #05131f, 0 1px 2px #05131f;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: opacity .16s ease;
+  }
+
+  .mm-map__canvas :global(.mm-zone-label::before) { display: none; }
+</style>
+
+<script>
+  /*
+   * De kaart opbouwen. Leaflet komt uit node_modules en wordt meegebundeld,
+   * niet van een CDN gehaald: één minder domein dat de site kan breken.
+   */
+  import L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
+
+  type Region = {
+    slug: string;
+    href: string;
+    title: string;
+    polygon: [number, number][] | null;
+    labelAt: [number, number] | null;
+  };
+
+  type Config = {
+    tileUrl: string;
+    bounds: [[number, number], [number, number]];
+    fullBounds: [[number, number], [number, number]];
+    minZoom: number;
+    maxZoom: number;
+    maxNativeZoom: number;
+    regions: Region[];
+  };
+
+  const host = document.querySelector<HTMLElement>('[data-mm-map]');
+
+  if (host && host.dataset.config) {
+    const config: Config = JSON.parse(host.dataset.config);
+    /** Waar de kaart op opent. */
+    const island = L.latLngBounds(config.bounds[0], config.bounds[1]);
+    /** Hoe ver je mag slepen: het hele blad, paneel inbegrepen. */
+    const sheet = L.latLngBounds(config.fullBounds[0], config.fullBounds[1]);
+
+    /*
+     * Een eigen plat coördinatenstelsel.
+     *
+     * `L.CRS.Simple` alleen is niet genoeg: dat legt punt [0, 0] op de
+     * linkerbovenhoek van het tegelraster, terwijl de bronkaart x van -16500
+     * tot 3500 laat lopen en y van -8000 tot 12000, met y omhoog. Zonder
+     * deze transformatie vraagt Leaflet tegels op die duizenden rijen naast
+     * het raster liggen, en dan blijft de kaart zwart.
+     *
+     * Op het diepste echte zoomniveau is één kaarteenheid één pixel. Daar
+     * rekent de schaal hieronder mee terug: x wordt (x - minX), y wordt
+     * (maxY - y), allebei gedeeld door 2^maxNativeZoom omdat Leaflet er zelf
+     * nog eens 2^zoom bij vermenigvuldigt.
+     */
+    const [[, minLng], [maxLat]] = config.fullBounds;
+    const unit = 1 / 2 ** config.maxNativeZoom;
+
+    /*
+     * Hoe groot de wereld is, leest Leaflet niet van het stelsel maar van de
+     * PROJECTIE: `getProjectedBounds` kijkt naar `projection.bounds`. De
+     * projectie van CRS.Simple is LonLat, en die staat op -180..180 en
+     * -90..90, want ze is voor een aardbol bedoeld.
+     *
+     * Laat je dat staan, dan denkt Leaflet dat de hele kaart elf bij vijf
+     * pixels groot is. Hij vraagt dan één tegelrij op en de rest van het
+     * beeld blijft zwart. Het is een stille fout: er komt geen waarschuwing,
+     * de kaart is alleen grotendeels leeg.
+     */
+    const projection = L.extend({}, L.Projection.LonLat, {
+      bounds: L.bounds(
+        L.point(config.fullBounds[0][1], config.fullBounds[0][0]),
+        L.point(config.fullBounds[1][1], config.fullBounds[1][0]),
+      ),
+    });
+
+    const crs = L.extend({}, L.CRS.Simple, {
+      projection,
+      transformation: new L.Transformation(unit, -minLng * unit, -unit, maxLat * unit),
+      infinite: false,
+    });
+
+    const map = L.map(host, {
+      // Plat stelsel: de kaart is een beeld, geen bol.
+      crs,
+      minZoom: config.minZoom,
+      maxZoom: config.maxZoom,
+      maxBounds: sheet,
+      // Stevig terugveren, zodat je niet het zwart naast de kaart in sleept.
+      maxBoundsViscosity: 1,
+      zoomControl: false,
+      attributionControl: false,
+      // Scrollen op de pagina mag niet per ongeluk de kaart zoomen.
+      scrollWheelZoom: false,
+    });
+
+    L.tileLayer(config.tileUrl, {
+      minZoom: config.minZoom,
+      maxZoom: config.maxZoom,
+      maxNativeZoom: config.maxNativeZoom,
+      noWrap: true,
+      bounds: sheet,
+      // Zonder dit zie je de naden tussen de tegels op sommige zooms.
+      tileSize: 256,
+      keepBuffer: 2,
+    }).addTo(map);
+
+    /*
+     * Leonida is staand en smal. `fitBounds` kiest het zoomniveau waarop het
+     * geheel past; dat is het juiste startpunt, en de bezoeker zoomt zelf in.
+     */
+    map.fitBounds(island);
+
+    /*
+     * De hoogte van het kader komt uit de opmaak eromheen, en die staat pas
+     * vast nadat de browser alles heeft doorgerekend. Leaflet meet zichzelf
+     * bij het opstarten, dus zonder dit blijft hij denken dat hij de oude
+     * hoogte heeft: grijze randen waar geen tegels staan. Hetzelfde geldt
+     * bij het draaien van een telefoon of het slepen van een venster.
+     */
+    const resize = () => {
+      map.invalidateSize({ animate: false });
+      map.fitBounds(island, { animate: false });
+    };
+
+    if ('ResizeObserver' in window) {
+      let first = true;
+      new ResizeObserver(() => {
+        // De eerste melding komt meteen na het opstarten; die is al gedaan.
+        if (first) { first = false; return; }
+        map.invalidateSize({ animate: false });
+      }).observe(host);
+    }
+
+    window.addEventListener('orientationchange', resize);
+    requestAnimationFrame(resize);
+
+    L.control.zoom({ position: 'topleft' }).addTo(map);
+
+    /*
+     * Zoomen met het wiel alleen als de kaart de focus heeft of als je hem
+     * al aan het gebruiken bent. Anders blijft de pagina scrollen zoals de
+     * bezoeker verwacht.
+     */
+    host.addEventListener('mouseenter', () => map.scrollWheelZoom.enable());
+    host.addEventListener('mouseleave', () => map.scrollWheelZoom.disable());
+
+    /* --- De gebieden --- */
+    const zones = new Map<string, L.Polygon>();
+    const labels: L.Marker[] = [];
+
+    for (const region of config.regions) {
+      if (region.polygon && region.polygon.length > 2) {
+        const zone = L.polygon(region.polygon as L.LatLngExpression[], {
+          className: 'mm-zone',
+          // Leaflet zet zelf kleuren op het pad; die halen we hier weg zodat
+          // de CSS erboven het alleen heeft.
+          color: 'transparent',
+          fillColor: 'transparent',
+          weight: 2,
+        }).addTo(map);
+
+        zone.on('click', () => { window.location.href = region.href; });
+        zone.on('keypress', (event: any) => {
+          if (event.originalEvent?.key === 'Enter') window.location.href = region.href;
+        });
+
+        const el = () => (zone as any).getElement() as SVGElement | null;
+        zone.on('mouseover', () => el()?.classList.add('is-active'));
+        zone.on('mouseout', () => el()?.classList.remove('is-active'));
+
+        zones.set(region.slug, zone);
+      }
+
+      if (region.labelAt) {
+        labels.push(
+          L.marker(region.labelAt as L.LatLngExpression, {
+            interactive: false,
+            keyboard: false,
+            icon: L.divIcon({
+              className: 'mm-zone-label',
+              html: region.title.toUpperCase(),
+              iconSize: [0, 0],
+            }),
+          }).addTo(map),
+        );
+      }
+    }
+
+    /*
+     * Onze eigen namen zijn er voor het uitgezoomde beeld, waar de namen op
+     * de kaart zelf te klein zijn om te lezen. Zodra je inzoomt neemt de
+     * kaart dat over en zouden ze dubbel staan, dus dan gaan ze weg.
+     */
+    const LABEL_UNTIL = 3;
+
+    const syncLabels = () => {
+      const show = map.getZoom() <= LABEL_UNTIL;
+      for (const label of labels) {
+        const el = label.getElement();
+        if (el) el.style.opacity = show ? '1' : '0';
+      }
+    };
+
+    map.on('zoomend', syncLabels);
+    syncLabels();
+
+    /*
+     * De lijst naast de kaart en de kaart zelf wijzen naar elkaar: ga je
+     * over een naam in de lijst, dan licht het gebied op.
+     */
+    document.querySelectorAll<HTMLElement>('[data-mm-region]').forEach((item) => {
+      const slug = item.dataset.mmRegion ?? '';
+      const zone = zones.get(slug);
+      if (!zone) return;
+
+      const el = () => (zone as any).getElement() as SVGElement | null;
+      const on = () => el()?.classList.add('is-active');
+      const off = () => el()?.classList.remove('is-active');
+
+      item.addEventListener('mouseenter', on);
+      item.addEventListener('mouseleave', off);
+      item.addEventListener('focus', on);
+      item.addEventListener('blur', off);
+    });
+  }
+</script>

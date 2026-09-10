@@ -1,7 +1,17 @@
 ---
 /*
- * De voettekst (PROJECT_SPEC.md §16): één zin die zegt wat de site is, de
- * links naar YouTube en Discord, en de verplichte disclaimer.
+ * De voettekst (PROJECT_SPEC.md §16): copyright, de verplichte disclaimer en
+ * de links naar YouTube en Discord.
+ *
+ * Bewust klein gehouden. De eerste versie had een zin over wat de site is én
+ * een disclaimer van drie regels; samen was dat het zwaarste blok van de
+ * pagina, terwijl een voettekst niets hoort te trekken. De zin over de site
+ * is eruit — die staat al in de metabeschrijving en in de og-tags — en de
+ * disclaimer zegt in één regel wat hij moet zeggen. §16 is meegegroeid.
+ *
+ * De disclaimer blijft wel staan, en verkort niet zo ver dat hij zijn werk
+ * niet meer doet: dat dit een onafhankelijke fansite is zonder band met
+ * Rockstar Games of Take-Two, en dat de merken van hun eigenaars zijn.
  *
  * Een sociale link verschijnt alleen als zijn URL in config/site.ts staat.
  */
@@ -16,6 +26,12 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 
+/*
+ * Het jaartal van de build. De site is statisch, dus dit bevriest bij het
+ * bouwen; elke push bouwt opnieuw, dus in de praktijk klopt het.
+ */
+const year = new Date().getFullYear();
+
 const links = [
   { label: t('footer.youtube'), href: social.youtube },
   { label: t('footer.discord'), href: social.discord },
@@ -24,10 +40,11 @@ const links = [
 
 <footer class="mm-footer" aria-label={t('footer.label')}>
   <div class="mm-footer__inner">
-    <div class="mm-footer__text">
-      <p class="mm-footer__tagline">{t('site.tagline')}</p>
-      <p class="mm-footer__disclaimer">{t('site.disclaimer')}</p>
-    </div>
+    <p class="mm-footer__text">
+      <span class="mm-footer__copy">{t('footer.copyright').replace('{y}', String(year))}</span>
+      <span class="mm-footer__sep" aria-hidden="true"> · </span>
+      <span>{t('site.disclaimer')}</span>
+    </p>
 
     {links.length > 0 && (
       <ul class="mm-footer__links">
@@ -43,6 +60,21 @@ const links = [
 
 <style>
   .mm-footer {
+    /*
+     * Blijft onderaan het scherm staan, op elke pagina. Afspraak met Nutri
+     * op 10 september 2026: de disclaimer en de sociale links horen altijd
+     * binnen bereik te zijn.
+     *
+     * `sticky` en niet `fixed`: zo houdt de voettekst zijn eigen plek in de
+     * opmaak. Aan het einde van een lange pagina schuift hij netjes onder de
+     * laatste alinea in plaats van er overheen te blijven liggen.
+     *
+     * Het mobiele menu ligt hierboven (z-index 60), zodat de overlay de
+     * voettekst afdekt en niet andersom.
+     */
+    position: sticky;
+    bottom: 0;
+    z-index: 15;
     border-top: 1px solid var(--mm-border);
     background: var(--mm-header);
   }
@@ -50,24 +82,28 @@ const links = [
   .mm-footer__inner {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 36px;
+    align-items: baseline;
+    gap: 12px 28px;
     width: 100%;
     max-width: var(--mm-max);
     margin: 0 auto;
-    padding: 20px 26px 24px;
-    font-size: 13px;
-    line-height: 1.7;
+    padding: 14px 26px 16px;
+    font-size: 12px;
+    line-height: 1.55;
     color: var(--mm-muted);
   }
 
+  /*
+   * Geen maximumbreedte: de regel is kort genoeg om op een breed scherm op
+   * één regel te passen, en dat is precies wat een voettekst hoort te doen.
+   * Op smal wikkelt hij vanzelf.
+   */
   .mm-footer__text {
-    flex: 1 1 320px;
+    flex: 1 1 340px;
     min-width: 0;
-    max-width: 46ch;
   }
 
-  .mm-footer__tagline { color: var(--mm-body); }
+  .mm-footer__copy { white-space: nowrap; }
 
   .mm-footer__links {
     margin: 0;
@@ -80,7 +116,7 @@ const links = [
 
   .mm-footer__link {
     font-family: var(--mm-display);
-    font-size: 16px;
+    font-size: 14px;
     letter-spacing: .1em;
     color: var(--mm-muted);
     transition: color .16s ease;
@@ -90,8 +126,8 @@ const links = [
 
   @media (max-width: 899px) {
     .mm-footer__inner {
-      gap: 18px;
-      padding: 20px 16px 24px;
+      gap: 10px 18px;
+      padding: 14px 16px 18px;
     }
 
     .mm-footer__links { margin-left: 0; }

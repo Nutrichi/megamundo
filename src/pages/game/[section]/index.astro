@@ -1,0 +1,90 @@
+---
+/*
+ * Een Game-sectie in het Engels: /game/map. Bij lancering is `map` de enige
+ * sectie met inhoud (§4).
+ *
+ * De route is dynamisch en niet statisch, en dat is met opzet: zo kan hij
+ * wegblijven. Nul gebieden betekent geen pagina en ook geen tab, want beide
+ * leiden zich af uit dezelfde bestanden (§4.1). Een sectie erbij is hier
+ * later een regel in getStaticPaths.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LeonidaMap from '../../../components/LeonidaMap.astro';
+import RegionList from '../../../components/RegionList.astro';
+import { getRegions } from '../../../lib/regions';
+import { defaultLocale } from '../../../i18n/ui';
+import { useTranslations } from '../../../i18n/utils';
+
+export async function getStaticPaths() {
+  const regions = await getRegions(defaultLocale);
+  return regions.length > 0 ? [{ params: { section: 'map' } }] : [];
+}
+
+const locale = defaultLocale;
+const t = useTranslations(locale);
+const regions = await getRegions(locale);
+---
+
+<BaseLayout locale={locale} title={t('map.title')} description={t('map.description')} fixedHeight>
+  <div class="mm-mappage">
+    <h1 class="mm-mappage__title">{t('map.title')}</h1>
+
+    <div class="mm-mappage__cols">
+      <LeonidaMap locale={locale} regions={regions} fill />
+      <RegionList locale={locale} regions={regions} />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  /*
+   * De kaartpagina vult het scherm: koptekst boven, voettekst onder, en de
+   * kaart daartussen. Zo is er niets te scrollen op de pagina zelf en houdt
+   * de kaart het muiswiel voor zichzelf.
+   *
+   * Onder 1100 px valt dat weg: dan staat de gebiedenlijst onder de kaart en
+   * moet de pagina wel kunnen scrollen.
+   */
+  .mm-mappage {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .mm-mappage__title { font-size: 32px; line-height: 1; }
+
+  /*
+   * Leonida is staand en smal. Naast elkaar gebruikt de kaart de hoogte en
+   * de lijst de breedte die overblijft.
+   */
+  .mm-mappage__cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+    gap: 20px;
+    align-items: stretch;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  @media (min-width: 1100px) {
+    /* De lijst scrollt in zichzelf, zodat de pagina dat niet hoeft. */
+    .mm-mappage__cols > :global(.mm-regions) {
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+  }
+
+  @media (max-width: 1099px) {
+    .mm-mappage__cols {
+      grid-template-columns: minmax(0, 1fr);
+      flex: none;
+    }
+
+    .mm-mappage { flex: none; }
+    .mm-mappage__title { font-size: 30px; }
+  }
+</style>

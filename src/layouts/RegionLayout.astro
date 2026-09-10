@@ -1,0 +1,152 @@
+---
+/*
+ * De pagina van één gebied op de kaart (/game/map/<slug>).
+ *
+ * Rustiger dan een postpagina: geen beeld, geen hartje, geen bron. Een
+ * broodkruimel, de naam, de werkelijke tegenhanger als die er is, de tekst,
+ * en de weg terug naar de kaart.
+ *
+ * Dit is ook de reden dat de kaart uit Markdown-bestanden leest en niet uit
+ * een JSON: elk gebied is zo een echte pagina met echte tekst, in zes talen,
+ * en dat is waar zoekverkeer op binnenkomt (§17).
+ */
+import type { Region } from '../lib/regions';
+import type { Locale } from '../i18n/ui';
+import { localizePath, useTranslations } from '../i18n/utils';
+import { render } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  region: Region;
+  locale: Locale;
+}
+
+const { region, locale } = Astro.props;
+const t = useTranslations(locale);
+const { Content } = await render(region.entry);
+
+const home = localizePath('', locale);
+const mapPath = localizePath('game/map', locale);
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://megamundo.be').href;
+
+/** Gestructureerde data: een plaats binnen de kaart (§17). */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Place',
+  name: region.title,
+  description: region.description,
+  mainEntityOfPage: canonical,
+  ...(region.realName ? { alternateName: region.realName } : {}),
+};
+---
+
+<BaseLayout
+  locale={locale}
+  title={region.title}
+  description={region.description}
+  compactCountdown
+>
+  <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
+
+  <article class="mm-region">
+    <nav class="mm-crumb" aria-label={t('crumb.label')}>
+      <a href={home}>{t('crumb.home')}</a>
+      <span aria-hidden="true">/</span>
+      <a href={mapPath}>{t('map.title')}</a>
+    </nav>
+
+    <h1 class="mm-region__title">{region.title}</h1>
+
+    {region.realName && (
+      <p class="mm-region__real">
+        <span class="mm-region__reallabel">{t('map.realName')}</span>
+        <span>{region.realName}</span>
+      </p>
+    )}
+
+    <div class="mm-prose">
+      <Content />
+    </div>
+
+    <p class="mm-region__back">
+      <a href={mapPath}>{t('map.backToMap')}</a>
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .mm-region {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 8px 0 40px;
+  }
+
+  .mm-crumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: var(--mm-muted);
+  }
+
+  .mm-crumb a:hover { color: var(--mm-ink); }
+
+  .mm-region__title {
+    font-size: 44px;
+    line-height: 1.02;
+    margin: 0 0 6px;
+    text-shadow: var(--mm-glow-h1);
+  }
+
+  .mm-region__real {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 24px;
+    font-size: 13.5px;
+    color: var(--mm-muted);
+  }
+
+  .mm-region__reallabel {
+    font-family: var(--mm-display);
+    letter-spacing: .14em;
+    color: var(--mm-accent-cyan);
+  }
+
+  .mm-region__back {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--mm-border);
+    font-size: 13.5px;
+  }
+
+  .mm-region__back a {
+    color: var(--mm-accent-cyan);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .mm-prose {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 17.5px;
+    line-height: 1.75;
+    color: var(--mm-body);
+  }
+
+  .mm-prose :global(h2) { font-size: 30px; margin-top: 12px; }
+
+  .mm-prose :global(a) {
+    color: var(--mm-accent-cyan);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 899px) {
+    .mm-region__title { font-size: 32px; }
+    .mm-prose { font-size: 16.5px; }
+    .mm-prose :global(h2) { font-size: 25px; }
+  }
+</style>

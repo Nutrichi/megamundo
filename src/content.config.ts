@@ -81,6 +81,32 @@ const game = defineCollection({
       section: z.enum([
         'map', 'characters', 'vehicles', 'missions', 'weapons', 'properties', 'cheats',
       ]),
+
+      /*
+       * De velden hieronder horen bij een gebied op de kaart van Leonida.
+       * Eén bestand per gebied is de enige bron: de kaart leest hier zijn
+       * klikvlakken uit, de lijst ernaast leest hier zijn namen, en §4.1
+       * laat de tab Map vanzelf verschijnen zodra er zo'n bestand staat.
+       */
+
+      /** Waar het gebied op lijkt in de echte wereld, als dat bekend is. */
+      realName: z.string().optional(),
+
+      /**
+       * Het klikvlak op de kaart, als punten [y, x] in het platte
+       * coördinatenstelsel van de kaart (zie src/data/map.ts).
+       *
+       * Bij benadering. Het vlak wordt niet getekend: het vangt alleen de
+       * klik en licht zacht op bij hover, zodat een ruwe rand niet opvalt.
+       * De grenzen die je ziet zijn die van de kaart zelf.
+       */
+      polygon: z.array(z.tuple([z.number(), z.number()])).optional(),
+
+      /** Waar het naamplaatje hangt, als [y, x]. */
+      labelAt: z.tuple([z.number(), z.number()]).optional(),
+
+      /** Volgorde in de lijst naast de kaart; laag getal staat bovenaan. */
+      order: z.number().default(99),
     }),
 });
 

@@ -21,6 +21,12 @@ export default defineConfig({
     },
   },
 
+  // De balk rechtsonder tijdens `npm run dev`. Die zit nooit in de gebouwde
+  // site, maar hij staat in de weg en niemand hier gebruikt hem.
+  devToolbar: {
+    enabled: false,
+  },
+
   build: {
     // Nette mappen zodat /nl/ met een slash werkt op GitHub Pages.
     format: 'directory',

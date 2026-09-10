@@ -37,7 +37,7 @@ export const ui = {
     'site.description': 'An independent GTA fansite counting down to Grand Theft Auto VI.',
     'site.tagline': 'An independent fansite for Grand Theft Auto, counting down to GTA VI.',
     'site.disclaimer':
-      'Megamundo is an independent fansite. Not affiliated with, endorsed by or associated with Rockstar Games or Take-Two Interactive. All trademarks belong to their respective owners.',
+      'Independent fansite. Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive. All trademarks belong to their owners.',
 
     'skip.content': 'Skip to content',
 
@@ -74,6 +74,7 @@ export const ui = {
     'countdown.aria':
       '{d} {du}, {h} {hu} and {m} {mu} until the release of GTA VI on 19 November 2026',
 
+    'footer.copyright': '© {y} megamundo.be',
     'footer.youtube': 'YouTube',
     'footer.discord': 'Discord',
     'footer.label': 'Site footer',
@@ -103,13 +104,23 @@ export const ui = {
     'post.source': 'Source:',
     'post.like': 'Like this post',
     'post.liked': 'You liked this post',
+
+    'map.title': 'Map of Leonida',
+    'map.label': 'Interactive map of Leonida',
+    'map.description': 'The map of Leonida, area by area: Vice City, Port Gellhorn, Mount Kalaga National Park, Ambrosia, Grassrivers and the Leonida Keys.',
+    'map.noscript': 'The map needs JavaScript. The areas are listed below and each one has its own page.',
+    'map.credit': 'Base map {map} from {site}.',
+    'map.regions': 'AREAS',
+    'map.realName': 'Real-world reference',
+    'map.backToMap': 'Back to the map',
+    'crumb.game': 'Game',
   },
 
   nl: {
     'site.description': 'Een onafhankelijke GTA-fansite die aftelt naar Grand Theft Auto VI.',
     'site.tagline': 'Een onafhankelijke fansite over Grand Theft Auto, aftellend naar GTA VI.',
     'site.disclaimer':
-      'Megamundo is een onafhankelijke fansite. Niet verbonden aan, goedgekeurd door of geassocieerd met Rockstar Games of Take-Two Interactive. Alle merken zijn eigendom van hun respectieve eigenaars.',
+      'Onafhankelijke fansite. Geen band met Rockstar Games of Take-Two Interactive. Alle merken zijn van hun eigenaars.',
 
     'skip.content': 'Naar de inhoud',
 
@@ -145,6 +156,7 @@ export const ui = {
     'countdown.aria':
       '{d} {du}, {h} {hu} en {m} {mu} tot de release van GTA VI op 19 november 2026',
 
+    'footer.copyright': '© {y} megamundo.be',
     'footer.label': 'Voettekst',
 
     'list.heading': 'ALLE POSTS, NIEUWSTE EERST',
@@ -172,13 +184,23 @@ export const ui = {
     'post.source': 'Bron:',
     'post.like': 'Deze post liken',
     'post.liked': 'Je vindt deze post leuk',
+
+    'map.title': 'Kaart van Leonida',
+    'map.label': 'Interactieve kaart van Leonida',
+    'map.description': 'De kaart van Leonida, gebied per gebied: Vice City, Port Gellhorn, Mount Kalaga National Park, Ambrosia, Grassrivers en de Leonida Keys.',
+    'map.noscript': 'De kaart heeft JavaScript nodig. De gebieden staan hieronder en elk gebied heeft een eigen pagina.',
+    'map.credit': 'Basiskaart {map} van {site}.',
+    'map.regions': 'GEBIEDEN',
+    'map.realName': 'Werkelijke tegenhanger',
+    'map.backToMap': 'Terug naar de kaart',
+    'crumb.game': 'Game',
   },
 
   fr: {
     'site.description': 'Un site de fans indépendant qui compte les jours jusqu’à Grand Theft Auto VI.',
     'site.tagline': 'Un site de fans indépendant sur Grand Theft Auto, en route vers GTA VI.',
     'site.disclaimer':
-      'Megamundo est un site de fans indépendant. Sans lien, approbation ni association avec Rockstar Games ou Take-Two Interactive. Toutes les marques appartiennent à leurs propriétaires respectifs.',
+      'Site de fans indépendant. Sans lien avec Rockstar Games ni Take-Two Interactive. Toutes les marques appartiennent à leurs propriétaires.',
 
     'skip.content': 'Aller au contenu',
 
@@ -214,6 +236,7 @@ export const ui = {
     'countdown.aria':
       '{d} {du}, {h} {hu} et {m} {mu} avant la sortie de GTA VI le 19 novembre 2026',
 
+    'footer.copyright': '© {y} megamundo.be',
     'footer.label': 'Pied de page',
 
     'list.heading': 'TOUS LES ARTICLES, DU PLUS RÉCENT',
@@ -241,13 +264,23 @@ export const ui = {
     'post.source': 'Source :',
     'post.like': 'Aimer cet article',
     'post.liked': 'Vous aimez cet article',
+
+    'map.title': 'Carte de Leonida',
+    'map.label': 'Carte interactive de Leonida',
+    'map.description': 'La carte de Leonida, zone par zone : Vice City, Port Gellhorn, Mount Kalaga National Park, Ambrosia, Grassrivers et les Leonida Keys.',
+    'map.noscript': 'La carte a besoin de JavaScript. Les zones sont listées ci-dessous et chacune a sa propre page.',
+    'map.credit': 'Fond de carte {map} de {site}.',
+    'map.regions': 'ZONES',
+    'map.realName': 'Référence réelle',
+    'map.backToMap': 'Retour à la carte',
+    'crumb.game': 'Jeu',
   },
 
   es: {
     'site.description': 'Un sitio de fans independiente que cuenta los días hasta Grand Theft Auto VI.',
     'site.tagline': 'Un sitio de fans independiente sobre Grand Theft Auto, camino a GTA VI.',
     'site.disclaimer':
-      'Megamundo es un sitio de fans independiente. Sin vínculo, respaldo ni asociación con Rockstar Games o Take-Two Interactive. Todas las marcas pertenecen a sus respectivos propietarios.',
+      'Sitio de fans independiente. Sin vínculo con Rockstar Games ni Take-Two Interactive. Todas las marcas pertenecen a sus propietarios.',
 
     'skip.content': 'Ir al contenido',
 
@@ -283,6 +316,7 @@ export const ui = {
     'countdown.aria':
       '{d} {du}, {h} {hu} y {m} {mu} hasta el lanzamiento de GTA VI el 19 de noviembre de 2026',
 
+    'footer.copyright': '© {y} megamundo.be',
     'footer.label': 'Pie de página',
 
     'list.heading': 'TODAS LAS ENTRADAS, MÁS RECIENTES PRIMERO',
@@ -310,13 +344,23 @@ export const ui = {
     'post.source': 'Fuente:',
     'post.like': 'Dar me gusta a esta entrada',
     'post.liked': 'Te gusta esta entrada',
+
+    'map.title': 'Mapa de Leonida',
+    'map.label': 'Mapa interactivo de Leonida',
+    'map.description': 'El mapa de Leonida, zona por zona: Vice City, Port Gellhorn, Mount Kalaga National Park, Ambrosia, Grassrivers y los Leonida Keys.',
+    'map.noscript': 'El mapa necesita JavaScript. Las zonas están listadas abajo y cada una tiene su propia página.',
+    'map.credit': 'Mapa base {map} de {site}.',
+    'map.regions': 'ZONAS',
+    'map.realName': 'Referencia real',
+    'map.backToMap': 'Volver al mapa',
+    'crumb.game': 'Juego',
   },
 
   it: {
     'site.description': 'Un sito di fan indipendente che conta i giorni fino a Grand Theft Auto VI.',
     'site.tagline': 'Un sito di fan indipendente su Grand Theft Auto, in attesa di GTA VI.',
     'site.disclaimer':
-      'Megamundo è un sito di fan indipendente. Non affiliato, approvato o associato a Rockstar Games o Take-Two Interactive. Tutti i marchi appartengono ai rispettivi proprietari.',
+      'Sito di fan indipendente. Nessun legame con Rockstar Games o Take-Two Interactive. Tutti i marchi appartengono ai rispettivi proprietari.',
 
     'skip.content': 'Vai al contenuto',
 
@@ -352,6 +396,7 @@ export const ui = {
     'countdown.aria':
       '{d} {du}, {h} {hu} e {m} {mu} all’uscita di GTA VI il 19 novembre 2026',
 
+    'footer.copyright': '© {y} megamundo.be',
     'footer.label': 'Piè di pagina',
 
     'list.heading': 'TUTTI GLI ARTICOLI, DAL PIÙ RECENTE',
@@ -379,13 +424,23 @@ export const ui = {
     'post.source': 'Fonte:',
     'post.like': 'Metti mi piace a questo articolo',
     'post.liked': 'Ti piace questo articolo',
+
+    'map.title': 'Mappa di Leonida',
+    'map.label': 'Mappa interattiva di Leonida',
+    'map.description': 'La mappa di Leonida, zona per zona: Vice City, Port Gellhorn, Mount Kalaga National Park, Ambrosia, Grassrivers e le Leonida Keys.',
+    'map.noscript': 'La mappa richiede JavaScript. Le zone sono elencate qui sotto e ognuna ha una pagina propria.',
+    'map.credit': 'Mappa di base {map} di {site}.',
+    'map.regions': 'ZONE',
+    'map.realName': 'Riferimento reale',
+    'map.backToMap': 'Torna alla mappa',
+    'crumb.game': 'Gioco',
   },
 
   de: {
     'site.description': 'Eine unabhängige GTA-Fanseite, die bis Grand Theft Auto VI zählt.',
     'site.tagline': 'Eine unabhängige Fanseite über Grand Theft Auto, auf dem Weg zu GTA VI.',
     'site.disclaimer':
-      'Megamundo ist eine unabhängige Fanseite. Nicht verbunden mit, unterstützt von oder assoziiert mit Rockstar Games oder Take-Two Interactive. Alle Marken gehören ihren jeweiligen Eigentümern.',
+      'Unabhängige Fanseite. Keine Verbindung zu Rockstar Games oder Take-Two Interactive. Alle Marken gehören ihren Eigentümern.',
 
     'skip.content': 'Zum Inhalt springen',
 
@@ -421,6 +476,7 @@ export const ui = {
     'countdown.aria':
       '{d} {du}, {h} {hu} und {m} {mu} bis zum Release von GTA VI am 19. November 2026',
 
+    'footer.copyright': '© {y} megamundo.be',
     'footer.label': 'Fußzeile',
 
     'list.heading': 'ALLE BEITRÄGE, NEUESTE ZUERST',
@@ -448,6 +504,16 @@ export const ui = {
     'post.source': 'Quelle:',
     'post.like': 'Diesen Beitrag liken',
     'post.liked': 'Du magst diesen Beitrag',
+
+    'map.title': 'Karte von Leonida',
+    'map.label': 'Interaktive Karte von Leonida',
+    'map.description': 'Die Karte von Leonida, Gebiet für Gebiet: Vice City, Port Gellhorn, Mount Kalaga National Park, Ambrosia, Grassrivers und die Leonida Keys.',
+    'map.noscript': 'Die Karte braucht JavaScript. Die Gebiete stehen unten und jedes hat eine eigene Seite.',
+    'map.credit': 'Basiskarte {map} von {site}.',
+    'map.regions': 'GEBIETE',
+    'map.realName': 'Reales Vorbild',
+    'map.backToMap': 'Zurück zur Karte',
+    'crumb.game': 'Spiel',
   },
 } as const;
 

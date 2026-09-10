@@ -10,15 +10,15 @@ export const ga4Id = 'G-PVE54ZRVSR';
 export const releaseDate = '2026-11-19T00:00:00Z';
 
 /**
- * De sociale links uit §16.
+ * De sociale links uit §16. Aangeleverd door Nutri op 10 september 2026.
+ * De Discord-uitnodiging is onbeperkt en verloopt niet.
  *
- * Nog niet ingevuld: de URL's van de YouTube en de Discord van Nutri zijn
- * nergens in de twee repo's te vinden en worden niet verzonnen. De voettekst
- * laat een link weg zolang zijn URL leeg is, dus de site blijft correct.
+ * De voettekst laat een link weg zolang zijn URL leeg is, dus leeghalen
+ * volstaat om er een te verbergen.
  */
 export const social = {
-  youtube: '',
-  discord: '',
+  youtube: 'https://www.youtube.com/@nutri_r1',
+  discord: 'https://discord.gg/E7AY5vPwcQ',
 };
 
 /**

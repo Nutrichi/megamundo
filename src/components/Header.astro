@@ -80,7 +80,15 @@ const hrefFor = (item: NavItem) => item.children?.[0]?.path ?? item.path;
 </header>
 
 <style>
-  .mm-header { background: var(--mm-header); }
+  .mm-header {
+    /*
+     * Blijft bovenaan staan bij het scrollen. De navigatie, het zoekveld en
+     * de themaknop horen altijd binnen bereik te zijn; op een lange feed
+     * scroll je anders minutenlang zonder ergens heen te kunnen.
+     */
+    position: sticky;
+    top: 0;
+    z-index: 20; background: var(--mm-header); }
 
   .mm-header__inner {
     display: flex;

@@ -14,7 +14,7 @@
  */
 
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { categories, type CategoryKey } from '../config/categories';
+import { categories, categoryKeys, type CategoryKey } from '../config/categories';
 import { defaultLocale, locales, type Locale } from '../i18n/ui';
 import { isLocale, localizePath } from '../i18n/utils';
 
@@ -195,6 +195,17 @@ export async function getPost(
 export async function getSlugs(category: CategoryKey): Promise<string[]> {
   const posts = await getPosts(defaultLocale);
   return posts.filter((post) => post.category === category).map((post) => post.slug);
+}
+
+/**
+ * Welke categorieën echt posts hebben, in de vaste volgorde van
+ * config/categories.ts. Het filter gebruikt dit: een chip die altijd nul
+ * resultaten geeft, is dezelfde fout als een tab naar een lege sectie
+ * (§4.1). Staat er nog geen gids, dan hoort de knop Guides er niet te zijn.
+ */
+export async function getUsedCategories(locale: Locale): Promise<CategoryKey[]> {
+  const posts = await getPosts(locale);
+  return categoryKeys.filter((key) => posts.some((post) => post.category === key));
 }
 
 /** Hoeveel posts er in deze taal staan; de teller boven de lijst. */

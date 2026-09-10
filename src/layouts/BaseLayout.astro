@@ -39,6 +39,13 @@ interface Props {
   image?: string;
   /** `article` op een postpagina, `website` op de rest. */
   ogType?: 'website' | 'article';
+  /**
+   * De pagina vult precies het scherm: koptekst boven, voettekst onder, en
+   * daartussen het enige dat beweegt. Voor de kaart, zodat zoomen en
+   * scrollen elkaar niet in de weg zitten. Alleen boven 1100 px; daaronder
+   * scrollt de pagina gewoon.
+   */
+  fixedHeight?: boolean;
 }
 
 const {
@@ -51,6 +58,7 @@ const {
   filter = false,
   image,
   ogType = 'website',
+  fixedHeight = false,
 } = Astro.props;
 
 const t = useTranslations(locale);
@@ -140,7 +148,7 @@ gtag('config', '${ga4Id}');`;
     </script>
   </head>
 
-  <body>
+  <body class:list={{ 'is-fixed': fixedHeight }}>
     <a class="mm-skip" href="#mm-content">{t('skip.content')}</a>
 
     <Header locale={locale} nav={nav} pathname={pathname} />

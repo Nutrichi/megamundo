@@ -1,0 +1,95 @@
+---
+/*
+ * De lijst met gebieden onder de kaart. Twee dingen tegelijk: de weg naar
+ * elke gebiedspagina zonder JavaScript, en de bediening naast de kaart, want
+ * wie met de muis over een naam gaat ziet het gebied oplichten.
+ */
+import type { Region } from '../lib/regions';
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  regions: Region[];
+  locale: Locale;
+}
+
+const { regions, locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="mm-regions" aria-label={t('map.regions')}>
+  <h2 class="mm-regions__head">{t('map.regions')}</h2>
+
+  <ul class="mm-regions__list">
+    {regions.map((region) => (
+      <li>
+        <a class="mm-regions__item" href={region.href} data-mm-region={region.slug}>
+          <span class="mm-regions__name">{region.title}</span>
+          {region.realName && <span class="mm-regions__real">{region.realName}</span>}
+          <span class="mm-regions__desc">{region.description}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .mm-regions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .mm-regions__head {
+    font-size: 14px;
+    letter-spacing: .18em;
+    color: var(--mm-muted);
+  }
+
+  .mm-regions__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+  }
+
+  .mm-regions__item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    height: 100%;
+    padding: 12px 14px;
+    background: var(--mm-raised);
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field-lg);
+    transition: var(--mm-transition);
+  }
+
+  .mm-regions__item:hover,
+  .mm-regions__item:focus-visible {
+    border-color: var(--mm-accent-cyan);
+    box-shadow: var(--mm-glow-pill);
+  }
+
+  .mm-regions__name {
+    font-family: var(--mm-display);
+    font-size: 19px;
+    letter-spacing: .06em;
+    color: var(--mm-ink);
+  }
+
+  .mm-regions__real {
+    font-size: 12px;
+    letter-spacing: .08em;
+    color: var(--mm-accent-cyan);
+  }
+
+  .mm-regions__desc {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--mm-muted);
+  }
+</style>

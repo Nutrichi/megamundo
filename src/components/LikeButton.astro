@@ -3,9 +3,19 @@
  * Het hartje. Staat in de pil (lijnvorm, klein) en op de postpagina
  * (gevuld, met de regel ernaast).
  *
+ * **Liken kan alleen op de postpagina** (§8.1). In de pil en bij het
+ * uitgelichte artikel is het hartje alleen weergave: het toont de telling en
+ * is niet aantikbaar. Dat is geen detail maar de bedoeling: zo loopt de weg
+ * naar een like via de individuele URL, en dat zijn precies de pagina's die
+ * verkeer en betrokkenheidssignalen nodig hebben.
+ *
  * Bewust een eigen knop en niet genest in de link van de pil (§5.1): een
  * knop in een link is geen geldige HTML en een schermlezer maakt er niets
  * van. De pil zet hem daarom naast de link, met een eigen label.
+ *
+ * **Een like is niet terug te nemen** (beslist 10 september 2026). De
+ * ontwerphandoff liet een tweede klik de like ongedaan maken; Nutri heeft
+ * dat ingetrokken. Eén keer geliked blijft geliked.
  *
  * De telling komt in fase 4 uit Supabase (§8). Zolang die er niet is, is de
  * basis nul en telt alleen de eigen like mee, lokaal bewaard zoals de
@@ -30,21 +40,38 @@ const { postId, count = 0, variant = 'pill', locale } = Astro.props;
 const t = useTranslations(locale);
 const isPost = variant === 'post';
 const label = t('post.like');
+
+/** Het aantal likes, voor wie de pagina met een schermlezer leest. */
+const readLabel = t('pill.likes').replace('{n}', String(count));
 ---
 
 <div class:list={['mm-like', isPost && 'is-post']}>
-  <button
-    type="button"
-    class="mm-like__button"
-    data-mm-like
-    data-post-id={postId}
-    data-base={count}
-    aria-pressed="false"
-    aria-label={label}
-  >
-    <Icon name="heart" size={isPost ? 17 : 14} filled={isPost} class="mm-like__icon" />
-    <span class="mm-like__count mm-nums" data-mm-like-count>{count}</span>
-  </button>
+  {isPost ? (
+    <button
+      type="button"
+      class="mm-like__button"
+      data-mm-like
+      data-post-id={postId}
+      data-base={count}
+      aria-pressed="false"
+      aria-label={label}
+    >
+      <Icon name="heart" size={17} filled class="mm-like__icon" />
+      <span class="mm-like__count mm-nums" data-mm-like-count>{count}</span>
+    </button>
+  ) : (
+    <span
+      class="mm-like__button is-static"
+      data-mm-like
+      data-post-id={postId}
+      data-base={count}
+      aria-label={readLabel}
+      data-static
+    >
+      <Icon name="heart" size={14} class="mm-like__icon" />
+      <span class="mm-like__count mm-nums" data-mm-like-count aria-hidden="true">{count}</span>
+    </span>
+  )}
 
   {isPost && (
     <span class="mm-like__note" data-mm-like-note hidden>{t('post.liked')}</span>
@@ -63,10 +90,25 @@ const label = t('post.like');
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 7px;
+    gap: 8px;
     font-size: 13px;
     color: var(--mm-muted);
     transition: var(--mm-transition), color .16s ease;
+  }
+
+  /*
+   * Het getal krijgt een vaste breedte, zodat het hartje niet opschuift
+   * wanneer de telling van 1 naar 10 naar 100 gaat. Zonder dit staat het
+   * groepje gecentreerd en wandelt het hartje per pil een paar pixels naar
+   * links: in een lijst van twintig pillen valt dat meteen op.
+   *
+   * Drie tekens is genoeg tot 999. Daarboven schuift het hartje een halve
+   * tekenbreedte; dat is een probleem voor een dag waarop een post
+   * duizend likes haalt.
+   */
+  .mm-like__count {
+    min-width: 3ch;
+    text-align: left;
   }
 
   .mm-like__icon {
@@ -74,9 +116,15 @@ const label = t('post.like');
     transition: fill .16s ease;
   }
 
-  /* Gelikt: het hartje vult zich, ook in de pil. */
-  .mm-like__button[aria-pressed="true"] .mm-like__icon { fill: var(--mm-accent-pink); }
-  .mm-like__button[aria-pressed="true"] .mm-like__count { color: var(--mm-accent-pink); }
+  /* Gelikt: het hartje vult zich, ook waar het alleen weergave is. */
+  .mm-like__button[aria-pressed="true"] .mm-like__icon,
+  .mm-like__button.is-liked .mm-like__icon { fill: var(--mm-accent-pink); }
+
+  .mm-like__button[aria-pressed="true"] .mm-like__count,
+  .mm-like__button.is-liked .mm-like__count { color: var(--mm-accent-pink); }
+
+  /* Alleen weergave: geen handje, geen focusring, niets aan te tikken. */
+  .is-static { cursor: default; }
 
   /* --- De variant op de postpagina --- */
   .is-post .mm-like__button {
@@ -90,6 +138,9 @@ const label = t('post.like');
   }
 
   .is-post .mm-like__icon { fill: var(--mm-accent-pink); }
+
+  /* Op de postpagina staat er één knop, dus daar mag het getal meeademen. */
+  .is-post .mm-like__count { min-width: 0; }
 
   .mm-like__note {
     font-size: 13.5px;
@@ -136,7 +187,12 @@ const label = t('post.like');
     const base = Number(button.dataset.base ?? '0');
     const isLiked = liked[id] === true;
 
-    button.setAttribute('aria-pressed', String(isLiked));
+    // Alleen de knop op de postpagina is een knop; de rest is weergave.
+    if (button.dataset.static === undefined) {
+      button.setAttribute('aria-pressed', String(isLiked));
+    } else {
+      button.classList.toggle('is-liked', isLiked);
+    }
 
     const count = button.querySelector<HTMLElement>('[data-mm-like-count]');
     if (count) count.textContent = String(base + (isLiked ? 1 : 0));
@@ -155,11 +211,15 @@ const label = t('post.like');
     const button = target?.closest<HTMLElement>('[data-mm-like]');
     if (!button) return;
 
+    // Weergave is geen knop.
+    if (button.dataset.static !== undefined) return;
+
     const id = button.dataset.postId ?? '';
     if (!id) return;
 
-    if (liked[id]) delete liked[id];
-    else liked[id] = true;
+    // Een like is niet terug te nemen (§8.1, beslist 10 september 2026).
+    if (liked[id]) return;
+    liked[id] = true;
 
     write(liked);
     // Dezelfde post kan twee keer op de pagina staan; werk ze allebei bij.

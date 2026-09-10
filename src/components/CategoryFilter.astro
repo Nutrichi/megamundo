@@ -15,8 +15,15 @@
  *
  * De chips komen uit config/categories.ts. Een categorie erbij is daar één
  * regel; hier hoeft niets te veranderen (§6).
+ *
+ * Alleen categorieën die echt posts hebben krijgen een chip. Een knop die
+ * gegarandeerd nul resultaten geeft is dezelfde fout als een tab naar een
+ * lege sectie (§4.1). Zijn er minder dan twee categorieën in omloop, dan
+ * valt de hele balk weg: filteren tussen "alles" en "het enige dat er is"
+ * heeft geen betekenis, en het scheelt weer wat ruis boven de feed.
  */
-import { categoryList } from '../config/categories';
+import { categories } from '../config/categories';
+import { getUsedCategories } from '../lib/posts';
 import type { Locale } from '../i18n/ui';
 import { localizePath, useTranslations } from '../i18n/utils';
 
@@ -27,8 +34,12 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 const home = localizePath('', locale);
+
+const used = await getUsedCategories(locale);
+const show = used.length > 1;
 ---
 
+{show && (
 <div class="mm-filter" role="group" aria-label={t('filter.label')} data-mm-filter>
   <a
     class="mm-filter__chip"
@@ -37,7 +48,7 @@ const home = localizePath('', locale);
     aria-current="true"
   >{t('filter.all')}</a>
 
-  {categoryList.map((category) => (
+  {used.map((key) => categories[key]).map((category) => (
     <a
       class="mm-filter__chip"
       href={`${home}${home.endsWith('/') ? '' : '/'}?cat=${category.key}`}
@@ -46,6 +57,7 @@ const home = localizePath('', locale);
     >{t(category.labelKey)}</a>
   ))}
 </div>
+)}
 
 <style>
   .mm-filter {

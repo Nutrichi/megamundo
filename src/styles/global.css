@@ -118,7 +118,44 @@ button {
 .mm-main {
   flex: 1 1 auto;
   min-width: 0;
+  /*
+   * De onderrand houdt rekening met de vastgeplakte voettekst: zonder die
+   * ruimte schuift de laatste regel er tijdens het scrollen achter.
+   */
   padding: 24px 26px 32px;
+}
+
+/*
+ * Een pagina die precies het scherm vult: koptekst boven, voettekst onder,
+ * en daartussen het enige dat beweegt. Gebruikt door de kaart.
+ *
+ * Waarom: op de kaartpagina liepen twee dingen door elkaar. Je zoomde met
+ * het wiel én de pagina schoof mee, en dat voelt kapot. Nu is er niets meer
+ * om te scrollen: de kaart heeft de hoogte die er is en houdt het wiel voor
+ * zichzelf.
+ *
+ * Alleen op een breed scherm. Daaronder staat de gebiedenlijst onder de
+ * kaart en moet de pagina gewoon kunnen scrollen, anders is de lijst
+ * onbereikbaar.
+ */
+@media (min-width: 1100px) {
+  body.is-fixed {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  body.is-fixed .mm-shell {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  body.is-fixed .mm-main {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    padding-bottom: 16px;
+  }
 }
 
 @keyframes mmRise {

@@ -1,0 +1,22 @@
+---
+/*
+ * Eén gebied van de kaart in de vijf niet-standaardtalen: /nl/game/map/<slug>.
+ */
+import RegionLayout from '../../../../layouts/RegionLayout.astro';
+import { getRegion, getRegionSlugs } from '../../../../lib/regions';
+import { defaultLocale, locales, type Locale } from '../../../../i18n/ui';
+
+export async function getStaticPaths() {
+  const slugs = await getRegionSlugs();
+  return locales
+    .filter((locale) => locale !== defaultLocale)
+    .flatMap((lang) => slugs.map((slug) => ({ params: { lang, section: 'map', slug } })));
+}
+
+const locale = Astro.params.lang as Locale;
+const region = await getRegion(Astro.params.slug!, locale);
+
+if (!region) throw new Error(`Onbekend gebied: ${Astro.params.slug}`);
+---
+
+<RegionLayout region={region} locale={locale} />

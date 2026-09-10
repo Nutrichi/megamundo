@@ -1,0 +1,22 @@
+---
+/*
+ * Eén gebied van de kaart in het Engels: /game/map/<slug>.
+ */
+import RegionLayout from '../../../layouts/RegionLayout.astro';
+import { getRegion, getRegionSlugs } from '../../../lib/regions';
+import { defaultLocale } from '../../../i18n/ui';
+
+export async function getStaticPaths() {
+  const slugs = await getRegionSlugs();
+  return slugs.map((slug) => ({ params: { section: 'map', slug } }));
+}
+
+const locale = defaultLocale;
+const region = await getRegion(Astro.params.slug!, locale);
+
+// Kan niet gebeuren: de slug komt uit dezelfde lijst. Faalt hij toch, dan
+// faalt de build luid in plaats van een halve pagina te publiceren (§14).
+if (!region) throw new Error(`Onbekend gebied: ${Astro.params.slug}`);
+---
+
+<RegionLayout region={region} locale={locale} />

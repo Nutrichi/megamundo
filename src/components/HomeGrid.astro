@@ -10,21 +10,14 @@
  * Het grid blijft twee kolommen, ook bij honderden posts. Uitdrukkelijke
  * keuze (§5): niet omschakelen naar een kaartengrid als het archief groeit.
  *
- * De teller rechts telt wat er ná het filter en de zoekterm overblijft. Het
- * script van PostList werkt hem bij; de twee patronen staan als attribuut
- * mee, zodat daar geen vertaling in de JavaScript hoeft.
+ * De teller rechts is er niet meer (11 september 2026): het getal zei de
+ * lezer niets en verspringt bij elk filter.
  */
 import type { Locale } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
 
 interface Props {
   locale: Locale;
-  /**
-   * Hoeveel posts er in de lijst rechts staan — dus zonder het uitgelichte
-   * artikel, dat eruit gefilterd is. De teller hoort te tellen wat eronder
-   * staat, en dat is ook wat het script doet zodra er gefilterd wordt.
-   */
-  count?: number;
   /**
    * Of de twee kolommen inhoud hebben. Expliciet, en niet met
    * `Astro.slots.has()`: die zegt ook ja als de slot wel meegegeven is maar
@@ -34,12 +27,8 @@ interface Props {
   hasList?: boolean;
 }
 
-const { locale, count = 0, hasFeatured = false, hasList = false } = Astro.props;
+const { locale, hasFeatured = false, hasList = false } = Astro.props;
 const t = useTranslations(locale);
-/** "1 post" of "143 posts", in de taal van de pagina. */
-const one = t('list.countOne');
-const many = t('list.countMany');
-const countLabel = (count === 1 ? one : many).replace('{n}', String(count));
 
 ---
 
@@ -52,14 +41,6 @@ const countLabel = (count === 1 ? one : many).replace('{n}', String(count));
   <section class="mm-home__col" aria-label={t('list.heading')}>
     <div class="mm-home__listhead">
       <h2 class="mm-home__label">{t('list.heading')}</h2>
-      {hasList && count > 0 && (
-        <span
-          class="mm-home__count mm-nums"
-          data-mm-count
-          data-one={one}
-          data-many={many}
-        >{countLabel}</span>
-      )}
     </div>
     {hasList ? <slot name="list" /> : <p class="mm-home__empty">{t('list.empty')}</p>}
   </section>
@@ -94,11 +75,6 @@ const countLabel = (count === 1 ? one : many).replace('{n}', String(count));
     padding-bottom: 4px;
   }
 
-  .mm-home__count {
-    font-size: 12.5px;
-    color: var(--mm-muted);
-  }
-
   .mm-home__empty {
     font-size: 13.5px;
     color: var(--mm-muted);
@@ -108,6 +84,15 @@ const countLabel = (count === 1 ? one : many).replace('{n}', String(count));
     .mm-home {
       grid-template-columns: minmax(0, 1fr);
       gap: 12px;
+    }
+
+    /*
+     * Gestapeld hebben de twee kolommen een scheiding nodig, anders loopt
+     * het uitgelichte artikel zonder pauze over in de lijst.
+     */
+    .mm-home__col + .mm-home__col {
+      padding-top: 14px;
+      border-top: 1px solid var(--mm-border);
     }
   }
 </style>

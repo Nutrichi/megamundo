@@ -190,6 +190,9 @@ button {
 }
 
 @media (max-width: 899px) {
+  /* Op een telefoon is de koptekst lager; de aftelbalk plakt daaronder. */
+  :root { --mm-header-h: 62px; }
+
   /* Geen extra ruimte nodig: op mobiel plakt de voettekst niet vast. */
   .mm-main { padding: 16px 16px 20px; }
 }

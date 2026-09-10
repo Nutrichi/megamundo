@@ -3,11 +3,14 @@
  * De rechterkolom van de homepage: het volledige archief als pillijst, met
  * LOAD MORE eronder (§5).
  *
- * Er is geen tweede pagina waar de rest staat. Elke post staat in de HTML —
- * dat is wat een crawler ziet en straks ook wat Pagefind indexeert (§15) —
- * en wat nog niet aan de beurt is, staat er verborgen bij. LOAD MORE toont
- * de volgende reeks; bestaande pillen blijven staan. Geen paginering, geen
- * oneindig scrollen.
+ * Er is geen tweede pagina waar de rest staat. Elke post staat in de HTML,
+ * dat is wat een crawler ziet en straks ook wat Pagefind indexeert (§15),
+ * en wat nog niet aan de beurt is staat er verborgen bij.
+ *
+ * **Bijladen gebeurt vanzelf** (11 september 2026). Kom je onderaan de
+ * lijst, dan verschijnt de volgende reeks. De knop blijft bestaan voor wie
+ * geen JavaScript heeft of met het toetsenbord werkt, en als vangnet: valt
+ * de waarnemer weg, dan is er nog altijd iets om op te duwen.
  *
  * Filteren en zoeken gebeuren in dezelfde lijst en op dezelfde manier: niets
  * wordt opnieuw opgehaald, er verandert alleen wat zichtbaar is.
@@ -51,6 +54,9 @@ const submitHref = submitPath ? localizePath(submitPath, locale) : '';
 
       <p class="mm-list__empty" data-mm-noresults hidden>{t('list.noResults')}</p>
 
+      <!-- Het baken dat het bijladen op gang brengt zodra het in beeld komt. -->
+      <div data-mm-sentinel aria-hidden="true"></div>
+
       <div class="mm-list__actions">
         <button type="button" class="mm-btn is-secondary" data-mm-more hidden>
           {t('list.loadMore')}
@@ -86,6 +92,9 @@ const submitHref = submitPath ? localizePath(submitPath, locale) : '';
     color: var(--mm-muted);
     padding: 12px 0;
   }
+
+  /* Eén pixel hoog: genoeg om een plek in de opmaak te hebben. */
+  .mm-list [data-mm-sentinel] { height: 1px; }
 
   .mm-list__actions {
     display: flex;
@@ -147,7 +156,7 @@ const submitHref = submitPath ? localizePath(submitPath, locale) : '';
     const searchInputs = Array.from(
       document.querySelectorAll<HTMLInputElement>('input[name="q"]'),
     );
-    const counter = document.querySelector<HTMLElement>('[data-mm-count]');
+    const sentinel = list.querySelector<HTMLElement>('[data-mm-sentinel]');
 
     const params = new URLSearchParams(window.location.search);
     const known = new Set(chips.map((chip) => chip.dataset.cat));
@@ -166,13 +175,6 @@ const submitHref = submitPath ? localizePath(submitPath, locale) : '';
         return inCategory && inQuery;
       });
 
-    /** "1 post" of "143 posts", in de taal van de pagina. */
-    const setCount = (n: number) => {
-      if (!counter) return;
-      const pattern = n === 1 ? counter.dataset.one : counter.dataset.many;
-      counter.textContent = (pattern ?? '').replace('{n}', String(n));
-    };
-
     const render = (markNew = false) => {
       const shown = matching();
       const cutoff = Math.min(visible, shown.length);
@@ -186,9 +188,10 @@ const submitHref = submitPath ? localizePath(submitPath, locale) : '';
         pill.hidden = !show;
       });
 
-      if (more) more.hidden = cutoff >= shown.length;
+      const done = cutoff >= shown.length;
+      if (more) more.hidden = done;
+      if (sentinel) sentinel.hidden = done;
       if (noResults) noResults.hidden = shown.length > 0;
-      setCount(shown.length);
 
       return shown.slice(0, cutoff);
     };
@@ -252,5 +255,45 @@ const submitHref = submitPath ? localizePath(submitPath, locale) : '';
 
     syncChips();
     render();
+
+    /*
+     * Vanzelf bijladen. Zodra het baken onder de lijst in de buurt van de
+     * onderrand komt, komt de volgende reeks erbij.
+     *
+     * Bewust met een scroll-luisteraar en niet met een IntersectionObserver.
+     * Die laatste meldde het baken één keer als "niet in beeld" en daarna
+     * nooit meer, omdat het element nul pixels hoog was. Een hoogte van één
+     * pixel lost dat op, maar een simpele meting van de afstand tot de
+     * onderrand is voorspelbaar en heeft die valkuil niet.
+     *
+     * De lus laadt door tot het baken weer ver genoeg weg is. Dat is nodig
+     * na filteren of zoeken: dan staat de lijst weer op de eerste reeks en
+     * kan het baken meteen weer binnen bereik liggen.
+     */
+    const maybeLoad = () => {
+      if (!sentinel) return;
+      // Hoogstens een paar reeksen per keer, zodat een fout hier nooit een
+      // eindeloze lus wordt.
+      for (let i = 0; i < 5; i += 1) {
+        if (sentinel.hidden) return;
+        if (sentinel.getBoundingClientRect().top > window.innerHeight + 600) return;
+        visible += step;
+        render(true);
+      }
+    };
+
+    let wachtend = false;
+    const onScroll = () => {
+      if (wachtend) return;
+      wachtend = true;
+      requestAnimationFrame(() => {
+        wachtend = false;
+        maybeLoad();
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    maybeLoad();
   }
 </script>

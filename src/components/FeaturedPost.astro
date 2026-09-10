@@ -6,6 +6,11 @@
  * Beeld met het categorielabel erover, dan de titel, de samenvatting en een
  * metaregel met de datum en het hartje. Beeld én titel wijzen naar dezelfde
  * detailpagina.
+ *
+ * **Op een telefoon blijven alleen het beeld en de titel over**
+ * (11 september 2026). De samenvatting en de metaregel vallen daar weg: op
+ * een smal scherm duwen ze de lijst met posts onder de vouw, en de
+ * samenvatting staat toch al op de postpagina zelf.
  */
 import type { Post } from '../lib/posts';
 import type { Locale } from '../i18n/ui';
@@ -79,7 +84,11 @@ const postId = `${post.collection}/${post.slug}`;
   }
 
   @media (max-width: 899px) {
+    .mm-featured { gap: 10px; }
     .mm-featured__title { font-size: 28px; line-height: 1.02; }
-    .mm-featured__summary { font-size: 14.5px; line-height: 1.6; }
+
+    /* Alleen beeld en titel; zie de uitleg bovenaan. */
+    .mm-featured__summary,
+    .mm-featured__meta { display: none; }
   }
 </style>

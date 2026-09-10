@@ -81,8 +81,6 @@ export const ui = {
 
     'list.heading': 'ALL POSTS, NEWEST FIRST',
     'list.empty': 'No posts yet.',
-    'list.countOne': '{n} post',
-    'list.countMany': '{n} posts',
     'featured.label': 'FEATURED',
 
 
@@ -178,8 +176,6 @@ export const ui = {
 
     'list.heading': 'ALLE POSTS, NIEUWSTE EERST',
     'list.empty': 'Nog geen posts.',
-    'list.countOne': '{n} post',
-    'list.countMany': '{n} posts',
     'featured.label': 'UITGELICHT',
 
 
@@ -275,8 +271,6 @@ export const ui = {
 
     'list.heading': 'TOUS LES ARTICLES, DU PLUS RÉCENT',
     'list.empty': 'Pas encore d’articles.',
-    'list.countOne': '{n} article',
-    'list.countMany': '{n} articles',
     'featured.label': 'À LA UNE',
 
 
@@ -372,8 +366,6 @@ export const ui = {
 
     'list.heading': 'TODAS LAS ENTRADAS, MÁS RECIENTES PRIMERO',
     'list.empty': 'Todavía no hay entradas.',
-    'list.countOne': '{n} entrada',
-    'list.countMany': '{n} entradas',
     'featured.label': 'DESTACADO',
 
 
@@ -469,8 +461,6 @@ export const ui = {
 
     'list.heading': 'TUTTI GLI ARTICOLI, DAL PIÙ RECENTE',
     'list.empty': 'Ancora nessun articolo.',
-    'list.countOne': '{n} articolo',
-    'list.countMany': '{n} articoli',
     'featured.label': 'IN EVIDENZA',
 
 
@@ -566,8 +556,6 @@ export const ui = {
 
     'list.heading': 'ALLE BEITRÄGE, NEUESTE ZUERST',
     'list.empty': 'Noch keine Beiträge.',
-    'list.countOne': '{n} Beitrag',
-    'list.countMany': '{n} Beiträge',
     'featured.label': 'HERVORGEHOBEN',
 
 

@@ -25,7 +25,6 @@ const rest = withoutFeatured(posts, featured);
 <BaseLayout locale={locale} filter>
   <HomeGrid
     locale={locale}
-    count={rest.length}
     hasFeatured={!!featured}
     hasList={rest.length > 0}
   >

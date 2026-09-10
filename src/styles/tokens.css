@@ -109,6 +109,12 @@
 
   /* Breedte van de contentkolom */
   --mm-max: 1180px;
+
+  /*
+   * Hoogte van de koptekst. De aftelbalk plakt hieronder vast, dus die twee
+   * moeten hetzelfde getal kennen.
+   */
+  --mm-header-h: 73px;
 }
 
 /* --- Dag: expliciete keuze --- */

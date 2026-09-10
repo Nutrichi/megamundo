@@ -105,6 +105,17 @@ const ariaText = fill(t('countdown.aria'), initial.days, initial.hours, initial.
 
 <style>
   .mm-countdown {
+    /*
+     * Blijft samen met de koptekst bovenaan staan (11 september 2026). De
+     * aftelling en de categoriechips horen bij de navigatie: je wil ze
+     * kunnen gebruiken zonder eerst terug naar boven te scrollen.
+     *
+     * `top` is de hoogte van de koptekst, zodat hij daar precies onder
+     * plakt in plaats van eroverheen.
+     */
+    position: sticky;
+    top: var(--mm-header-h);
+    z-index: 19;
     background: var(--mm-bar);
     border-top: 1px solid var(--mm-border);
     border-bottom: 1px solid var(--mm-border);

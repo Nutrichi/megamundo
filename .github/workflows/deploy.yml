@@ -1,16 +1,12 @@
 # Bouwt de site en zet hem op GitHub Pages.
 #
-# TIJDELIJK (10 september 2026): deze workflow publiceert de PLACEHOLDER en
-# niet de Astro-site. De Pages-bron blijkt op "GitHub Actions" te staan en
-# niet op "branch" zoals eerder aangenomen, dus elke push naar main zette de
-# Astro-site live. Die is nog leeg, en dat hoort megamundo.be niet te tonen.
+# Live sinds 11 september 2026: deze workflow publiceert dist/, de Astro-site.
 #
-# Terugdraaien is één ding: de stap "Zet de placeholder klaar" weghalen en
-# `path: _site` weer `path: dist` maken. Doe dat zodra de Astro-site beter is
-# dan de placeholder (§ "Wat openstaat voor Nutri" in STATUS.md).
-#
-# De build blijft draaien, ook nu hij niet gepubliceerd wordt: dan merkt de
-# Action het nog steeds als een post de build breekt.
+# Van 10 tot 11 september publiceerde hij bewust de placeholder uit de wortel
+# van de publieke repo. Wil je die ooit tijdelijk terug: haal index.html,
+# robots.txt, sitemap.xml, CNAME, .nojekyll en assets/ uit commit bfdab20 van
+# de publieke repo, zet een stap die ze naar _site kopieert, en maak
+# `path: dist` hieronder `path: _site`.
 #
 # Daily Clips en Streams (fase 7, §10.1): de workflow draait ook elk kwartier
 # op schema. Vlak voor de build haalt scripts/fetch-feeds.mjs de streams en de
@@ -82,18 +78,9 @@ jobs:
 
       - uses: actions/configure-pages@v5
 
-      # TIJDELIJK: alleen de placeholder uit de wortel gaat live.
-      # Uitsluitend deze vijf dingen, zodat er geen bronbestand meelift.
-      - name: Zet de placeholder klaar
-        run: |
-          mkdir -p _site
-          cp index.html robots.txt sitemap.xml CNAME .nojekyll _site/
-          cp -R assets _site/assets
-          ls -R _site
-
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: dist
 
   deploy:
     needs: build

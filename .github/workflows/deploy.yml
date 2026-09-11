@@ -2,6 +2,12 @@
 #
 # Live sinds 11 september 2026: deze workflow publiceert dist/, de Astro-site.
 #
+# De Pages-bron moet op "GitHub Actions" staan (Settings → Pages → Build and
+# deployment → Source). Tot 11 september stond hij op "Deploy from a branch":
+# dan draaide bij elke push ook GitHub's eigen Jekyll-bouw ("pages build and
+# deployment"), die naar dezelfde site publiceerde en tegen deze workflow
+# racete, en hing het eigen domein aan het CNAME-bestand in de repo.
+#
 # Van 10 tot 11 september publiceerde hij bewust de placeholder uit de wortel
 # van de publieke repo. Wil je die ooit tijdelijk terug: haal index.html,
 # robots.txt, sitemap.xml, CNAME, .nojekyll en assets/ uit commit bfdab20 van

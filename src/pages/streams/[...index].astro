@@ -1,0 +1,17 @@
+---
+/*
+ * Streams in het Engels, op /streams (§10). De vijf andere talen staan in
+ * [lang]/streams; de pagina zelf staat in FeedPage.
+ *
+ * Een rest-parameter en geen gewone streams.astro, zodat de route kan
+ * wegblijven als er niets opgehaald is (§4.1).
+ */
+import FeedPage from '../../components/FeedPage.astro';
+import { feedHasContent } from '../../lib/feeds';
+
+export function getStaticPaths() {
+  return feedHasContent('streams') ? [{ params: { index: undefined } }] : [];
+}
+---
+
+<FeedPage kind="streams" locale="en" />

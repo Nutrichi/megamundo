@@ -8,15 +8,17 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "check": "astro check",
     "new-post": "node scripts/new-post.mjs",
     "translate": "node scripts/translate.mjs",
     "map:update": "node scripts/update-map.mjs",
+    "feeds": "node scripts/fetch-feeds.mjs",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.3.2",
     "leaflet": "^1.9.4"
   },
@@ -28,6 +30,7 @@
     "@anthropic-ai/sdk": "^0.72.1",
     "@astrojs/check": "^0.9.10",
     "@types/leaflet": "^1.9.22",
+    "pagefind": "^1.5.2",
     "typescript": "^6.0.3"
   }
 }

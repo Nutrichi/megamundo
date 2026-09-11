@@ -25,24 +25,44 @@ interface Props {
    */
   hasFeatured?: boolean;
   hasList?: boolean;
+  /*
+   * De koppen en de lege staat. Standaard die van de homepage; Daily Clips
+   * en Streams geven hun eigen mee (§10, handoff scherm 6).
+   */
+  featuredLabel?: string;
+  /** Alleen voor schermlezers, als het blok zelf al een zichtbaar label draagt. */
+  featuredLabelHidden?: boolean;
+  listLabel?: string;
+  /** Rechts in de lijstkop, zoals `min. 500 viewers`. */
+  listMeta?: string;
+  emptyText?: string;
 }
 
-const { locale, hasFeatured = false, hasList = false } = Astro.props;
+const {
+  locale,
+  hasFeatured = false,
+  hasList = false,
+  featuredLabelHidden = false,
+  listMeta,
+} = Astro.props;
 const t = useTranslations(locale);
-
+const featuredLabel = Astro.props.featuredLabel ?? t('featured.label');
+const listLabel = Astro.props.listLabel ?? t('list.heading');
+const emptyText = Astro.props.emptyText ?? t('list.empty');
 ---
 
 <div class="mm-home">
-  <section class="mm-home__col" aria-label={t('featured.label')}>
-    <h2 class="mm-home__label">{t('featured.label')}</h2>
-    {hasFeatured ? <slot name="featured" /> : <p class="mm-home__empty">{t('list.empty')}</p>}
+  <section class="mm-home__col" aria-label={featuredLabel}>
+    <h2 class:list={['mm-home__label', { 'mm-sr': featuredLabelHidden }]}>{featuredLabel}</h2>
+    {hasFeatured ? <slot name="featured" /> : <p class="mm-home__empty">{emptyText}</p>}
   </section>
 
-  <section class="mm-home__col" aria-label={t('list.heading')}>
+  <section class="mm-home__col" aria-label={listLabel}>
     <div class="mm-home__listhead">
-      <h2 class="mm-home__label">{t('list.heading')}</h2>
+      <h2 class="mm-home__label">{listLabel}</h2>
+      {listMeta && <p class="mm-home__meta">{listMeta}</p>}
     </div>
-    {hasList ? <slot name="list" /> : <p class="mm-home__empty">{t('list.empty')}</p>}
+    {hasList ? <slot name="list" /> : <p class="mm-home__empty">{emptyText}</p>}
   </section>
 </div>
 
@@ -73,6 +93,11 @@ const t = useTranslations(locale);
     justify-content: space-between;
     gap: 12px;
     padding-bottom: 4px;
+  }
+
+  .mm-home__meta {
+    font-size: 12px;
+    color: var(--mm-muted);
   }
 
   .mm-home__empty {

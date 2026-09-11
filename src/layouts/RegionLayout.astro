@@ -15,6 +15,7 @@ import type { Locale } from '../i18n/ui';
 import { localizePath, useTranslations } from '../i18n/utils';
 import { render } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
+import { breadcrumbJsonLd } from '../lib/structured-data';
 
 interface Props {
   region: Region;
@@ -29,14 +30,26 @@ const home = localizePath('', locale);
 const mapPath = localizePath('game/map', locale);
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://megamundo.be').href;
 
-/** Gestructureerde data: een plaats binnen de kaart (§17). */
+/** Gestructureerde data: een plaats binnen de kaart, en de broodkruimel (§17). */
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Place',
-  name: region.title,
-  description: region.description,
-  mainEntityOfPage: canonical,
-  ...(region.realName ? { alternateName: region.realName } : {}),
+  '@graph': [
+    {
+      '@type': 'Place',
+      name: region.title,
+      description: region.description,
+      mainEntityOfPage: canonical,
+      ...(region.realName ? { alternateName: region.realName } : {}),
+    },
+    breadcrumbJsonLd(
+      [
+        { name: t('crumb.home'), path: home },
+        { name: t('map.title'), path: mapPath },
+        { name: region.title, path: Astro.url.pathname },
+      ],
+      Astro.site,
+    ),
+  ],
 };
 ---
 
@@ -48,8 +61,8 @@ const jsonLd = {
 >
   <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
 
-  <article class="mm-region">
-    <nav class="mm-crumb" aria-label={t('crumb.label')}>
+  <article class="mm-region" data-pagefind-body>
+    <nav class="mm-crumb" aria-label={t('crumb.label')} data-pagefind-ignore>
       <a href={home}>{t('crumb.home')}</a>
       <span aria-hidden="true">/</span>
       <a href={mapPath}>{t('map.title')}</a>
@@ -59,7 +72,7 @@ const jsonLd = {
 
     {region.realName && (
       <p class="mm-region__real">
-        <span class="mm-region__reallabel">{t('map.realName')}</span>
+        <span class="mm-region__reallabel" data-pagefind-ignore>{t('map.realName')}</span>
         <span>{region.realName}</span>
       </p>
     )}
@@ -68,7 +81,7 @@ const jsonLd = {
       <Content />
     </div>
 
-    <p class="mm-region__back">
+    <p class="mm-region__back" data-pagefind-ignore>
       <a href={mapPath}>{t('map.backToMap')}</a>
     </p>
   </article>

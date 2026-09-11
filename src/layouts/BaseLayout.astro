@@ -5,8 +5,9 @@
  * Twee dingen die hier bewust op één plek staan:
  *
  * 1. De GA4-tag (§17.1). Die zit achter `index`. Aan betekent indexeerbaar
- *    plus de tag; uit betekent noindex en géén tag. Nooit allebei, nooit
- *    geen van beide, en nooit meer met de hand in een losse pagina.
+ *    plus de tag; uit betekent noindex en géén tag. Nooit meer met de hand in
+ *    een losse pagina. Eén uitzondering zet `analytics` expliciet aan: de
+ *    404-pagina, noindex maar met de tag (Nutri, 11 september 2026).
  * 2. Het thema. Een klein inline scriptje zet data-theme vóór de eerste
  *    paint, zodat er geen lichtflits is.
  */
@@ -29,6 +30,11 @@ interface Props {
   description?: string;
   /** Aan: GA4 en indexeerbaar. Uit: noindex en geen GA4. */
   index?: boolean;
+  /**
+   * De GA4-tag los van `index`. Alleen voor de 404-pagina: die hoort niet in
+   * een zoekmachine, maar Analytics moet wel zien welke adressen stuk zijn.
+   */
+  analytics?: boolean;
   /** De compacte aftelbalk, voor de postpagina. */
   compactCountdown?: boolean;
   /** Zet de aftelbalk uit. Na de release kan hij hiermee in één keer weg. */
@@ -53,6 +59,7 @@ const {
   title,
   description,
   index = true,
+  analytics,
   compactCountdown = false,
   countdown = true,
   filter = false,
@@ -65,6 +72,7 @@ const t = useTranslations(locale);
 const pathname = Astro.url.pathname;
 const nav = await getNav(locale);
 
+const withAnalytics = analytics ?? index;
 const pageTitle = title ? `${title} · ${t('site.title')}` : t('site.title');
 const pageDescription = description ?? t('site.description');
 
@@ -93,10 +101,10 @@ gtag('config', '${ga4Id}');`;
       viewport en vóór de title, en alleen op een indexeerbare pagina.
       Aan sluit noindex uit, uit sluit de tag uit (PROJECT_SPEC.md §17.1).
     -->
-    {index && (
+    {withAnalytics && (
       <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
     )}
-    {index && <script is:inline set:html={gtagSnippet} />}
+    {withAnalytics && <script is:inline set:html={gtagSnippet} />}
     {!index && <meta name="robots" content="noindex, nofollow" />}
 
     <title>{pageTitle}</title>
@@ -104,10 +112,14 @@ gtag('config', '${ga4Id}');`;
     <meta name="generator" content={Astro.generator} />
 
     <link rel="canonical" href={canonical} />
-    {alternates.map((alt) => (
+    <!--
+      Taalversies alleen op een indexeerbare pagina. Een noindex-pagina hoeft
+      ze niet, en de 404 zou anders naar /nl/404 wijzen, dat niet bestaat.
+    -->
+    {index && alternates.map((alt) => (
       <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
     ))}
-    {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
+    {index && xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
 
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
@@ -151,12 +163,19 @@ gtag('config', '${ga4Id}');`;
   <body class:list={{ 'is-fixed': fixedHeight }}>
     <a class="mm-skip" href="#mm-content">{t('skip.content')}</a>
 
-    <Header locale={locale} nav={nav} pathname={pathname} />
-    {countdown && (
-      <CountdownBar locale={locale} compact={compactCountdown}>
-        {filter && <CategoryFilter locale={locale} />}
-      </CountdownBar>
-    )}
+    <!--
+      Koptekst en aftelbalk plakken samen vast in één omhulling. Zo hoeft
+      niemand de hoogte van de koptekst te kennen, en kan er geen strook
+      tussen vallen als het lettertype laadt of de navigatie omslaat.
+    -->
+    <div class="mm-top">
+      <Header locale={locale} nav={nav} pathname={pathname} />
+      {countdown && (
+        <CountdownBar locale={locale} compact={compactCountdown}>
+          {filter && <CategoryFilter locale={locale} />}
+        </CountdownBar>
+      )}
+    </div>
 
     <div class="mm-shell">
       <SpectrumBar />

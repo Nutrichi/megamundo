@@ -118,17 +118,24 @@ const home = localizePath('', locale);
     display: flex;
     flex-direction: column;
     min-height: 620px;
-    padding: 16px;
+    /* Bovenaan geen padding: de bovenbalk neemt de maten van de koptekst over. */
+    padding: 0 16px 16px;
     gap: 8px;
     overflow-y: auto;
     background: var(--mm-bg);
     background-image: var(--mm-wash-menu);
   }
 
+  /*
+   * Precies de maten van de koptekst op een telefoon: 14 px boven en onder,
+   * een knop van 34 px hoog. Zo verspringen logo, woordmerk en knop niet als
+   * het menu opengaat (11 september 2026). Eerder zakte alles 5 px.
+   */
   .mm-menu__top {
     display: flex;
     align-items: center;
     gap: 10px;
+    padding: 14px 0;
   }
 
   .mm-menu__brand {
@@ -148,7 +155,7 @@ const home = localizePath('', locale);
 
   .mm-close {
     margin-left: auto;
-    padding: 10px; /* raakvlak 44 px */
+    padding: 7px 10px; /* 34 px hoog en 40 px breed, net als de hamburger */
   }
 
   .mm-close__box {

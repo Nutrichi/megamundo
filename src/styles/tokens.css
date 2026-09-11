@@ -70,6 +70,8 @@
   --mm-glow-wordmark: 0 0 22px rgba(217, 59, 161, .75);
   --mm-glow-logo: drop-shadow(0 0 8px rgba(217, 59, 161, .55));
   --mm-glow-days: 0 0 20px rgba(217, 59, 161, .8);
+  /* Het zwakste punt van het ademen van de dagenteller (global.css, mmFlicker). */
+  --mm-glow-days-soft: 0 0 10px rgba(217, 59, 161, .45);
   --mm-glow-hours: 0 0 20px rgba(61, 197, 217, .7);
   --mm-glow-minutes: 0 0 20px rgba(242, 217, 92, .6);
   --mm-glow-pill: 0 0 22px rgba(61, 197, 217, .2);
@@ -109,12 +111,6 @@
 
   /* Breedte van de contentkolom */
   --mm-max: 1180px;
-
-  /*
-   * Hoogte van de koptekst. De aftelbalk plakt hieronder vast, dus die twee
-   * moeten hetzelfde getal kennen.
-   */
-  --mm-header-h: 73px;
 }
 
 /* --- Dag: expliciete keuze --- */
@@ -133,7 +129,7 @@
 
   /* Donkerder accenten: op een lichte grond moet tekst 4,5:1 halen. */
   --mm-accent-pink: #c22f8c;
-  --mm-accent-cyan: #147f95;
+  --mm-accent-cyan: #147f95; --mm-cat-gta6: #1f63c6; /* GTA VI blauw overdag: teal en groen leken te veel op elkaar (Nutri, 11 september 2026) */
   --mm-accent-amber: #a86a12;
   --mm-accent-yellow: #a86a12;
   --mm-accent-green: #1f7a45;
@@ -143,7 +139,7 @@
   /* Geen gloed op dag; hover wordt een schaduw. */
   --mm-glow-wordmark: none;
   --mm-glow-logo: none;
-  --mm-glow-days: none;
+  --mm-glow-days: none; --mm-glow-days-soft: none;
   --mm-glow-hours: none;
   --mm-glow-minutes: none;
   --mm-glow-pill: 0 4px 14px rgba(25, 20, 38, .08);
@@ -176,7 +172,7 @@
     --mm-quote: #4a4360;
 
     --mm-accent-pink: #c22f8c;
-    --mm-accent-cyan: #147f95;
+    --mm-accent-cyan: #147f95; --mm-cat-gta6: #1f63c6; /* GTA VI blauw overdag: teal en groen leken te veel op elkaar (Nutri, 11 september 2026) */
     --mm-accent-amber: #a86a12;
     --mm-accent-yellow: #a86a12;
     --mm-accent-green: #1f7a45;
@@ -185,7 +181,7 @@
 
     --mm-glow-wordmark: none;
     --mm-glow-logo: none;
-    --mm-glow-days: none;
+    --mm-glow-days: none; --mm-glow-days-soft: none;
     --mm-glow-hours: none;
     --mm-glow-minutes: none;
     --mm-glow-pill: 0 4px 14px rgba(25, 20, 38, .08);

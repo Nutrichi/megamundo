@@ -25,6 +25,7 @@ import BaseLayout from './BaseLayout.astro';
 import CategoryBadge from '../components/CategoryBadge.astro';
 import PostImage from '../components/PostImage.astro';
 import LikeButton from '../components/LikeButton.astro';
+import { publisherJsonLd } from '../lib/structured-data';
 
 interface Props {
   post: Post;
@@ -71,6 +72,8 @@ const jsonLd = {
   datePublished: isoDate(post.date),
   inLanguage: post.lang,
   mainEntityOfPage: canonical,
+  author: publisherJsonLd(Astro.site),
+  publisher: publisherJsonLd(Astro.site),
   ...(imageUrl ? { image: [imageUrl] } : {}),
   ...(post.source ? { citation: post.source } : {}),
 };
@@ -86,7 +89,11 @@ const jsonLd = {
 >
   <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
 
-  <article class="mm-post">
+  <!--
+    Pagefind (§15) indexeert alleen wat binnen data-pagefind-body staat: de
+    post zelf, zonder broodkruimel, hartje en bronregel.
+  -->
+  <article class="mm-post" data-pagefind-body>
     <div class="mm-post__hero">
       <PostImage
         image={post.image}
@@ -98,7 +105,7 @@ const jsonLd = {
     </div>
 
     <div class="mm-post__body">
-      <nav class="mm-crumb" aria-label={t('crumb.label')}>
+      <nav class="mm-crumb" aria-label={t('crumb.label')} data-pagefind-ignore>
         <a href={home}>{t('crumb.home')}</a>
         <span aria-hidden="true">/</span>
         <span>{category.label}</span>
@@ -108,7 +115,7 @@ const jsonLd = {
 
       <h1 class="mm-post__title">{post.title}</h1>
 
-      <p class="mm-post__meta">
+      <p class="mm-post__meta" data-pagefind-ignore>
         <time datetime={isoDate(post.date)}>{longDate(post.date, locale)}</time>
         <span aria-hidden="true"> · </span>
         <span>{readingLabel}</span>
@@ -118,12 +125,12 @@ const jsonLd = {
         <Content />
       </div>
 
-      <div class="mm-post__like">
+      <div class="mm-post__like" data-pagefind-ignore>
         <LikeButton postId={postId} locale={locale} variant="post" />
       </div>
 
       {post.source && (
-        <p class="mm-post__source">
+        <p class="mm-post__source" data-pagefind-ignore>
           {t('post.source')}{' '}
           {post.sourceUrl ? (
             <a

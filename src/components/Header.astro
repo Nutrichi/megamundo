@@ -80,15 +80,11 @@ const hrefFor = (item: NavItem) => item.children?.[0]?.path ?? item.path;
 </header>
 
 <style>
-  .mm-header {
-    /*
-     * Blijft bovenaan staan bij het scrollen. De navigatie, het zoekveld en
-     * de themaknop horen altijd binnen bereik te zijn; op een lange feed
-     * scroll je anders minutenlang zonder ergens heen te kunnen.
-     */
-    position: sticky;
-    top: 0;
-    z-index: 20; background: var(--mm-header); }
+  /*
+   * Vastgepind wordt niet hier maar in de omhulling `.mm-top` in
+   * BaseLayout, samen met de aftelbalk. Zo is er geen hoogte om te raden.
+   */
+  .mm-header { background: var(--mm-header); }
 
   .mm-header__inner {
     display: flex;
@@ -191,7 +187,12 @@ const hrefFor = (item: NavItem) => item.children?.[0]?.path ?? item.path;
     }
 
     .mm-brand__word { font-size: 21px; }
-    .mm-brand__logo { width: 24px; height: 24px; }
+    /*
+     * `:global`, want de svg komt uit Logo.astro en draagt het scope-attribuut
+     * van dit bestand niet. Zonder dat bleef het logo 28 px in plaats van de
+     * 24 px uit de handoff, en stond het anders dan in het mobiele menu.
+     */
+    .mm-brand :global(.mm-brand__logo) { width: 24px; height: 24px; }
     .mm-nav,
     .mm-header__tools { display: none; }
     .mm-burger { display: block; }

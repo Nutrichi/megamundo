@@ -1,7 +1,7 @@
 /*
  * De categorieën. Eén plek, zoals §6 eist: een categorie bijzetten is hier
- * een regel erbij en geen verbouwing. Het filter op de homepage, het ruitje
- * in de pil en het label op de postpagina lezen allemaal hieruit.
+ * een regel erbij en geen verbouwing. Het filter op de homepage, het
+ * palmboompje in de pil en het label op de postpagina lezen allemaal hieruit.
  *
  * **Een categorie is het spel waar de post over gaat.** Beslist door Nutri
  * op 10 september 2026. Daarvoor waren de categorieën News en Guides, maar

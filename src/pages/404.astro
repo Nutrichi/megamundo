@@ -1,0 +1,108 @@
+---
+/*
+ * De 404-pagina. GitHub Pages toont dist/404.html voor elk adres dat niet
+ * bestaat, in welke taal ook; daarom staat ze in het Engels, met de weg terug
+ * naar de homepage in elke taal.
+ *
+ * Noindex, maar wel met de GA4-tag (Nutri, 11 september 2026): zo toont
+ * Analytics welke adressen stuk zijn. Het is de enige pagina waar noindex en
+ * de tag samengaan (§17.1).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { localeNames, locales } from '../i18n/ui';
+import { localizePath, useTranslations } from '../i18n/utils';
+
+const locale = 'en' as const;
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('notFound.title')}
+  description={t('notFound.text')}
+  index={false}
+  analytics
+>
+  <section class="mm-404">
+    <p class="mm-404__code" aria-hidden="true">404</p>
+    <h1 class="mm-404__title">{t('notFound.title')}</h1>
+    <p class="mm-404__text">{t('notFound.text')}</p>
+
+    <a class="mm-404__home" href={localizePath('', locale)}>{t('notFound.home')}</a>
+
+    <ul class="mm-404__langs">
+      {locales.map((code) => (
+        <li><a href={localizePath('', code)} lang={code}>{localeNames[code]}</a></li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .mm-404 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 40px 0 56px;
+    text-align: center;
+  }
+
+  /* Het getal in het spectrum van het logo; het enige grote accent op de pagina. */
+  .mm-404__code {
+    font-family: var(--mm-display);
+    font-size: 132px;
+    line-height: .9;
+    background: var(--mm-spectrum-h);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .mm-404__title {
+    font-size: 40px;
+    line-height: 1;
+    text-shadow: var(--mm-glow-h1);
+  }
+
+  .mm-404__text {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--mm-muted);
+  }
+
+  .mm-404__home {
+    margin-top: 10px;
+    padding: 10px 28px;
+    border: 1px solid var(--mm-accent-pink);
+    border-radius: var(--mm-r-pill);
+    background: var(--mm-accent-pink);
+    color: var(--mm-bg);
+    box-shadow: var(--mm-glow-primary);
+    font-family: var(--mm-display);
+    font-size: 17px;
+    letter-spacing: .12em;
+  }
+
+  .mm-404__langs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 16px;
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 13.5px;
+    color: var(--mm-muted);
+  }
+
+  .mm-404__langs a:hover { color: var(--mm-ink); }
+
+  @media (max-width: 899px) {
+    .mm-404 { padding: 24px 0 36px; }
+    .mm-404__code { font-size: 104px; }
+    .mm-404__title { font-size: 32px; }
+  }
+</style>

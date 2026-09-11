@@ -1,0 +1,18 @@
+---
+/*
+ * Daily Clips in het Engels, op /clips (§10). De vijf andere talen staan in
+ * [lang]/clips; de pagina zelf staat in FeedPage.
+ *
+ * Een rest-parameter en geen gewone clips.astro, en dat is met opzet: zo kan
+ * de route wegblijven. Niets opgehaald betekent geen pagina, net zoals het
+ * geen tab betekent (§4.1).
+ */
+import FeedPage from '../../components/FeedPage.astro';
+import { feedHasContent } from '../../lib/feeds';
+
+export function getStaticPaths() {
+  return feedHasContent('clips') ? [{ params: { index: undefined } }] : [];
+}
+---
+
+<FeedPage kind="clips" locale="en" />

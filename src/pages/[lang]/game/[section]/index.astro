@@ -8,7 +8,8 @@ import LeonidaMap from '../../../../components/LeonidaMap.astro';
 import RegionList from '../../../../components/RegionList.astro';
 import { getRegions } from '../../../../lib/regions';
 import { defaultLocale, locales, type Locale } from '../../../../i18n/ui';
-import { useTranslations } from '../../../../i18n/utils';
+import { localizePath, useTranslations } from '../../../../i18n/utils';
+import { breadcrumbJsonLd } from '../../../../lib/structured-data';
 
 export async function getStaticPaths() {
   const regions = await getRegions(defaultLocale);
@@ -21,9 +22,22 @@ export async function getStaticPaths() {
 const locale = Astro.params.lang as Locale;
 const t = useTranslations(locale);
 const regions = await getRegions(locale);
+
+/* De broodkruimel als gestructureerde data (§17); zie de Engelse route. */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  ...breadcrumbJsonLd(
+    [
+      { name: t('crumb.home'), path: localizePath('', locale) },
+      { name: t('map.title'), path: Astro.url.pathname },
+    ],
+    Astro.site,
+  ),
+};
 ---
 
 <BaseLayout locale={locale} title={t('map.title')} description={t('map.description')} fixedHeight>
+  <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
   <div class="mm-mappage">
     <h1 class="mm-mappage__title">{t('map.title')}</h1>
 

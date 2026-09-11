@@ -11,6 +11,7 @@
 import { getCollection } from 'astro:content';
 import type { Locale, UIKey } from '../i18n/ui';
 import { localizePath } from '../i18n/utils';
+import { feedHasContent } from '../lib/feeds';
 
 /** De zeven Game-submenu's in de vaste volgorde uit §4. */
 export const gameSections = [
@@ -44,9 +45,9 @@ type Section = {
 /*
  * De vijf tabs. Home staat er altijd; de rest verdient zijn plek.
  *
- * Clips en Streams halen hun inhoud op met GitHub Actions (§10) en hebben
- * dus geen collection. Tot die Actions in fase 7 bestaan, is er niets om
- * te tonen en blijven ze weg. Dat is dezelfde regel, niet een uitzondering.
+ * Clips en Streams halen hun inhoud op vlak voor de build (§10) en hebben
+ * dus geen collection. Is er niets opgehaald, dan is er niets om te tonen
+ * en blijven ze weg. Dat is dezelfde regel, niet een uitzondering.
  */
 const sections: Section[] = [
   { id: 'home', labelKey: 'nav.home', path: '', source: 'always' },
@@ -87,11 +88,12 @@ function loadCollections() {
 }
 
 /**
- * Welke opgehaalde feeds inhoud hebben. Fase 7 vult dit met de bestanden die
- * de Actions wegschrijven; zolang die er niet zijn, is het antwoord nee.
+ * Welke opgehaalde feeds inhoud hebben (§10). Leest wat
+ * scripts/fetch-feeds.mjs vlak voor de build heeft weggeschreven; niets
+ * opgehaald is geen tab.
  */
-async function fetchedHasContent(_id: string): Promise<boolean> {
-  return false;
+async function fetchedHasContent(id: string): Promise<boolean> {
+  return (id === 'clips' || id === 'streams') && feedHasContent(id);
 }
 
 /**

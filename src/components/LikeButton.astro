@@ -56,9 +56,15 @@ const isPost = variant === 'post';
     data-post-id={postId}
     data-base={count}
     aria-pressed="false"
-    aria-label={t('post.like')}
   >
     <Icon name="heart" size={isPost ? 17 : 14} class="mm-like__icon" />
+    <!--
+      De naam voor een schermlezer staat als verborgen tekst in de knop en niet
+      als aria-label. Zo bevat de toegankelijke naam ook het zichtbare getal
+      ("Like this post, 12"), zoals WCAG 2.5.3 vraagt. Gevonden door
+      Lighthouse op 11 september 2026.
+    -->
+    <span class="mm-sr">{t('post.like')}, </span>
     <span class="mm-like__count mm-nums" data-mm-like-count>{count}</span>
   </button>
 
@@ -242,7 +248,11 @@ const isPost = variant === 'post';
      */
     liked[id] = true;
     write(liked);
-    button.dataset.base = String(Number(button.dataset.base ?? '0') + 1);
+    // Elk hartje van deze post telt mee: het uitgelichte artikel staat ook
+    // als pil in de lijst, en die twee horen hetzelfde getal te tonen.
+    all()
+      .filter((el) => el.dataset.postId === id)
+      .forEach((el) => { el.dataset.base = String(Number(el.dataset.base ?? '0') + 1); });
     paintAll();
 
     void addLike(id).then((count) => {

@@ -1,0 +1,341 @@
+---
+/*
+ * Het grote blok links op Daily Clips en Streams (handoff, scherm 6). Het is
+ * ook het afspeelvak: een klik op een clip of stream, hier of in de lijst,
+ * speelt die in dit blok (src/scripts/feed-stage.ts).
+ *
+ * Staat er een keuze van Nutri in src/data/featured.json, dan is dat dit
+ * blok, met het gele FEATURED-label en een gele rand (§10.4). Zodra er geld
+ * tegenover staat, zegt het label SPONSORED; in de EU is dat een verplichting
+ * en geen stijlkeuze.
+ *
+ * Zonder keuze staat hier het item met de meeste kijkers of weergaven, zonder
+ * label en zonder gele rand. Dan beweert de pagina niets wat niet waar is.
+ *
+ * De handoff noemt het kanaal van een stream nergens; het staat hier vooraan
+ * in de metaregel, want zonder naam weet je niet wie je gaat bekijken.
+ */
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import type { Clip, Stream } from '../lib/feeds';
+import { clipDuration, clockTime, compactNumber, languageName, timeAgo } from '../lib/feed-format';
+
+interface Props {
+  clip?: Clip;
+  stream?: Stream;
+  picked?: boolean;
+  sponsored?: boolean;
+  now: Date;
+  locale: Locale;
+}
+
+const { clip, stream, picked = false, sponsored = false, now, locale } = Astro.props;
+const t = useTranslations(locale);
+
+const id = clip?.id ?? stream?.channel ?? '';
+const title = clip?.title || stream?.title || stream?.name || '';
+const href = clip?.url ?? stream?.url ?? '';
+const thumbnail = clip?.thumbnail ?? stream?.thumbnail ?? null;
+
+const meta = (clip
+  ? [
+      clip.channel,
+      t('clips.views').replace('{n}', compactNumber(clip.views, locale)),
+      timeAgo(new Date(clip.publishedAt), now, locale),
+    ]
+  : stream?.live && stream.startedAt
+    ? [
+        stream.name,
+        t('streams.started').replace('{time}', clockTime(new Date(stream.startedAt), locale)),
+        languageName(stream.language, locale),
+        stream.game,
+      ]
+    : [stream?.name, t('streams.offline')]
+).filter(Boolean).join(' · ');
+
+const corner = clip
+  ? clipDuration(clip.duration)
+  : stream?.live
+    ? t('streams.watching').replace('{n}', compactNumber(stream.viewers, locale))
+    : '';
+
+/*
+ * Wat het afspeelscript nodig heeft. Een stream houdt zijn gewone link naar
+ * Twitch: op een scherm dat te smal is voor de Twitch-speler blijft dat de weg.
+ */
+const playAttrs = {
+  'data-mm-play': clip ? 'clip' : 'stream',
+  'data-id': id,
+  'data-title': title,
+  'data-meta': meta,
+  ...(stream ? { target: '_blank', rel: 'noopener' } : {}),
+};
+---
+
+<article
+  class:list={['mm-feedlead', clip ? 'is-clip' : 'is-stream', { 'is-picked': picked }]}
+  data-mm-stage
+  data-id={id}
+  data-mm-clip-id={clip?.id}
+>
+  {picked && (
+    <p class="mm-feedlead__pick" data-mm-stage-pick>
+      <span class="mm-feedlead__badge">{sponsored ? t('feed.sponsored') : t('feed.featured')}</span>
+      <span>{sponsored ? t('feed.sponsoredNote') : t('feed.pickedNote')}</span>
+    </p>
+  )}
+
+  <div class="mm-feedlead__stage" data-mm-stage-box>
+    <a class="mm-feedlead__shot" href={href} tabindex="-1" aria-hidden="true" {...playAttrs}>
+      {thumbnail ? (
+        <img
+          class="mm-feedlead__img"
+          src={thumbnail}
+          alt=""
+          width="640"
+          height="360"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          referrerpolicy="no-referrer"
+        />
+      ) : (
+        <span class="mm-feedlead__slot"></span>
+      )}
+      <span class="mm-feedlead__wash"></span>
+      {clip && <span class="mm-feedlead__play"></span>}
+      {clip && <span class="mm-feedlead__watched">{t('clips.watched')}</span>}
+      {stream?.live && (
+        <span class="mm-feedlead__live"><span class="mm-feedlead__dot"></span>{t('streams.live')}</span>
+      )}
+      {corner && <span class="mm-feedlead__corner">{corner}</span>}
+    </a>
+  </div>
+
+  <h3 class="mm-feedlead__title">
+    <a href={href} data-mm-stage-title {...playAttrs}>{title}</a>
+  </h3>
+
+  <p class="mm-feedlead__meta" data-mm-stage-meta>{meta}</p>
+</article>
+
+<style>
+  .mm-feedlead {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .mm-feedlead__pick {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 12px;
+    color: var(--mm-muted);
+  }
+
+  .mm-feedlead__badge {
+    font-family: var(--mm-display);
+    font-size: 13px;
+    letter-spacing: .16em;
+    line-height: 1.4;
+    color: var(--mm-yellow);
+    border: 1px solid var(--mm-yellow);
+    border-radius: var(--mm-r-badge);
+    padding: 2px 10px;
+  }
+
+  /* Het vak: eerst het beeld, na een klik de speler. */
+  .mm-feedlead__stage {
+    position: relative;
+    height: 230px;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-card);
+    overflow: hidden;
+    transition: var(--mm-transition);
+  }
+
+  .mm-feedlead__stage:hover {
+    border-color: var(--mm-accent-cyan);
+    box-shadow: var(--mm-glow-pill);
+  }
+
+  .is-picked .mm-feedlead__stage {
+    border-color: var(--mm-yellow);
+    box-shadow: var(--mm-glow-featured);
+  }
+
+  /*
+   * Speelt er iets, dan krijgt het vak de verhouding van een video. Twitch
+   * eist bovendien minstens 300 pixels hoog.
+   */
+  .is-playing .mm-feedlead__stage {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+
+  .is-stream.is-playing .mm-feedlead__stage { min-height: 300px; }
+
+  .mm-feedlead__stage :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .mm-feedlead__shot {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  .mm-feedlead__img,
+  .mm-feedlead__slot {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mm-feedlead__img { object-fit: cover; }
+
+  /* Geen beeld: dezelfde gestreepte plek als bij een post zonder artwork. */
+  .mm-feedlead__slot {
+    background: repeating-linear-gradient(
+      135deg,
+      var(--mm-slot-a) 0 14px,
+      var(--mm-slot-b) 14px 28px
+    );
+  }
+
+  .mm-feedlead__wash {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .is-clip .mm-feedlead__wash {
+    background: radial-gradient(120% 90% at 50% 120%, rgba(242, 163, 65, .22), transparent 60%);
+  }
+
+  .is-stream .mm-feedlead__wash {
+    background: radial-gradient(120% 90% at 50% 120%, rgba(48, 104, 217, .25), transparent 60%);
+  }
+
+  /*
+   * Wat over het beeld ligt, blijft licht op donker, ook in het dagthema:
+   * het beeld eronder is niet licht of donker naargelang het thema.
+   */
+  .mm-feedlead__play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 54px;
+    height: 54px;
+    margin: -27px 0 0 -27px;
+    display: grid;
+    place-items: center;
+    border: 2px solid #f2f0f6;
+    border-radius: 999px;
+    background: rgba(7, 6, 15, .35);
+  }
+
+  .mm-feedlead__play::after {
+    content: '';
+    margin-left: 5px;
+    border-left: 16px solid #f2f0f6;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+  }
+
+  /* Al bekeken: een label linksboven, zoals LIVE bij een stream. */
+  .mm-feedlead__watched { display: none; }
+
+  .is-watched .mm-feedlead__watched {
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 10px;
+    border-radius: var(--mm-r-badge);
+    background: rgba(7, 6, 15, .9);
+    color: #f2f0f6;
+    font-family: var(--mm-display);
+    font-size: 12.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .is-watched .mm-feedlead__watched::before {
+    content: '';
+    width: 5px;
+    height: 9px;
+    margin-top: -3px;
+    border-right: 2px solid #f2f0f6;
+    border-bottom: 2px solid #f2f0f6;
+    transform: rotate(45deg);
+  }
+
+  .mm-feedlead__live,
+  .mm-feedlead__corner {
+    position: absolute;
+    background: rgba(7, 6, 15, .9);
+    color: #f2f0f6;
+  }
+
+  .mm-feedlead__live {
+    left: 14px;
+    top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 3px 10px;
+    border-radius: var(--mm-r-badge);
+    font-family: var(--mm-display);
+    font-size: 12.5px;
+    letter-spacing: .14em;
+  }
+
+  .mm-feedlead__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--mm-orange);
+    box-shadow: 0 0 10px var(--mm-orange);
+  }
+
+  .mm-feedlead__corner {
+    right: 12px;
+    bottom: 12px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Streamtitels zijn soms een halve alinea; na drie regels houdt het op. */
+  .mm-feedlead__title {
+    font-size: 26px;
+    line-height: 1.05;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+  }
+
+  .mm-feedlead__meta {
+    font-size: 13px;
+    color: var(--mm-muted);
+  }
+
+  @media (max-width: 899px) {
+    .mm-feedlead { gap: 10px; }
+    .mm-feedlead__stage { height: 180px; }
+    .mm-feedlead__title { font-size: 22px; }
+  }
+</style>

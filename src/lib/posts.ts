@@ -170,17 +170,6 @@ export function pickFeatured(posts: Post[]): Post | undefined {
   return posts.find((post) => post.featured) ?? posts[0];
 }
 
-/**
- * De lijst rechts. Het uitgelichte artikel gaat eruit, zodat het niet dubbel
- * op de pagina staat (§5).
- */
-export function withoutFeatured(posts: Post[], featured: Post | undefined): Post[] {
-  if (!featured) return posts;
-  return posts.filter(
-    (post) => !(post.slug === featured.slug && post.collection === featured.collection),
-  );
-}
-
 /** Eén post opzoeken, voor de postpagina. */
 export async function getPost(
   collection: PostCollection,

@@ -7,10 +7,16 @@
 #
 # Terugdraaien is één ding: de stap "Zet de placeholder klaar" weghalen en
 # `path: _site` weer `path: dist` maken. Doe dat zodra de Astro-site beter is
-# dan de placeholder (§ "Twee dingen die openstaan" in STATUS.md).
+# dan de placeholder (§ "Wat openstaat voor Nutri" in STATUS.md).
 #
 # De build blijft draaien, ook nu hij niet gepubliceerd wordt: dan merkt de
 # Action het nog steeds als een post de build breekt.
+#
+# Daily Clips en Streams (fase 7, §10.1): de workflow draait ook elk kwartier
+# op schema. Vlak voor de build haalt scripts/fetch-feeds.mjs de streams en de
+# clips op. Er wordt niets gecommit; de opgehaalde bestanden gaan van run naar
+# run mee in de cache. YouTube wordt maar één keer per uur gevraagd, dat
+# regelt het script zelf. De sleutels zijn repo secrets.
 #
 # De Node-versie komt uit .nvmrc, zodat de Action en de twee machines
 # nooit uit elkaar lopen.
@@ -21,6 +27,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Best effort: GitHub start een geplande run soms tien tot twintig minuten
+  # later. Reken op "ongeveer elk kwartier", niet op de klok (§10.1).
+  schedule:
+    - cron: '*/15 * * * *'
 
 permissions:
   contents: read
@@ -44,6 +54,29 @@ jobs:
           cache: npm
 
       - run: npm ci
+
+      # De vorige ophaling terug. Zo hoeft YouTube niet bij elke run, en
+      # heeft de site nog iets als een API even niet antwoordt.
+      - name: Vorige feeds terughalen
+        uses: actions/cache/restore@v4
+        with:
+          path: src/data/generated
+          key: feeds-${{ github.run_id }}
+          restore-keys: feeds-
+
+      - name: Clips en streams ophalen
+        run: npm run feeds
+        env:
+          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+          TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+
+      - name: Feeds bewaren voor de volgende run
+        if: hashFiles('src/data/generated/*.json') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: src/data/generated
+          key: feeds-${{ github.run_id }}
 
       - run: npm run build
 

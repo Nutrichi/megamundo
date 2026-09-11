@@ -114,6 +114,22 @@ button {
 
 .mm-skip:focus { top: 12px; }
 
+/*
+ * Koptekst en aftelbalk, samen vastgepind bovenaan. De navigatie, het
+ * zoekveld en de chips horen altijd binnen bereik te zijn; op een lange
+ * feed scroll je anders minutenlang zonder ergens heen te kunnen.
+ *
+ * Eén omhulling in plaats van twee losse sticky blokken: dan moest de
+ * aftelbalk de hoogte van de koptekst kennen, en dat getal klopte niet
+ * zodra het lettertype laadde of de navigatie omsloeg. Door de strook die
+ * dat gaf schoof de inhoud zichtbaar heen.
+ */
+.mm-top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
 /* De contentkolom van de site. */
 .mm-shell {
   flex: 1 1 auto;
@@ -174,9 +190,15 @@ button {
   to { opacity: 1; transform: none; }
 }
 
+/*
+ * Het neon van de dagenteller ademt in zijn gloed, niet in zijn dekking. Een
+ * flikkering op opacity zakte tot 90 %, en dan haalde roze op de donkere balk
+ * het contrast van 4,5:1 niet meer (Lighthouse, 11 september 2026). In het
+ * dagthema is er geen gloed, en dan staat het getal gewoon stil.
+ */
 @keyframes mmFlicker {
-  0%, 100% { opacity: .9; }
-  50% { opacity: 1; }
+  0%, 100% { text-shadow: var(--mm-glow-days); }
+  50% { text-shadow: var(--mm-glow-days-soft); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -190,9 +212,6 @@ button {
 }
 
 @media (max-width: 899px) {
-  /* Op een telefoon is de koptekst lager; de aftelbalk plakt daaronder. */
-  :root { --mm-header-h: 62px; }
-
   /* Geen extra ruimte nodig: op mobiel plakt de voettekst niet vast. */
   .mm-main { padding: 16px 16px 20px; }
 }

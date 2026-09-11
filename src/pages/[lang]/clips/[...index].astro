@@ -1,0 +1,20 @@
+---
+/*
+ * Daily Clips in de vijf niet-standaardtalen: /nl/clips, /fr/clips enzovoort.
+ * Engels staat in ../../clips; de regels staan daar uitgelegd.
+ */
+import FeedPage from '../../../components/FeedPage.astro';
+import { feedHasContent } from '../../../lib/feeds';
+import { defaultLocale, locales, type Locale } from '../../../i18n/ui';
+
+export function getStaticPaths() {
+  if (!feedHasContent('clips')) return [];
+  return locales
+    .filter((locale) => locale !== defaultLocale)
+    .map((locale) => ({ params: { lang: locale, index: undefined } }));
+}
+
+const locale = Astro.params.lang as Locale;
+---
+
+<FeedPage kind="clips" locale={locale} />

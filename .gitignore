@@ -11,6 +11,10 @@ dist/
 .astro/
 node_modules/
 
-# Sleutels (vertaalscript, fase 2)
+# Opgehaald vlak voor de build door scripts/fetch-feeds.mjs (fase 7, §10.1).
+# Nooit committen: dat zou een commit per kwartier zijn.
+src/data/generated/
+
+# Sleutels (vertaalscript fase 2, Twitch en YouTube fase 7)
 .env
 .env.production

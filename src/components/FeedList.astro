@@ -1,0 +1,97 @@
+---
+/*
+ * De rechterkolom van Daily Clips en Streams: de opgehaalde lijst als pillen,
+ * met LOAD MORE eronder. Geen voetnoot (Nutri, 11 september 2026).
+ *
+ * Zoeken en bijladen is hetzelfde script als op de homepage
+ * (src/scripts/pill-list.ts). Categoriechips staan hier niet, dus dat deel
+ * valt vanzelf weg.
+ */
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import type { Clip, Entry, Stream } from '../lib/feeds';
+import FeedPill from './FeedPill.astro';
+
+interface Props {
+  clips?: Entry<Clip>[];
+  streams?: Entry<Stream>[];
+  now: Date;
+  locale: Locale;
+}
+
+const { clips = [], streams = [], now, locale } = Astro.props;
+const t = useTranslations(locale);
+
+/** Zelfde stap als de homepage: vijftien meteen, vijftien per keer erbij. */
+const STEP = 15;
+---
+
+<div class="mm-feedlist" data-mm-list data-step={STEP}>
+  <ul class="mm-feedlist__items" data-mm-items>
+    {clips.map((entry) => (
+      <FeedPill clip={entry.item} picked={entry.picked} sponsored={entry.sponsored} now={now} locale={locale} />
+    ))}
+    {streams.map((entry) => (
+      <FeedPill stream={entry.item} picked={entry.picked} sponsored={entry.sponsored} now={now} locale={locale} />
+    ))}
+  </ul>
+
+  <p class="mm-feedlist__empty" data-mm-noresults hidden>{t('feed.noResults')}</p>
+
+  <!-- Het baken dat het bijladen op gang brengt zodra het in beeld komt. -->
+  <div data-mm-sentinel aria-hidden="true"></div>
+
+  <button type="button" class="mm-feedlist__more" data-mm-more hidden>
+    {t('list.loadMore')}
+  </button>
+</div>
+
+<style>
+  .mm-feedlist {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .mm-feedlist__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  .mm-feedlist__empty {
+    font-size: 13.5px;
+    color: var(--mm-muted);
+    padding: 12px 0;
+  }
+
+  /* Eén pixel hoog: genoeg om een plek in de opmaak te hebben. */
+  .mm-feedlist [data-mm-sentinel] { height: 1px; }
+
+  .mm-feedlist__more {
+    margin-top: 14px;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-pill);
+    padding: 9px 0;
+    text-align: center;
+    font-family: var(--mm-display);
+    font-size: 16px;
+    letter-spacing: .12em;
+    color: var(--mm-ink);
+    transition: var(--mm-transition);
+  }
+
+  .mm-feedlist__more:hover { border-color: var(--mm-accent-cyan); }
+
+  @media (max-width: 899px) {
+    .mm-feedlist__more { padding: 11px 0; }
+  }
+</style>
+
+<script>
+  import '../scripts/pill-list';
+</script>

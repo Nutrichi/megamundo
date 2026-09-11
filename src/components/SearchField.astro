@@ -1,8 +1,15 @@
 ---
 /*
- * Zoekveld. Filtert in fase 2 de pillijst live op titel; hier staat de
- * vorm en het formulier al. Zonder JavaScript komt de zoekterm als ?q= op
- * de homepage terecht, en dat is precies waar fase 2 hem oppikt.
+ * Zoekveld. Twee taken in één veld (§15, fase 5):
+ *
+ * - Op een pagina met een pillijst filtert het die lijst live op titel
+ *   (src/scripts/pill-list.ts). Enter toont daarbovenop de resultaten van de
+ *   hele site.
+ * - Overal elders zoekt het tijdens het typen over de hele site, met Pagefind
+ *   (src/scripts/site-search.ts).
+ *
+ * Zonder JavaScript komt de zoekterm als ?q= op de homepage terecht, en daar
+ * filtert de lijst hem.
  */
 import type { Locale } from '../i18n/ui';
 import { localizePath, useTranslations } from '../i18n/utils';
@@ -18,30 +25,42 @@ const t = useTranslations(locale);
 const action = localizePath('', locale);
 ---
 
-<form
-  class:list={['mm-search', variant === 'block' && 'is-block']}
-  role="search"
-  action={action}
-  method="get"
+<div
+  class:list={['mm-searchbox', variant === 'block' && 'is-block']}
+  data-mm-search
+  data-label-none={t('search.none')}
+  data-label-one={t('search.countOne')}
+  data-label-many={t('search.countMany')}
 >
-  <Icon name="search" size={14} class="mm-search__icon" />
-  <label class="mm-sr" for={`mm-q-${variant}`}>{t('search.label')}</label>
-  <input
-    id={`mm-q-${variant}`}
-    class="mm-search__input"
-    type="search"
-    name="q"
-    placeholder={t('search.placeholder')}
-    autocomplete="off"
-  />
-</form>
+  <form class="mm-search" role="search" action={action} method="get">
+    <Icon name="search" size={14} class="mm-search__icon" />
+    <label class="mm-sr" for={`mm-q-${variant}`}>{t('search.label')}</label>
+    <input
+      id={`mm-q-${variant}`}
+      class="mm-search__input"
+      type="search"
+      name="q"
+      placeholder={t('search.placeholder')}
+      autocomplete="off"
+    />
+  </form>
+
+  <div class="mm-results" data-mm-results hidden>
+    <p class="mm-results__status" data-mm-results-status aria-live="polite"></p>
+    <ul class="mm-results__list" data-mm-results-list></ul>
+  </div>
+</div>
 
 <style>
+  .mm-searchbox {
+    position: relative;
+    flex: none;
+  }
+
   .mm-search {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex: none;
     min-width: 150px;
     border: 1px solid var(--mm-border);
     border-radius: var(--mm-r-field);
@@ -73,13 +92,109 @@ const action = localizePath('', locale);
   /* Weg met het kruisje dat WebKit er zelf in zet. */
   .mm-search__input::-webkit-search-cancel-button { -webkit-appearance: none; }
 
+  /* --- De resultaten van de hele site --- */
+  .mm-results {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 30;
+    width: min(420px, calc(100vw - 32px));
+    max-height: min(70vh, 520px);
+    overflow-y: auto;
+    padding: 8px;
+    background: var(--mm-bg);
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field-lg);
+    box-shadow: 0 18px 40px rgba(7, 6, 15, .55);
+  }
+
+  .mm-results__status {
+    padding: 4px 10px 8px;
+    font-size: 12px;
+    color: var(--mm-muted);
+  }
+
+  .mm-results__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  /*
+   * `:global`, want het script maakt deze elementen pas aan, en die dragen
+   * het scope-attribuut van dit bestand niet.
+   */
+  .mm-results :global(.mm-results__item) {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 10px;
+    border: 1px solid transparent;
+    border-radius: var(--mm-r-field);
+    transition: var(--mm-transition);
+  }
+
+  .mm-results :global(.mm-results__item:hover),
+  .mm-results :global(.mm-results__item:focus-visible) {
+    border-color: var(--mm-accent-cyan);
+    outline: none;
+  }
+
+  .mm-results :global(.mm-results__title) {
+    font-size: 14px;
+    color: var(--mm-ink-soft);
+  }
+
+  .mm-results :global(.mm-results__excerpt) {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--mm-muted);
+  }
+
+  .mm-results :global(mark) {
+    background: none;
+    color: var(--mm-accent-cyan);
+  }
+
   /* --- Blokvariant: het veld bovenaan het mobiele menu --- */
-  .is-block {
-    width: 100%;
+  .is-block { width: 100%; }
+
+  .is-block .mm-search {
     border-radius: var(--mm-r-field-xl);
     padding: 11px 13px;
     background: var(--mm-raised);
   }
 
   .is-block .mm-search__input { font-size: 14.5px; }
+
+  /* In het menu schuiven de resultaten gewoon onder het veld, zonder zweven. */
+  .is-block .mm-results {
+    position: static;
+    width: auto;
+    max-height: none;
+    margin-top: 8px;
+    box-shadow: none;
+  }
 </style>
+
+<!--
+  Pagefind laden, buiten de bundelaar om. Vite verpakt elke import() in een
+  hulpfunctie die hij pas na het bundelen invult, en Astro zet kleine scripts
+  inline in de HTML; daar bleef die hulpfunctie leeg, met een fout bij elke
+  toetsaanslag (11 september 2026). Een is:inline-script raakt Vite niet aan.
+  Het veld staat twee keer op de pagina (koptekst en menu), vandaar ??=.
+-->
+<script is:inline>
+  window.mmLoadPagefind ??= () => import('/pagefind/pagefind.js');
+</script>
+
+<script>
+  import '../scripts/site-search';
+</script>

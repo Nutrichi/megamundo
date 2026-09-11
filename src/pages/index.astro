@@ -2,26 +2,37 @@
 /*
  * De homepage in het Engels, op `/`. De vijf andere talen komen uit
  * [lang]/index.astro; de inhoud staat in HomeGrid, zodat er niets dubbel is.
+ *
+ * Het uitgelichte artikel staat óók in de lijst (Nutri, 11 september 2026):
+ * de lijst is het volledige archief, en wie hem afloopt hoort het
+ * belangrijkste bericht daar niet te missen.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeGrid from '../components/HomeGrid.astro';
 import FeaturedPost from '../components/FeaturedPost.astro';
 import PostList from '../components/PostList.astro';
-import { getPosts, pickFeatured, withoutFeatured } from '../lib/posts';
+import { getPosts, pickFeatured } from '../lib/posts';
+import { websiteJsonLd } from '../lib/structured-data';
 
 const locale = 'en' as const;
 const posts = await getPosts(locale);
 const featured = pickFeatured(posts);
-const rest = withoutFeatured(posts, featured);
+
+/*
+ * Gestructureerde data (§17). Bewust hier en niet in de script-tag zelf:
+ * daarbinnen kent Astro zijn eigen `Astro` niet, en dan faalt de build.
+ */
+const jsonLd = websiteJsonLd(locale, Astro.site);
 ---
 
 <BaseLayout locale={locale} filter>
+  <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
   <HomeGrid
     locale={locale}
     hasFeatured={!!featured}
-    hasList={rest.length > 0}
+    hasList={posts.length > 0}
   >
     {featured && <FeaturedPost slot="featured" post={featured} locale={locale} />}
-    {rest.length > 0 && <PostList slot="list" posts={rest} locale={locale} />}
+    {posts.length > 0 && <PostList slot="list" posts={posts} locale={locale} />}
   </HomeGrid>
 </BaseLayout>

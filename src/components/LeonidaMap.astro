@@ -94,6 +94,12 @@ const config = {
   }
 
   .mm-map__canvas {
+    /*
+     * Leaflet geeft zijn lagen een z-index van 400 tot 1000. Zonder eigen
+     * stapelcontext tellen die mee met de rest van de pagina, en dan lag de
+     * kaart boven het mobiele menu en boven de vastgepinde koptekst.
+     */
+    isolation: isolate;
     height: min(82vh, 860px);
     min-height: 460px;
     border: 1px solid var(--mm-border);

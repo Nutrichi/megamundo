@@ -106,16 +106,11 @@ const ariaText = fill(t('countdown.aria'), initial.days, initial.hours, initial.
 <style>
   .mm-countdown {
     /*
-     * Blijft samen met de koptekst bovenaan staan (11 september 2026). De
-     * aftelling en de categoriechips horen bij de navigatie: je wil ze
-     * kunnen gebruiken zonder eerst terug naar boven te scrollen.
-     *
-     * `top` is de hoogte van de koptekst, zodat hij daar precies onder
-     * plakt in plaats van eroverheen.
+     * Blijft samen met de koptekst bovenaan staan (11 september 2026), maar
+     * pint zichzelf niet vast: dat doet de omhulling `.mm-top` in
+     * BaseLayout. Dit blok blijft zo los van de koptekst en kan na de
+     * release in zijn geheel weg.
      */
-    position: sticky;
-    top: var(--mm-header-h);
-    z-index: 19;
     background: var(--mm-bar);
     border-top: 1px solid var(--mm-border);
     border-bottom: 1px solid var(--mm-border);
@@ -196,7 +191,13 @@ const ariaText = fill(t('countdown.aria'), initial.days, initial.hours, initial.
     padding: 7px 26px;
   }
 
-  .is-compact .mm-countdown__num { font-size: 20px; }
+  /*
+   * Nooit kleiner dan 24 px (11 september 2026). Daaronder geldt het cijfer
+   * als gewone tekst en moet het 4,5:1 contrast halen; roze met zijn gloed
+   * op de donkere balk kwam op 4,37, en op de lichte balk van het dagthema
+   * nog lager. Vanaf 24 px is het grote tekst en volstaat 3:1 (WCAG 1.4.3).
+   */
+  .is-compact .mm-countdown__num { font-size: 24px; }
   .is-compact .mm-countdown__unit { font-size: 11px; }
 
   .is-compact .mm-countdown__suffix {
@@ -218,7 +219,7 @@ const ariaText = fill(t('countdown.aria'), initial.days, initial.hours, initial.
     }
 
     .mm-countdown__label { display: none; }
-    .mm-countdown__num { font-size: 22px; }
+    .mm-countdown__num { font-size: 24px; } /* zie .is-compact: minstens 24 px */
     .mm-countdown__unit { font-size: 11.5px; }
 
     .mm-countdown__suffix {

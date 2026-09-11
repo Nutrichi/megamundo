@@ -1,0 +1,103 @@
+---
+/*
+ * Daily Clips en Streams (§10, handoff scherm 6). Hetzelfde patroon als de
+ * homepage: links één item groot, rechts de opgehaalde lijst als pillen.
+ *
+ * Geen zichtbare paginakop, geen uitleg, geen ophaaltijd en geen voetnoot
+ * (Nutri, 11 september 2026): de ruimte gaat naar de inhoud. De titel staat
+ * er alleen voor schermlezers en zoekmachines, want elke pagina heeft één
+ * h1 (§17).
+ *
+ * De route bouwt deze pagina alleen als er iets is (§4.1), dus `feed` is
+ * hier in de praktijk nooit leeg. De controle staat er toch: een lege pagina
+ * is erger dan geen pagina.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeGrid from './HomeGrid.astro';
+import FeedFeatured from './FeedFeatured.astro';
+import FeedList from './FeedList.astro';
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import { getClips, getStreams, type FeedKind } from '../lib/feeds';
+import { wholeNumber } from '../lib/feed-format';
+
+interface Props {
+  kind: FeedKind;
+  locale: Locale;
+}
+
+const { kind, locale } = Astro.props;
+const t = useTranslations(locale);
+
+/** Eén moment voor de hele pagina, zodat de kop en elke "3 hr. ago" kloppen. */
+const now = new Date();
+const clips = kind === 'clips' ? getClips(now) : null;
+const streams = kind === 'streams' ? getStreams(now) : null;
+const feed = clips ?? streams;
+
+const fill = (text: string, values: Record<string, string | number>) =>
+  Object.entries(values).reduce((out, [key, value]) => out.replaceAll(`{${key}}`, String(value)), text);
+
+const title = clips ? t('clips.title') : t('streams.title');
+const description = clips
+  ? fill(t('clips.description'), { h: clips.rules.windowHours })
+  : t('streams.description');
+
+/* De regel die de lijstkop belooft, uit het bestand zelf (§10.3). */
+const listMeta = clips
+  ? fill(t('clips.rules'), { n: wholeNumber(clips.rules.minViews, locale) })
+  : fill(t('streams.rules'), { n: wholeNumber(streams?.rules.minViewers ?? 0, locale) });
+
+const lead = feed?.lead;
+/*
+ * Een handmatige keuze draagt zijn eigen gele label; dan is de kolomkop
+ * alleen nog voor schermlezers. Zonder keuze zegt de kop wat het blok is.
+ */
+const leadLabel = lead?.picked
+  ? t('feed.featured')
+  : clips ? t('clips.topLabel') : t('streams.topLabel');
+---
+
+<BaseLayout locale={locale} title={title} description={description}>
+  <!--
+    Het grote beeld komt van YouTube of Twitch. De verbinding alvast openen
+    scheelt tijd tot het grootste element op de pagina (§17, LCP).
+  -->
+  <link slot="head" rel="preconnect" href={clips ? 'https://i.ytimg.com' : 'https://static-cdn.jtvnw.net'} />
+  {feed && lead && (
+    <>
+      <h1 class="mm-sr">{title}</h1>
+
+      <HomeGrid
+        locale={locale}
+        hasFeatured
+        hasList={feed.list.length > 0}
+        featuredLabel={leadLabel}
+        featuredLabelHidden={lead.picked}
+        listLabel={t('feed.listLabel')}
+        listMeta={listMeta}
+        emptyText={t('feed.noResults')}
+      >
+        {clips && (
+          <FeedFeatured slot="featured" clip={clips.lead.item} picked={clips.lead.picked}
+            sponsored={clips.lead.sponsored} now={now} locale={locale} />
+        )}
+        {streams && (
+          <FeedFeatured slot="featured" stream={streams.lead.item} picked={streams.lead.picked}
+            sponsored={streams.lead.sponsored} now={now} locale={locale} />
+        )}
+        {clips && clips.list.length > 0 && (
+          <FeedList slot="list" clips={clips.list} now={now} locale={locale} />
+        )}
+        {streams && streams.list.length > 0 && (
+          <FeedList slot="list" streams={streams.list} now={now} locale={locale} />
+        )}
+      </HomeGrid>
+    </>
+  )}
+</BaseLayout>
+
+<script>
+  // Een klik speelt in het grote blok; de uitleg staat in het script.
+  import '../scripts/feed-stage';
+</script>

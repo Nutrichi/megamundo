@@ -4,7 +4,8 @@
  * overal terug: archief, clips, streams.
  *
  * De herziene vorm, niet de eerste. Van links naar rechts: een kolom van
- * vaste breedte met één klein ruitje in de categoriekleur, een scheidingslijn,
+ * vaste breedte met een palmboompje in de categoriekleur (tot 11 september
+ * 2026 een ruitje), een scheidingslijn,
  * de titel op één regel, dezelfde scheidingslijn nog eens, en een kolom van
  * vaste breedte met het hartje en de telling.
  *
@@ -53,7 +54,18 @@ const categoryLabel = category.label;
   data-title={post.title.toLowerCase()}
 >
   <span class="mm-pill__cat" aria-hidden="true">
-    <span class="mm-pill__diamond" style={`--mm-diamond: ${category.color};`}></span>
+    <svg class="mm-pill__palm" style={`--mm-palm: ${category.color};`} viewBox="0 0 24 24" fill="currentColor">
+      <!-- De kroon -->
+      <path d="M12 8.3C9.5 5 5 4.6 2 7.4c3.2-.4 6 .6 7.6 2.6z" />
+      <path d="M12 8.3c2.5-3.3 7-3.7 10-.9-3.2-.4-6 .6-7.6 2.6z" />
+      <path d="M12 8.3C11.4 4.2 8.4 1.4 4.6 1.4c2.6 1.4 4.6 3.8 5.4 7z" />
+      <path d="M12 8.3c.6-4.1 3.6-6.9 7.4-6.9-2.6 1.4-4.6 3.8-5.4 7z" />
+      <path d="M12 9c-2.3.1-4.6 1.8-5.6 4.6 1.8-1.5 3.8-2.3 5.9-2.2z" />
+      <path d="M12 9c2.3.1 4.6 1.8 5.6 4.6-1.8-1.5-3.8-2.3-5.9-2.2z" />
+      <!-- De stam, die in het heuveltje zakt: de boom staat op een eilandje -->
+      <path d="M11 9.3c1.3 3.2 1.5 6.6.7 10h2.2c.8-3.5.6-7-.8-10.3z" />
+      <path d="M3.5 22.5c2-2.2 5.1-3.4 8.5-3.4s6.5 1.2 8.5 3.4z" />
+    </svg>
   </span>
 
   <span class="mm-pill__rule" aria-hidden="true"></span>
@@ -81,7 +93,14 @@ const categoryLabel = category.label;
     border: 1px solid var(--mm-border);
     border-radius: var(--mm-r-pill);
     overflow: hidden;
-    transition: var(--mm-transition);
+    /*
+     * Alleen de rand animeert; de gloed staat er meteen (11 september 2026).
+     * Een geanimeerde box-shadow tekent de pil zestien beelden lang opnieuw,
+     * met het gefilterde palmboompje erbij. Over een lijst van vijftig pillen
+     * voelde dat traag, vooral in Safari; zonder is het rekenwerk bij het
+     * bewegen van de muis 14 tot 32 % lager.
+     */
+    transition: border-color .16s ease;
   }
 
   .mm-pill:hover,
@@ -90,7 +109,7 @@ const categoryLabel = category.label;
     box-shadow: var(--mm-glow-pill);
   }
 
-  /* Vaste kolom met alleen een ruitje. Nooit een gevuld kleurvlak. */
+  /* Vaste kolom met alleen het palmboompje. Nooit een gevuld kleurvlak. */
   .mm-pill__cat {
     flex: none;
     width: 40px;
@@ -99,12 +118,17 @@ const categoryLabel = category.label;
     place-items: center;
   }
 
-  .mm-pill__diamond {
-    width: 10px;
-    height: 10px;
-    background: var(--mm-diamond);
-    transform: rotate(45deg);
-    box-shadow: 0 0 var(--mm-glow-diamond) var(--mm-diamond);
+  /*
+   * Het palmboompje (Nutri, 11 september 2026): de kleur van de categorie en
+   * dezelfde gloed als het ruitje dat er stond. Een eigen tekening, geen
+   * materiaal van Rockstar (§2.4). De kleur loopt via `currentColor`, want
+   * een CSS-variabele in het fill-attribuut van SVG werkt niet (§13).
+   */
+  .mm-pill__palm {
+    width: 16px;
+    height: 16px;
+    color: var(--mm-palm);
+    filter: drop-shadow(0 0 4px var(--mm-palm));
   }
 
   .mm-pill__rule {
@@ -179,7 +203,7 @@ const categoryLabel = category.label;
   @media (max-width: 899px) {
     .mm-pill { min-height: 44px; } /* raakvlak */
     .mm-pill__cat { width: 34px; }
-    .mm-pill__diamond { width: 9px; height: 9px; }
+    .mm-pill__palm { width: 14px; height: 14px; }
     .mm-pill__link { font-size: 13.5px; }
     .mm-pill__value { width: 62px; }
   }

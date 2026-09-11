@@ -23,10 +23,13 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  # Best effort: GitHub start een geplande run soms tien tot twintig minuten
-  # later. Reken op "ongeveer elk kwartier", niet op de klok (§10.1).
+  # Elk kwartier, maar bewust niet op :00, :15, :30 en :45. Dat zijn de
+  # drukste momenten bij GitHub, en daar worden geplande runs het eerst
+  # uitgesteld of weggelaten: met '*/15' draaide er na de lancering drie uur
+  # lang geen enkele (11 september 2026). Best effort blijft het; reken op
+  # "ongeveer elk kwartier", niet op de klok (§10.1).
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '7,22,37,52 * * * *'
 
 permissions:
   contents: read

@@ -4,12 +4,14 @@
  *
  * Gedeeld door PostList (de homepage) en FeedList (Daily Clips en Streams);
  * beide zetten dezelfde data-attributen neer. Op de feedpagina's staan geen
- * categoriechips, dus daar valt het filter vanzelf weg.
+ * categoriechips, dus daar valt het filter vanzelf weg. De taalkiezer staat
+ * alleen op Streams.
  *
  * De staat:
- *   category — in de URL (?cat=), deelbaar en terug-knop-vriendelijk
- *   query    — alleen in het geheugen, zoals de handoff voorschrijft
- *   visible  — hoeveel pillen er getoond zijn; groeit per LOAD MORE
+ *   category: in de URL (?cat=), deelbaar en terug-knop-vriendelijk
+ *   language: in de URL (?language=) en bewaard in de browser; alleen Streams
+ *   query:    alleen in het geheugen, zoals de handoff voorschrijft
+ *   visible:  hoeveel pillen er getoond zijn; groeit per LOAD MORE
  */
 const list = document.querySelector<HTMLElement>('[data-mm-list]');
 const items = list?.querySelector<HTMLElement>('[data-mm-items]');
@@ -26,6 +28,8 @@ if (list && items) {
     document.querySelectorAll<HTMLInputElement>('input[name="q"]'),
   );
   const sentinel = list.querySelector<HTMLElement>('[data-mm-sentinel]');
+  const languageSelect = document.querySelector<HTMLSelectElement>('[data-mm-language]');
+  const leadsBox = document.querySelector<HTMLElement>('[data-mm-leads]');
 
   const params = new URLSearchParams(window.location.search);
   const known = new Set(chips.map((chip) => chip.dataset.cat));
@@ -33,15 +37,58 @@ if (list && items) {
   let category = params.get('cat') ?? 'all';
   if (!known.has(category)) category = 'all';
 
+  /*
+   * De taal van de streams. De URL gaat voor; anders wat deze browser de
+   * vorige keer koos. Een taal die bij deze ophaling niet meer voorkomt,
+   * valt terug op alle talen.
+   */
+  const LANGUAGE_KEY = 'mm-stream-language';
+  const knownLanguages = new Set(Array.from(languageSelect?.options ?? []).map((option) => option.value));
+  const storedLanguage = () => {
+    try {
+      return localStorage.getItem(LANGUAGE_KEY);
+    } catch {
+      return null;
+    }
+  };
+  let language = params.get('language') ?? storedLanguage() ?? 'all';
+  if (!knownLanguages.has(language)) language = 'all';
+
   let query = (params.get('q') ?? '').trim().toLowerCase();
   let visible = step;
 
-  /** Welke pillen door het filter en de zoekterm komen, in volgorde. */
+  /*
+   * Het grote blok per taal. Het blok van bij het laden hoort bij alle
+   * talen; dat van een taal staat in een <template> en wordt pas bij de keuze
+   * in de pagina gezet. Het kanaal dat groot staat, valt uit de lijst.
+   */
+  const allLead = leadsBox?.querySelector<HTMLElement>(':scope > [data-mm-lead-current]') ?? null;
+  let leadId = '';
+
+  const showLead = () => {
+    if (!leadsBox || !allLead) return;
+    const current = leadsBox.querySelector<HTMLElement>(':scope > [data-mm-lead-current]');
+    const template = language === 'all'
+      ? null
+      : leadsBox.querySelector<HTMLTemplateElement>(`template[data-mm-lead-for="${CSS.escape(language)}"]`);
+    const next = template
+      ? (template.content.firstElementChild?.cloneNode(true) as HTMLElement | null)
+      : allLead;
+    leadId = template?.dataset.mmLeadId ?? '';
+    if (next && current !== next) {
+      if (current) current.replaceWith(next);
+      else leadsBox.prepend(next);
+    }
+  };
+
+  /** Welke pillen door het filter, de taal en de zoekterm komen, in volgorde. */
   const matching = () =>
     pills.filter((pill) => {
       const inCategory = category === 'all' || pill.dataset.category === category;
+      const inLanguage = language === 'all' || pill.dataset.language === language;
+      const notOnStage = !leadId || pill.dataset.id !== leadId;
       const inQuery = !query || (pill.dataset.title ?? '').includes(query);
-      return inCategory && inQuery;
+      return inCategory && inLanguage && notOnStage && inQuery;
     });
 
   const render = (markNew = false) => {
@@ -70,6 +117,8 @@ if (list && items) {
     const next = new URLSearchParams(window.location.search);
     if (category === 'all') next.delete('cat');
     else next.set('cat', category);
+    if (language === 'all') next.delete('language');
+    else next.set('language', language);
 
     const search = next.toString();
     const url = `${window.location.pathname}${search ? `?${search}` : ''}`;
@@ -83,6 +132,12 @@ if (list && items) {
     });
   };
 
+  const syncLanguage = () => {
+    if (!languageSelect) return;
+    languageSelect.value = language;
+    languageSelect.classList.toggle('is-active', language !== 'all');
+  };
+
   chips.forEach((chip) => {
     chip.addEventListener('click', (event) => {
       event.preventDefault();
@@ -93,6 +148,21 @@ if (list && items) {
       syncUrl();
       render();
     });
+  });
+
+  languageSelect?.addEventListener('change', () => {
+    language = languageSelect.value;
+    try {
+      if (language === 'all') localStorage.removeItem(LANGUAGE_KEY);
+      else localStorage.setItem(LANGUAGE_KEY, language);
+    } catch {
+      // Privémodus: de keuze geldt dan alleen voor deze pagina.
+    }
+    visible = step;
+    syncLanguage();
+    showLead();
+    syncUrl();
+    render();
   });
 
   searchInputs.forEach((input) => {
@@ -123,6 +193,10 @@ if (list && items) {
   });
 
   syncChips();
+  syncLanguage();
+  showLead();
+  // Kwam de taal uit de browser, dan toont de URL hem ook.
+  if (language !== 'all') syncUrl();
   render();
 
   /*

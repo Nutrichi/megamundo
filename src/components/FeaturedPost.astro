@@ -36,7 +36,8 @@ const postId = `${post.collection}/${post.slug}`;
 
 <article class="mm-featured">
   <a class="mm-featured__shot" href={post.href} tabindex="-1" aria-hidden="true">
-    <PostImage image={post.image} alt={post.imageAlt ?? ''} variant="featured">
+    <!-- Het grootste element boven de vouw: meteen en met voorrang laden (§17). -->
+    <PostImage image={post.image} alt={post.imageAlt ?? ''} variant="featured" eager>
       <CategoryBadge category={post.category} locale={locale} overlay />
     </PostImage>
   </a>

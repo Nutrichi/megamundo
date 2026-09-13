@@ -163,6 +163,36 @@ export function getStreams(now = new Date()): Feed<Stream, StreamRules> | null {
   });
 }
 
+/**
+ * De talen op Streams, voor de taalkiezer (Nutri, 13 september 2026). Per
+ * taal: hoeveel live streams er zijn, en wat er in het grote blok komt als
+ * die taal gekozen is. Dat is een live uitgelicht kanaal in die taal, en
+ * anders de stream met de meeste kijkers. De taal met de meeste streams
+ * staat bovenaan.
+ */
+export function streamLanguages(
+  feed: Feed<Stream, StreamRules>,
+): { code: string; count: number; lead: Entry<Stream> }[] {
+  const byCode = new Map<string, Entry<Stream>[]>();
+
+  for (const entry of [feed.lead, ...feed.list]) {
+    const code = entry.item.language;
+    if (!code || !entry.item.live) continue;
+    if (!byCode.has(code)) byCode.set(code, []);
+    byCode.get(code)!.push(entry);
+  }
+
+  return [...byCode.entries()]
+    .map(([code, entries]) => ({
+      code,
+      count: entries.length,
+      lead:
+        entries.find((entry) => entry.picked)
+        ?? entries.reduce((top, entry) => (entry.item.viewers > top.item.viewers ? entry : top)),
+    }))
+    .sort((a, b) => b.count - a.count || a.code.localeCompare(b.code));
+}
+
 export function getClips(now = new Date()): Feed<Clip, ClipRules> | null {
   return assemble({
     file: read<Clip, ClipRules>('clips'),

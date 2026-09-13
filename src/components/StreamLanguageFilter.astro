@@ -1,0 +1,98 @@
+---
+/*
+ * De taalkiezer op Streams (Nutri, 11 en 13 september 2026), rechts in de
+ * lijstkop, op de plek waar `min. 50 viewers` stond. De drempel van 50
+ * kijkers blijft in scripts/fetch-feeds.mjs; hij staat alleen niet meer op
+ * de pagina.
+ *
+ * De talen komen uit dezelfde ophaling als de lijst, dus ze verversen mee
+ * met elke build. De taal met de meeste streams staat bovenaan, met het
+ * aantal erbij. De namen staan in de taal van de pagina (Intl.DisplayNames).
+ *
+ * Een gewone <select>: die werkt met het toetsenbord en op elke telefoon
+ * zonder eigen code. Wat een keuze doet, staat in src/scripts/pill-list.ts:
+ * de lijst filteren, het grote blok wisselen naar de stream met de meeste
+ * kijkers in die taal, en de keuze bewaren in de URL (?language=) en in de
+ * browser.
+ */
+import { localeTags, type Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import { languageName } from '../lib/feed-format';
+
+interface Props {
+  locale: Locale;
+  languages: { code: string; count: number }[];
+}
+
+const { locale, languages } = Astro.props;
+const t = useTranslations(locale);
+
+/** "anglais" wordt "Anglais": een keuzelijst begint met een hoofdletter. */
+const label = (code: string) => {
+  if (code === 'other') return t('streams.otherLanguage');
+  const name = languageName(code, locale);
+  return name.charAt(0).toLocaleUpperCase(localeTags[locale]) + name.slice(1);
+};
+---
+
+<label class="mm-langfilter">
+  <span class="mm-sr">{t('streams.languageLabel')}</span>
+  <select class="mm-langfilter__select" data-mm-language>
+    <option value="all">{t('streams.allLanguages')}</option>
+    {languages.map((language) => (
+      <option value={language.code}>{label(language.code)} ({language.count})</option>
+    ))}
+  </select>
+  <span class="mm-langfilter__chevron" aria-hidden="true"></span>
+</label>
+
+<style>
+  .mm-langfilter {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+  }
+
+  /* Dezelfde vorm als de chips in de aftelbalk. */
+  .mm-langfilter__select {
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+    font-size: 12px;
+    line-height: 1.4;
+    padding: 3px 26px 3px 11px;
+    color: var(--mm-ink);
+    background: transparent;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-pill);
+    cursor: pointer;
+    transition: var(--mm-transition), background-color .16s ease;
+  }
+
+  .mm-langfilter__select:hover { border-color: var(--mm-accent-cyan); }
+
+  /* Een gekozen taal krijgt de actieve staat van een chip. */
+  .mm-langfilter__select.is-active {
+    background: var(--mm-accent-pink-wash);
+    border-color: var(--mm-accent-pink);
+  }
+
+  .mm-langfilter__select option {
+    color: var(--mm-ink);
+    background: var(--mm-raised);
+  }
+
+  .mm-langfilter__chevron {
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    margin-top: -4px;
+    border-right: 1.5px solid var(--mm-muted);
+    border-bottom: 1.5px solid var(--mm-muted);
+    transform: rotate(45deg);
+    pointer-events: none;
+  }
+</style>

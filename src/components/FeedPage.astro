@@ -8,6 +8,12 @@
  * er alleen voor schermlezers en zoekmachines, want elke pagina heeft één
  * h1 (§17).
  *
+ * De lijstkop toont sinds 13 september 2026 geen regel van de ophaling meer
+ * (`min. 250 views`, `min. 50 viewers`). Op Streams staat daar de
+ * taalkiezer. Het grote blok per taal staat al klaar in een <template>: dat
+ * laadt niets tot iemand die taal kiest, en het script in pill-list.ts zet
+ * het dan op zijn plek.
+ *
  * De route bouwt deze pagina alleen als er iets is (§4.1), dus `feed` is
  * hier in de praktijk nooit leeg. De controle staat er toch: een lege pagina
  * is erger dan geen pagina.
@@ -16,10 +22,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeGrid from './HomeGrid.astro';
 import FeedFeatured from './FeedFeatured.astro';
 import FeedList from './FeedList.astro';
+import StreamLanguageFilter from './StreamLanguageFilter.astro';
 import type { Locale } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
-import { getClips, getStreams, type FeedKind } from '../lib/feeds';
-import { wholeNumber } from '../lib/feed-format';
+import { getClips, getStreams, streamLanguages, type FeedKind } from '../lib/feeds';
 
 interface Props {
   kind: FeedKind;
@@ -34,6 +40,7 @@ const now = new Date();
 const clips = kind === 'clips' ? getClips(now) : null;
 const streams = kind === 'streams' ? getStreams(now) : null;
 const feed = clips ?? streams;
+const languages = streams ? streamLanguages(streams) : [];
 
 const fill = (text: string, values: Record<string, string | number>) =>
   Object.entries(values).reduce((out, [key, value]) => out.replaceAll(`{${key}}`, String(value)), text);
@@ -42,11 +49,6 @@ const title = clips ? t('clips.title') : t('streams.title');
 const description = clips
   ? fill(t('clips.description'), { h: clips.rules.windowHours })
   : t('streams.description');
-
-/* De regel die de lijstkop belooft, uit het bestand zelf (§10.3). */
-const listMeta = clips
-  ? fill(t('clips.rules'), { n: wholeNumber(clips.rules.minViews, locale) })
-  : fill(t('streams.rules'), { n: wholeNumber(streams?.rules.minViewers ?? 0, locale) });
 
 const lead = feed?.lead;
 /*
@@ -75,7 +77,6 @@ const leadLabel = lead?.picked
         featuredLabel={leadLabel}
         featuredLabelHidden={lead.picked}
         listLabel={t('feed.listLabel')}
-        listMeta={listMeta}
         emptyText={t('feed.noResults')}
       >
         {clips && (
@@ -83,8 +84,23 @@ const leadLabel = lead?.picked
             sponsored={clips.lead.sponsored} now={now} locale={locale} />
         )}
         {streams && (
-          <FeedFeatured slot="featured" stream={streams.lead.item} picked={streams.lead.picked}
-            sponsored={streams.lead.sponsored} now={now} locale={locale} />
+          <div slot="featured" data-mm-leads>
+            <div data-mm-lead-current>
+              <FeedFeatured stream={streams.lead.item} picked={streams.lead.picked}
+                sponsored={streams.lead.sponsored} now={now} locale={locale} />
+            </div>
+            {languages.map((language) => (
+              <template data-mm-lead-for={language.code} data-mm-lead-id={language.lead.item.channel.toLowerCase()}>
+                <div data-mm-lead-current>
+                  <FeedFeatured stream={language.lead.item} picked={language.lead.picked}
+                    sponsored={language.lead.sponsored} now={now} locale={locale} />
+                </div>
+              </template>
+            ))}
+          </div>
+        )}
+        {streams && languages.length > 1 && (
+          <StreamLanguageFilter slot="listtools" locale={locale} languages={languages} />
         )}
         {clips && clips.list.length > 0 && (
           <FeedList slot="list" clips={clips.list} now={now} locale={locale} />

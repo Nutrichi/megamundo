@@ -75,6 +75,8 @@ const pickLabel = picked ? `${sponsored ? t('feed.sponsored') : t('feed.featured
   class:list={['mm-feedpill', clip ? 'is-clip' : 'is-stream', { 'is-picked': picked }]}
   data-mm-post
   data-mm-clip-id={clip?.id}
+  data-id={stream?.channel.toLowerCase()}
+  data-language={stream?.language || undefined}
   data-title={`${title} ${channel}`.toLowerCase()}
 >
   <span class="mm-feedpill__icon" aria-hidden="true">

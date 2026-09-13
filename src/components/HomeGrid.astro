@@ -12,6 +12,10 @@
  *
  * De teller rechts is er niet meer (11 september 2026): het getal zei de
  * lezer niets en verspringt bij elk filter.
+ *
+ * Rechts in de lijstkop is er plek voor een bediening (slot `listtools`).
+ * Streams zet er zijn taalkiezer. Tot 13 september 2026 stond daar de regel
+ * van de ophaling, zoals `min. 50 viewers`.
  */
 import type { Locale } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
@@ -33,8 +37,6 @@ interface Props {
   /** Alleen voor schermlezers, als het blok zelf al een zichtbaar label draagt. */
   featuredLabelHidden?: boolean;
   listLabel?: string;
-  /** Rechts in de lijstkop, zoals `min. 500 viewers`. */
-  listMeta?: string;
   emptyText?: string;
 }
 
@@ -43,7 +45,6 @@ const {
   hasFeatured = false,
   hasList = false,
   featuredLabelHidden = false,
-  listMeta,
 } = Astro.props;
 const t = useTranslations(locale);
 const featuredLabel = Astro.props.featuredLabel ?? t('featured.label');
@@ -60,7 +61,7 @@ const emptyText = Astro.props.emptyText ?? t('list.empty');
   <section class="mm-home__col" aria-label={listLabel}>
     <div class="mm-home__listhead">
       <h2 class="mm-home__label">{listLabel}</h2>
-      {listMeta && <p class="mm-home__meta">{listMeta}</p>}
+      <slot name="listtools" />
     </div>
     {hasList ? <slot name="list" /> : <p class="mm-home__empty">{emptyText}</p>}
   </section>
@@ -89,15 +90,11 @@ const emptyText = Astro.props.emptyText ?? t('list.empty');
 
   .mm-home__listhead {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     gap: 12px;
+    min-height: 24px;
     padding-bottom: 4px;
-  }
-
-  .mm-home__meta {
-    font-size: 12px;
-    color: var(--mm-muted);
   }
 
   .mm-home__empty {

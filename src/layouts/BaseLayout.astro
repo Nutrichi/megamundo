@@ -22,6 +22,7 @@ import CategoryFilter from '../components/CategoryFilter.astro';
 import GameTabs from '../components/GameTabs.astro';
 import SpectrumBar from '../components/SpectrumBar.astro';
 import Footer from '../components/Footer.astro';
+import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 
@@ -145,12 +146,13 @@ gtag('config', '${ga4Id}');`;
     <meta property="og:locale" content={localeTags[locale]} />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap"
-    />
+    <!--
+      De lettertypes staan op de site zelf (src/styles/fonts.css), niet meer
+      bij Google Fonts (13 september 2026). De twee bestanden die boven de
+      vouw nodig zijn, laden vooraf.
+    -->
+    <link rel="preload" href="/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Gestructureerde data en wat een losse pagina verder nodig heeft (§17). -->
     <slot name="head" />

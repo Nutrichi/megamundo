@@ -34,8 +34,8 @@ const FEATURED_FILE = path.join(ROOT, 'src/data/featured.json');
 const BLOCKLIST_FILE = path.join(ROOT, 'src/data/blocklist.json');
 
 /*
- * De regels (§10.3). Het script schrijft ze mee in het bestand en de pagina
- * toont ze van daaruit: wat de lijstkop belooft, is wat er gefilterd is.
+ * De regels (§10.3). Het script schrijft ze mee in het bestand. De lijstkop
+ * toont ze sinds 13 september 2026 niet meer (Nutri); ze blijven wel gelden.
  */
 const TWITCH = {
   /** Grand Theft Auto V. Na de release wordt dit de categorie van GTA VI. */
@@ -50,8 +50,8 @@ const TWITCH = {
 const YOUTUBE = {
   query: 'GTA Online',
   windowHours: 24,
-  /** Was 1000; op 11 september naar 250 gezet door Nutri. */
-  minViews: 250,
+  /** Was 1000, daarna 250; op 13 september naar 50 gezet door Nutri. */
+  minViews: 50,
   /** YouTube noemt korter dan vier minuten `short`; dat is precies de regel. */
   duration: 'short',
   /** Korter dan dit is geen clip (Nutri, 11 september 2026). */

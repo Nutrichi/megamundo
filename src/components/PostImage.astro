@@ -55,6 +55,7 @@ const widths = isPost ? [640, 960, 1280, 1600] : [420, 640, 900, 1400];
       widths={widths}
       sizes={sizes}
       loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : 'auto'}
       decoding={eager ? 'sync' : 'async'}
     />
   ) : (

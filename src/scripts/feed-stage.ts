@@ -66,83 +66,89 @@ paintWatched();
 // Terug uit de bfcache, of in een ander tabblad bekeken: opnieuw kijken.
 window.addEventListener('pageshow', paintWatched);
 
-const lead = document.querySelector<HTMLElement>('[data-mm-stage]');
-const box = lead?.querySelector<HTMLElement>('[data-mm-stage-box]');
+/** De officiële spelers: YouTube in de privacyvriendelijke variant, en Twitch. */
+const embedUrl = (kind: string, id: string) =>
+  kind === 'clip'
+    ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0`
+    : `https://player.twitch.tv/?${new URLSearchParams({
+        channel: id,
+        parent: window.location.hostname,
+        autoplay: 'true',
+        muted: 'false',
+      })}`;
 
-if (lead && box) {
+/** Het blok in beeld brengen, onder de vastgepinde koptekst. */
+const reveal = (lead: HTMLElement) => {
+  const offset = (document.querySelector<HTMLElement>('.mm-top')?.offsetHeight ?? 0) + 12;
+  const top = lead.getBoundingClientRect().top;
+  if (top >= offset && top < window.innerHeight / 2) return;
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: top + window.scrollY - offset, behavior: smooth ? 'smooth' : 'auto' });
+};
+
+/*
+ * Het grote blok wordt bij elke klik opnieuw opgezocht. Op Streams wisselt de
+ * taalkiezer het blok (src/scripts/pill-list.ts), en dan is het blok van bij
+ * het laden er niet meer.
+ */
+document.addEventListener('click', (event) => {
+  if (!(event.target instanceof Element)) return;
+  const link = event.target.closest<HTMLAnchorElement>('a[data-mm-play]');
+  if (!link) return;
+  // Cmd- of Ctrl-klik opent de bron in een nieuw tabblad, zoals elke link.
+  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+  const lead = document.querySelector<HTMLElement>('[data-mm-stage]');
+  const box = lead?.querySelector<HTMLElement>('[data-mm-stage-box]');
+  if (!lead || !box) return;
+
+  const kind = link.dataset.mmPlay ?? '';
+  const id = link.dataset.id ?? '';
+  if (!id) return;
+  // Te smal voor de Twitch-speler: dan gewoon naar Twitch.
+  if (kind === 'stream' && box.getBoundingClientRect().width < 400) return;
+
+  event.preventDefault();
+
   const titleLink = lead.querySelector<HTMLAnchorElement>('[data-mm-stage-title]');
   const meta = lead.querySelector<HTMLElement>('[data-mm-stage-meta]');
   const pick = lead.querySelector<HTMLElement>('[data-mm-stage-pick]');
   const leadId = lead.dataset.id ?? '';
-  const leadPicked = lead.classList.contains('is-picked');
+  // Of het blok bij het laden uitgelicht was; de klasse verandert bij afspelen.
+  lead.dataset.mmPicked ??= String(lead.classList.contains('is-picked'));
+  const leadPicked = lead.dataset.mmPicked === 'true';
 
-  /** De officiële spelers: YouTube in de privacyvriendelijke variant, en Twitch. */
-  const embedUrl = (kind: string, id: string) =>
-    kind === 'clip'
-      ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0`
-      : `https://player.twitch.tv/?${new URLSearchParams({
-          channel: id,
-          parent: window.location.hostname,
-          autoplay: 'true',
-          muted: 'false',
-        })}`;
+  const iframe = document.createElement('iframe');
+  iframe.src = embedUrl(kind, id);
+  iframe.title = link.dataset.title ?? '';
+  iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+  iframe.allowFullscreen = true;
+  // YouTube weigert een embed die niet zegt van welke site hij komt.
+  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
 
-  /** Het blok in beeld brengen, onder de vastgepinde koptekst. */
-  const reveal = () => {
-    const offset = (document.querySelector<HTMLElement>('.mm-top')?.offsetHeight ?? 0) + 12;
-    const top = lead.getBoundingClientRect().top;
-    if (top >= offset && top < window.innerHeight / 2) return;
-    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top: top + window.scrollY - offset, behavior: smooth ? 'smooth' : 'auto' });
-  };
+  lead.classList.add('is-playing');
+  box.replaceChildren(iframe);
 
-  document.addEventListener('click', (event) => {
-    if (!(event.target instanceof Element)) return;
-    const link = event.target.closest<HTMLAnchorElement>('a[data-mm-play]');
-    if (!link) return;
-    // Cmd- of Ctrl-klik opent de bron in een nieuw tabblad, zoals elke link.
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  // De titel en de metaregel volgen wat er speelt. De titel wordt nu een
+  // link naar de bron, want afspelen doet hij al.
+  if (titleLink) {
+    titleLink.textContent = link.dataset.title ?? '';
+    titleLink.href = link.href;
+    titleLink.removeAttribute('data-mm-play');
+    titleLink.target = '_blank';
+    titleLink.rel = 'noopener';
+  }
+  if (meta) meta.textContent = link.dataset.meta ?? '';
 
-    const kind = link.dataset.mmPlay ?? '';
-    const id = link.dataset.id ?? '';
-    if (!id) return;
-    // Te smal voor de Twitch-speler: dan gewoon naar Twitch.
-    if (kind === 'stream' && box.getBoundingClientRect().width < 400) return;
+  // Het gele label en de gele rand horen alleen bij het uitgelichte item zelf.
+  const isLead = id === leadId;
+  if (pick) pick.hidden = !isLead;
+  lead.classList.toggle('is-picked', isLead && leadPicked);
 
-    event.preventDefault();
+  document
+    .querySelectorAll('[data-mm-post].is-playing')
+    .forEach((pill) => pill.classList.remove('is-playing'));
+  link.closest('[data-mm-post]')?.classList.add('is-playing');
 
-    const iframe = document.createElement('iframe');
-    iframe.src = embedUrl(kind, id);
-    iframe.title = link.dataset.title ?? '';
-    iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-    iframe.allowFullscreen = true;
-    // YouTube weigert een embed die niet zegt van welke site hij komt.
-    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-
-    lead.classList.add('is-playing');
-    box.replaceChildren(iframe);
-
-    // De titel en de metaregel volgen wat er speelt. De titel wordt nu een
-    // link naar de bron, want afspelen doet hij al.
-    if (titleLink) {
-      titleLink.textContent = link.dataset.title ?? '';
-      titleLink.href = link.href;
-      titleLink.removeAttribute('data-mm-play');
-      titleLink.target = '_blank';
-      titleLink.rel = 'noopener';
-    }
-    if (meta) meta.textContent = link.dataset.meta ?? '';
-
-    // Het gele label en de gele rand horen alleen bij het uitgelichte item zelf.
-    const isLead = id === leadId;
-    if (pick) pick.hidden = !isLead;
-    lead.classList.toggle('is-picked', isLead && leadPicked);
-
-    document
-      .querySelectorAll('[data-mm-post].is-playing')
-      .forEach((pill) => pill.classList.remove('is-playing'));
-    link.closest('[data-mm-post]')?.classList.add('is-playing');
-
-    reveal();
-  });
-}
+  reveal(lead);
+});

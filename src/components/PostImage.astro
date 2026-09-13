@@ -15,6 +15,7 @@
  */
 import { Image, getImage } from 'astro:assets';
 import type { Post } from '../lib/posts';
+import { featuredImage, heroImage } from '../lib/post-image';
 
 interface Props {
   image?: Post['image'];
@@ -41,9 +42,12 @@ const big = image && zoomable
   ? await getImage({ src: image, width: 2400, format: 'webp' })
   : undefined;
 
-/** Wat de browser aan breedte mag verwachten; scheelt gedownloade bytes. */
-const sizes = isPost ? '(max-width: 899px) 100vw, 1180px' : '(max-width: 899px) 100vw, 600px';
-const widths = isPost ? [640, 960, 1280, 1600] : [420, 640, 900, 1400];
+/*
+ * Wat de browser aan breedte mag verwachten; scheelt gedownloade bytes. De
+ * maten staan in lib/post-image.ts, want de homepage laadt het uitgelichte
+ * beeld vooraf met exact dezelfde.
+ */
+const { sizes, widths } = isPost ? heroImage : featuredImage;
 ---
 
 <div class:list={['mm-shot', isPost ? 'is-post' : 'is-featured']}>

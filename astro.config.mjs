@@ -31,6 +31,12 @@ export default defineConfig({
   build: {
     // Nette mappen zodat /nl/ met een slash werkt op GitHub Pages.
     format: 'directory',
+    /*
+     * De CSS staat in de pagina zelf in plaats van in een apart bestand
+     * (13 september 2026). Dat scheelt een rondreis voor de eerste weergave,
+     * op een trage mobiele verbinding de grootste rem die nog overbleef (§17).
+     */
+    inlineStylesheets: 'always',
   },
 
   /*

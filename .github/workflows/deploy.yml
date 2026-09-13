@@ -14,14 +14,25 @@
 # de publieke repo, zet een stap die ze naar _site kopieert, en maak
 # `path: dist` hieronder `path: _site`.
 #
-# Daily Clips en Streams (fase 7, §10.1): de workflow draait ook elk kwartier
-# op schema. Vlak voor de build haalt scripts/fetch-feeds.mjs de streams en de
-# clips op. Er wordt niets gecommit; de opgehaalde bestanden gaan van run naar
-# run mee in de cache. YouTube wordt maar één keer per uur gevraagd, dat
-# regelt het script zelf. De sleutels zijn repo secrets.
+# Daily Clips en Streams (fase 7, §10.1): de workflow draait ook op schema.
+# Vlak voor de build haalt scripts/fetch-feeds.mjs de streams en de clips op.
+# Er wordt niets gecommit; de opgehaalde bestanden gaan van run naar run mee
+# in de cache. YouTube wordt maar één keer per uur gevraagd, dat regelt het
+# script zelf. De sleutels zijn repo secrets.
 #
 # De Node-versie komt uit .nvmrc, zodat de Action en de twee machines
 # nooit uit elkaar lopen.
+#
+# De acties van GitHub zijn op 13 september 2026 bijgewerkt naar hun nieuwste
+# hoofdversie, gemaakt voor Node 24 (checkout v7, setup-node v7, cache v6,
+# configure-pages v6, upload-pages-artifact v5, deploy-pages v5). Wat daarbij
+# kon breken, nagekeken in de release notes:
+#   - setup-node cachet npm sinds v5 ook vanzelf; hier staat `cache: npm` al.
+#   - upload-pages-artifact neemt sinds v4 geen bestanden meer mee waarvan de
+#     naam met een punt begint. In dist/ zijn dat alleen .nojekyll (niet nodig:
+#     deze workflow draait geen Jekyll) en een verdwaalde .DS_Store. Komt er
+#     ooit zo'n bestand bij dat wel online moet, zet dan
+#     `include-hidden-files: true` bij die stap.
 
 name: Deploy naar GitHub Pages
 
@@ -32,8 +43,8 @@ on:
   # Elk kwartier, maar bewust niet op :00, :15, :30 en :45. Dat zijn de
   # drukste momenten bij GitHub, en daar worden geplande runs het eerst
   # uitgesteld of weggelaten: met '*/15' draaide er na de lancering drie uur
-  # lang geen enkele (11 september 2026). Best effort blijft het; reken op
-  # "ongeveer elk kwartier", niet op de klok (§10.1).
+  # lang geen enkele (11 september 2026). In de praktijk start GitHub ze om de
+  # één tot vijf uur, en dat is goed zo (Nutri, 13 september 2026; §10.1).
   schedule:
     - cron: '7,22,37,52 * * * *'
 
@@ -51,9 +62,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -63,7 +74,7 @@ jobs:
       # De vorige ophaling terug. Zo hoeft YouTube niet bij elke run, en
       # heeft de site nog iets als een API even niet antwoordt.
       - name: Vorige feeds terughalen
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: src/data/generated
           key: feeds-${{ github.run_id }}
@@ -78,16 +89,16 @@ jobs:
 
       - name: Feeds bewaren voor de volgende run
         if: hashFiles('src/data/generated/*.json') != ''
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: src/data/generated
           key: feeds-${{ github.run_id }}
 
       - run: npm run build
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
@@ -99,4 +110,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

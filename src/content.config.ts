@@ -91,7 +91,7 @@ const game = defineCollection({
        * verschijnen; bij lancering is dat alleen `map` (§4, §4.1).
        */
       section: z.enum([
-        'map', 'characters', 'vehicles', 'missions', 'weapons', 'properties', 'cheats',
+        'characters', 'map', 'vehicles', 'missions', 'weapons', 'properties', 'cheats',
       ]),
 
       /*

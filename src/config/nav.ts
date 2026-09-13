@@ -13,9 +13,13 @@ import type { Locale, UIKey } from '../i18n/ui';
 import { localizePath } from '../i18n/utils';
 import { feedHasContent } from '../lib/feeds';
 
-/** De zeven Game-submenu's in de vaste volgorde uit §4. */
+/**
+ * De zeven Game-submenu's in de vaste volgorde uit §4. Het eerste met inhoud
+ * is waar GAME naartoe linkt, dus Characters staat voor Map (Nutri,
+ * 13 september 2026).
+ */
 export const gameSections = [
-  'map', 'characters', 'vehicles', 'missions', 'weapons', 'properties', 'cheats',
+  'characters', 'map', 'vehicles', 'missions', 'weapons', 'properties', 'cheats',
 ] as const;
 export type GameSection = (typeof gameSections)[number];
 

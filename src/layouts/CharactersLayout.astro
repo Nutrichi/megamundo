@@ -96,12 +96,17 @@ const jsonLd = {
     display: flex;
     flex-direction: column;
     gap: 28px;
-    padding: 8px 0 8px;
+    /* Geen ruimte boven: de titel staat op dezelfde hoogte als die van de kaart. */
+    padding: 0 0 8px;
   }
 
+  /*
+   * Dezelfde maat als de titel van de kaart (.mm-mappage__title), zodat de
+   * twee overzichten onder Game dezelfde kop hebben (Nutri, 13 september 2026).
+   */
   .mm-cast__title {
-    font-size: 44px;
-    line-height: 1.02;
+    font-size: 32px;
+    line-height: 1;
     text-shadow: var(--mm-glow-h1);
   }
 
@@ -220,8 +225,12 @@ const jsonLd = {
     color: var(--mm-muted);
   }
 
+  /* Het breekpunt van de kaartpagina, waar haar titel naar 30 px gaat. */
+  @media (max-width: 1099px) {
+    .mm-cast__title { font-size: 30px; }
+  }
+
   @media (max-width: 899px) {
-    .mm-cast__title { font-size: 32px; }
     .is-lead .mm-cast__name { font-size: 24px; }
   }
 

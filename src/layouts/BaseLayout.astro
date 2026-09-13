@@ -198,7 +198,15 @@ gtag('config', '${ga4Id}');`;
     ))}
     {index && xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
 
+    <!--
+      Google toont het icoon in de zoekresultaten en wil een veelvoud van
+      48 px. Met alleen de PNG van 32 px vergrootte het die, en dan zag het
+      logo er wazig uit. Alles gemaakt door tools/mkicon.py.
+    -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 

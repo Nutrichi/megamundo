@@ -12,6 +12,7 @@ import { defaultLocale, type Locale } from '../i18n/ui';
 import { isLocale, localizePath } from '../i18n/utils';
 
 type GameEntry = CollectionEntry<'game'>;
+type GameSectionKey = GameEntry['data']['section'];
 
 export type Region = {
   slug: string;
@@ -48,20 +49,26 @@ function loadGame() {
   return cache;
 }
 
-/** Alle gebieden in één taal, in de volgorde uit `order`. */
-export async function getRegions(locale: Locale): Promise<Region[]> {
+/**
+ * De pagina's van één Game-sectie in één taal, met de taalregel van
+ * hierboven. Gedeeld door de kaart en de personages (lib/characters.ts).
+ */
+export async function getSectionEntries(
+  section: GameSectionKey,
+  locale: Locale,
+): Promise<{ slug: string; lang: Locale; entry: GameEntry }[]> {
   const all = await loadGame();
   const bySlug = new Map<string, Map<Locale, GameEntry>>();
 
   for (const entry of all) {
     if (entry.data.draft) continue;
-    if (entry.data.section !== 'map') continue;
+    if (entry.data.section !== section) continue;
     const { lang, slug } = splitId(entry);
     if (!bySlug.has(slug)) bySlug.set(slug, new Map());
     bySlug.get(slug)!.set(lang, entry);
   }
 
-  const regions: Region[] = [];
+  const entries: { slug: string; lang: Locale; entry: GameEntry }[] = [];
 
   for (const [slug, byLang] of bySlug) {
     const lang = byLang.has(locale)
@@ -70,11 +77,19 @@ export async function getRegions(locale: Locale): Promise<Region[]> {
         ? defaultLocale
         : undefined;
     if (!lang) continue;
+    entries.push({ slug, lang, entry: byLang.get(lang)! });
+  }
 
-    const entry = byLang.get(lang)!;
+  return entries;
+}
+
+/** Alle gebieden in één taal, in de volgorde uit `order`. */
+export async function getRegions(locale: Locale): Promise<Region[]> {
+  const entries = await getSectionEntries('map', locale);
+
+  const regions: Region[] = entries.map(({ slug, lang, entry }) => {
     const data = entry.data;
-
-    regions.push({
+    return {
       slug,
       href: localizePath(`game/map/${slug}`, locale),
       title: data.title,
@@ -86,8 +101,8 @@ export async function getRegions(locale: Locale): Promise<Region[]> {
       lang,
       isFallback: lang !== locale,
       entry,
-    });
-  }
+    };
+  });
 
   return regions.sort((a, b) => a.order - b.order || a.title.localeCompare(b.title));
 }

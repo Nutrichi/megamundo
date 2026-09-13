@@ -1,22 +1,31 @@
 ---
 /*
- * Eén gebied van de kaart in de vijf niet-standaardtalen: /nl/game/map/<slug>.
+ * Eén pagina onder Game in de vijf niet-standaardtalen: een gebied van de
+ * kaart (/nl/game/map/<slug>) of een personage (/nl/game/characters/<slug>).
  */
 import RegionLayout from '../../../../layouts/RegionLayout.astro';
+import CharacterLayout from '../../../../layouts/CharacterLayout.astro';
 import { getRegion, getRegionSlugs } from '../../../../lib/regions';
+import { getCharacter, getCharacterSlugs } from '../../../../lib/characters';
 import { defaultLocale, locales, type Locale } from '../../../../i18n/ui';
 
 export async function getStaticPaths() {
-  const slugs = await getRegionSlugs();
+  const [regions, characters] = await Promise.all([getRegionSlugs(), getCharacterSlugs()]);
   return locales
     .filter((locale) => locale !== defaultLocale)
-    .flatMap((lang) => slugs.map((slug) => ({ params: { lang, section: 'map', slug } })));
+    .flatMap((lang) => [
+      ...regions.map((slug) => ({ params: { lang, section: 'map', slug } })),
+      ...characters.map((slug) => ({ params: { lang, section: 'characters', slug } })),
+    ]);
 }
 
 const locale = Astro.params.lang as Locale;
-const region = await getRegion(Astro.params.slug!, locale);
+const { section, slug } = Astro.params;
+const region = section === 'map' ? await getRegion(slug!, locale) : undefined;
+const character = section === 'characters' ? await getCharacter(slug!, locale) : undefined;
 
-if (!region) throw new Error(`Onbekend gebied: ${Astro.params.slug}`);
+if (!region && !character) throw new Error(`Onbekende pagina: game/${section}/${slug}`);
 ---
 
-<RegionLayout region={region} locale={locale} />
+{region && <RegionLayout region={region} locale={locale} />}
+{character && <CharacterLayout character={character} locale={locale} />}

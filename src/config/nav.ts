@@ -19,9 +19,10 @@ export const gameSections = [
 ] as const;
 export type GameSection = (typeof gameSections)[number];
 
-/** Labels van de submenu's. `map` heeft een eigen vertaalsleutel. */
+/** Labels van de submenu's. Elk submenu met inhoud heeft een eigen vertaalsleutel. */
 const gameSectionKeys: Partial<Record<GameSection, UIKey>> = {
   map: 'nav.map',
+  characters: 'nav.characters',
 };
 
 export type NavItem = {

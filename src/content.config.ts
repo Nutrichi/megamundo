@@ -117,7 +117,16 @@ const game = defineCollection({
       /** Waar het naamplaatje hangt, als [y, x]. */
       labelAt: z.tuple([z.number(), z.number()]).optional(),
 
-      /** Volgorde in de lijst naast de kaart; laag getal staat bovenaan. */
+      /**
+       * Een hoofdpersonage (`section: characters`). Jason en Lucia staan
+       * bovenaan het overzicht, apart van de rest.
+       */
+      lead: z.boolean().default(false),
+
+      /**
+       * Volgorde in de lijst naast de kaart of in het overzicht van de
+       * personages; laag getal staat bovenaan.
+       */
       order: z.number().default(99),
     }),
 });

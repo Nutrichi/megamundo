@@ -1,0 +1,398 @@
+---
+/*
+ * De pagina van één personage (/game/characters/<slug>).
+ *
+ * Van boven naar onder: een broodkruimel, de naam, of het een
+ * hoofdpersonage is, het omslagbeeld, de tekst, een galerij met de andere
+ * screenshots, de bronregel en de weg terug naar het overzicht.
+ *
+ * De beelden zijn officiële screenshots van Rockstar (§2.4, uitzondering van
+ * 13 september 2026) uit src/assets/characters/<slug>/. Elk beeld is groot te
+ * bekijken in één <dialog>, met vorige en volgende en de pijltjestoetsen.
+ * Het grote beeld (2400 px) laadt pas bij de klik.
+ *
+ * De bronregel volgt §7.1: gedempt, en pas bij hover blijkt dat het een
+ * link is. Hij geldt voor de tekst en voor de beelden.
+ */
+import { Image, getImage } from 'astro:assets';
+import type { Character } from '../lib/characters';
+import type { Locale } from '../i18n/ui';
+import { localizePath, useTranslations } from '../i18n/utils';
+import { render } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import { breadcrumbJsonLd } from '../lib/structured-data';
+
+interface Props {
+  character: Character;
+  locale: Locale;
+}
+
+const { character, locale } = Astro.props;
+const t = useTranslations(locale);
+const { Content } = await render(character.entry);
+
+const home = localizePath('', locale);
+const castPath = localizePath('game/characters', locale);
+
+const total = character.images.length;
+const shots = await Promise.all(
+  character.images.map(async (src, i) => ({
+    src,
+    big: (await getImage({ src, width: 2400, format: 'webp' })).src,
+    alt: t('characters.shotAlt')
+      .replace('{name}', character.title)
+      .replace('{n}', String(i + 1))
+      .replace('{total}', String(total)),
+  })),
+);
+const [cover, ...rest] = shots;
+
+/* Het deelbeeld: het omslagbeeld, als jpg op 1200 px (§17). */
+const ogImage = cover ? (await getImage({ src: cover.src, width: 1200, format: 'jpg' })).src : undefined;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  ...breadcrumbJsonLd(
+    [
+      { name: t('crumb.home'), path: home },
+      { name: t('characters.title'), path: castPath },
+      { name: character.title, path: Astro.url.pathname },
+    ],
+    Astro.site,
+  ),
+};
+---
+
+<BaseLayout
+  locale={locale}
+  title={character.title}
+  description={character.description}
+  image={ogImage}
+  compactCountdown
+>
+  <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
+
+  <article class="mm-character" data-pagefind-body>
+    <nav class="mm-crumb" aria-label={t('crumb.label')} data-pagefind-ignore>
+      <a href={home}>{t('crumb.home')}</a>
+      <span aria-hidden="true">/</span>
+      <a href={castPath}>{t('characters.title')}</a>
+    </nav>
+
+    <header class="mm-character__head">
+      <h1 class="mm-character__title">{character.title}</h1>
+      {character.lead && (
+        <p class="mm-character__role" data-pagefind-ignore>{t('characters.lead')}</p>
+      )}
+    </header>
+
+    {cover && (
+      <button
+        type="button"
+        class="mm-character__cover"
+        data-mm-shot={cover.big}
+        data-alt={cover.alt}
+        aria-label={cover.alt}
+      >
+        <Image
+          class="mm-character__img"
+          src={cover.src}
+          alt=""
+          widths={[480, 660, 960, 1320]}
+          sizes="(max-width: 899px) 100vw, 660px"
+          loading="eager"
+        />
+      </button>
+    )}
+
+    <div class="mm-prose">
+      <Content />
+    </div>
+
+    {rest.length > 0 && (
+      <section class="mm-character__gallery" aria-labelledby="mm-character-shots" data-pagefind-ignore>
+        <h2 class="mm-character__galleryhead" id="mm-character-shots">{t('characters.screenshots')}</h2>
+        <ul class="mm-character__grid">
+          {rest.map((shot) => (
+            <li>
+              <button
+                type="button"
+                class="mm-character__thumb"
+                data-mm-shot={shot.big}
+                data-alt={shot.alt}
+                aria-label={shot.alt}
+              >
+                <Image
+                  class="mm-character__img"
+                  src={shot.src}
+                  alt=""
+                  widths={[320, 480, 660]}
+                  sizes="(max-width: 899px) 50vw, 325px"
+                />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {character.source && (
+      <p class="mm-character__source" data-pagefind-ignore>
+        {t('post.source')}{' '}
+        {character.sourceUrl ? (
+          <a href={character.sourceUrl} rel="noopener nofollow" target="_blank">{character.source}</a>
+        ) : character.source}
+      </p>
+    )}
+
+    <p class="mm-character__back" data-pagefind-ignore>
+      <a href={castPath}>{t('characters.back')}</a>
+    </p>
+  </article>
+
+  {total > 0 && (
+    <dialog class="mm-gallery" data-mm-gallery>
+      <img class="mm-gallery__img" data-mm-gallery-img alt="" />
+      <button type="button" class="mm-gallery__btn is-close" data-mm-gallery-close aria-label={t('gallery.close')}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" />
+        </svg>
+      </button>
+      {total > 1 && (
+        <button type="button" class="mm-gallery__btn is-prev" data-mm-gallery-prev aria-label={t('gallery.prev')}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <polyline points="15 5 8 12 15 19" />
+          </svg>
+        </button>
+      )}
+      {total > 1 && (
+        <button type="button" class="mm-gallery__btn is-next" data-mm-gallery-next aria-label={t('gallery.next')}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <polyline points="9 5 16 12 9 19" />
+          </svg>
+        </button>
+      )}
+    </dialog>
+  )}
+</BaseLayout>
+
+<style>
+  .mm-character {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 8px 0 40px;
+  }
+
+  .mm-crumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: var(--mm-muted);
+  }
+
+  .mm-crumb a:hover { color: var(--mm-ink); }
+
+  .mm-character__head { margin-bottom: 20px; }
+
+  .mm-character__title {
+    font-size: 44px;
+    line-height: 1.02;
+    margin: 0;
+    text-shadow: var(--mm-glow-h1);
+  }
+
+  .mm-character__role {
+    margin-top: 6px;
+    font-family: var(--mm-display);
+    font-size: 15px;
+    letter-spacing: .14em;
+    color: var(--mm-accent-pink);
+  }
+
+  /* Omslagbeeld en miniaturen: het hele beeld is de knop. */
+  .mm-character__cover,
+  .mm-character__thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--mm-slot-a);
+    border: 1px solid var(--mm-border);
+    cursor: zoom-in;
+    transition: var(--mm-transition);
+  }
+
+  .mm-character__cover {
+    margin-bottom: 26px;
+    border-radius: var(--mm-r-card);
+  }
+
+  .mm-character__thumb { border-radius: var(--mm-r-field-lg); }
+
+  .mm-character__cover:hover,
+  .mm-character__thumb:hover {
+    border-color: var(--mm-accent-cyan);
+    box-shadow: var(--mm-glow-pill);
+  }
+
+  .mm-character__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mm-prose {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 17.5px;
+    line-height: 1.75;
+    color: var(--mm-body);
+  }
+
+  .mm-character__gallery {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mm-character__galleryhead {
+    font-size: 14px;
+    letter-spacing: .18em;
+    color: var(--mm-muted);
+  }
+
+  .mm-character__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mm-character__source {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--mm-border);
+    font-size: 13.5px;
+    color: var(--mm-muted);
+  }
+
+  /* In rust geen link, pas bij hover (§7.1). */
+  .mm-character__source a { color: inherit; }
+  .mm-character__source a:hover { text-decoration: underline; }
+
+  .mm-character__back {
+    margin-top: 10px;
+    font-size: 13.5px;
+  }
+
+  .mm-character__back a {
+    color: var(--mm-accent-cyan);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* --- Een beeld groot, zoals het kopbeeld van een post (PostImage) --- */
+  .mm-gallery {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    overflow: hidden;
+  }
+
+  .mm-gallery::backdrop { background: rgba(5, 4, 12, .92); }
+
+  .mm-gallery__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: zoom-out;
+  }
+
+  .mm-gallery__btn {
+    position: fixed;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    background: var(--mm-raised);
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field);
+    color: var(--mm-ink);
+    transition: var(--mm-transition);
+  }
+
+  .mm-gallery__btn:hover { border-color: var(--mm-accent-cyan); }
+
+  .mm-gallery__btn.is-close { top: 14px; right: 14px; }
+  .mm-gallery__btn.is-prev { left: 14px; top: 50%; transform: translateY(-50%); }
+  .mm-gallery__btn.is-next { right: 14px; top: 50%; transform: translateY(-50%); }
+
+  @media (max-width: 899px) {
+    .mm-character__title { font-size: 32px; }
+    .mm-prose { font-size: 16.5px; }
+    .mm-character__cover { border-radius: var(--mm-r-card-sm); }
+    .mm-gallery__btn.is-prev,
+    .mm-gallery__btn.is-next { top: auto; bottom: 18px; transform: none; }
+  }
+</style>
+
+<script>
+  /*
+   * De galerij. Eén <dialog> voor alle beelden van de pagina: de browser
+   * houdt de focus vast, handelt Escape af en schermt de pagina af.
+   * Geen bibliotheek nodig.
+   */
+  const dialog = document.querySelector<HTMLDialogElement>('[data-mm-gallery]');
+  const img = dialog?.querySelector<HTMLImageElement>('[data-mm-gallery-img]');
+  const openers = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mm-shot]'));
+
+  if (dialog && img && openers.length) {
+    let index = 0;
+
+    const show = (next: number) => {
+      index = (next + openers.length) % openers.length;
+      const opener = openers[index];
+      img.src = opener.dataset.mmShot ?? '';
+      img.alt = opener.dataset.alt ?? '';
+    };
+
+    openers.forEach((opener, i) => {
+      opener.addEventListener('click', () => {
+        show(i);
+        dialog.showModal();
+      });
+    });
+
+    dialog.querySelector('[data-mm-gallery-prev]')?.addEventListener('click', () => show(index - 1));
+    dialog.querySelector('[data-mm-gallery-next]')?.addEventListener('click', () => show(index + 1));
+    dialog.querySelector('[data-mm-gallery-close]')?.addEventListener('click', () => dialog.close());
+
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') show(index - 1);
+      if (event.key === 'ArrowRight') show(index + 1);
+    });
+
+    // Klikken op het beeld of ernaast sluit.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === img || event.target === dialog) dialog.close();
+    });
+
+    // Terug naar het beeld waar je vandaan kwam.
+    dialog.addEventListener('close', () => openers[index]?.focus());
+  }
+</script>

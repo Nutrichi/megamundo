@@ -1,0 +1,232 @@
+---
+/*
+ * Het overzicht van de personages (/game/characters), in elke taal.
+ *
+ * Eerst de twee hoofdpersonages, daarna de rest, elk als kaart met een
+ * beeld, de naam en één zin. Elke kaart is een link naar de eigen pagina van
+ * het personage, want daar komt het zoekverkeer op binnen (§17).
+ *
+ * Het beeld is het omslagbeeld uit src/assets/characters/<slug>/ (zie
+ * lib/characters.ts): een officiële screenshot van Rockstar (§2.4). Het is
+ * versiering naast de naam, dus alt blijft leeg. Zonder beeld staan de
+ * initialen in een cirkel.
+ */
+import { Image } from 'astro:assets';
+import type { Locale } from '../i18n/ui';
+import { localizePath, useTranslations } from '../i18n/utils';
+import { getCharacters, initials } from '../lib/characters';
+import { breadcrumbJsonLd } from '../lib/structured-data';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const characters = await getCharacters(locale);
+
+const groups = [
+  { key: 'leads', label: t('characters.leads'), items: characters.filter((c) => c.lead) },
+  { key: 'others', label: t('characters.others'), items: characters.filter((c) => !c.lead) },
+].filter((group) => group.items.length > 0);
+
+/* De broodkruimel als gestructureerde data (§17), zoals bij de kaart. */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  ...breadcrumbJsonLd(
+    [
+      { name: t('crumb.home'), path: localizePath('', locale) },
+      { name: t('characters.title'), path: Astro.url.pathname },
+    ],
+    Astro.site,
+  ),
+};
+---
+
+<BaseLayout locale={locale} title={t('characters.title')} description={t('characters.description')}>
+  <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
+
+  <div class="mm-cast">
+    <h1 class="mm-cast__title">{t('characters.title')}</h1>
+
+    {groups.map((group) => {
+      const leads = group.key === 'leads';
+      return (
+        <section class="mm-cast__group" aria-labelledby={`mm-cast-${group.key}`}>
+          <h2 class="mm-cast__head" id={`mm-cast-${group.key}`}>{group.label}</h2>
+
+          <ul class:list={['mm-cast__list', { 'is-leads': leads }]}>
+            {group.items.map((character) => (
+              <li>
+                <a class:list={['mm-cast__item', { 'is-lead': character.lead }]} href={character.href}>
+                  {character.images[0] && (
+                    <span class="mm-cast__shot">
+                      <Image
+                        class="mm-cast__img"
+                        src={character.images[0]}
+                        alt=""
+                        widths={leads ? [480, 720, 1080] : [360, 540, 760]}
+                        sizes={leads ? '(max-width: 899px) 100vw, 560px' : '(max-width: 899px) 100vw, 370px'}
+                        loading={leads ? 'eager' : 'lazy'}
+                      />
+                    </span>
+                  )}
+                  <span class="mm-cast__body">
+                    {!character.images[0] && (
+                      <span class="mm-cast__mono" aria-hidden="true">{initials(character.title)}</span>
+                    )}
+                    <span class="mm-cast__text">
+                      <span class="mm-cast__name">{character.title}</span>
+                      <span class="mm-cast__desc">{character.description}</span>
+                    </span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      );
+    })}
+  </div>
+</BaseLayout>
+
+<style>
+  .mm-cast {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 8px 0 8px;
+  }
+
+  .mm-cast__title {
+    font-size: 44px;
+    line-height: 1.02;
+    text-shadow: var(--mm-glow-h1);
+  }
+
+  .mm-cast__group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mm-cast__head {
+    font-size: 14px;
+    letter-spacing: .18em;
+    color: var(--mm-muted);
+  }
+
+  .mm-cast__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: 12px;
+  }
+
+  /* Twee hoofdpersonages: twee brede kaarten naast elkaar. */
+  .mm-cast__list.is-leads {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  }
+
+  .mm-cast__item {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background: var(--mm-raised);
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field-lg);
+    transition: var(--mm-transition);
+  }
+
+  .mm-cast__item:hover,
+  .mm-cast__item:focus-visible {
+    border-color: var(--mm-accent-cyan);
+    box-shadow: var(--mm-glow-pill);
+  }
+
+  /* Roze leidt, cyaan steunt (§12.2): de hoofdpersonages krijgen het roze. */
+  .mm-cast__item.is-lead:hover,
+  .mm-cast__item.is-lead:focus-visible {
+    border-color: var(--mm-accent-pink);
+  }
+
+  .mm-cast__shot {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-bottom: 1px solid var(--mm-border);
+    background: var(--mm-slot-a);
+  }
+
+  .mm-cast__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+
+  .mm-cast__item:hover .mm-cast__img { transform: scale(1.03); }
+
+  .mm-cast__body {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px 16px;
+  }
+
+  .mm-cast__mono {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid var(--mm-accent-cyan);
+    border-radius: 50%;
+    font-family: var(--mm-display);
+    font-size: 21px;
+    letter-spacing: .04em;
+    color: var(--mm-accent-cyan);
+  }
+
+  .is-lead .mm-cast__mono {
+    border-color: var(--mm-accent-pink);
+    color: var(--mm-accent-pink);
+  }
+
+  .mm-cast__text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .mm-cast__name {
+    font-family: var(--mm-display);
+    font-size: 22px;
+    line-height: 1.1;
+    letter-spacing: .06em;
+    color: var(--mm-ink);
+  }
+
+  .is-lead .mm-cast__name { font-size: 28px; }
+
+  .mm-cast__desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--mm-muted);
+  }
+
+  @media (max-width: 899px) {
+    .mm-cast__title { font-size: 32px; }
+    .is-lead .mm-cast__name { font-size: 24px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mm-cast__img { transition: none; }
+    .mm-cast__item:hover .mm-cast__img { transform: none; }
+  }
+</style>

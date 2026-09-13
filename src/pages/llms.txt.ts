@@ -11,6 +11,7 @@
 import type { APIRoute } from 'astro';
 import { getPosts } from '../lib/posts';
 import { getRegions } from '../lib/regions';
+import { getCharacters } from '../lib/characters';
 import { getClips, getStreams } from '../lib/feeds';
 import { defaultLocale, localeNames, locales, ui } from '../i18n/ui';
 import { localizePath } from '../i18n/utils';
@@ -22,12 +23,16 @@ export const GET: APIRoute = async ({ site }) => {
 
   const posts = await getPosts(defaultLocale);
   const regions = await getRegions(defaultLocale);
+  const characters = await getCharacters(defaultLocale);
   const clips = getClips();
   const streams = getStreams();
 
   const sections = [
     `- [Home](${url('/')}): the full news archive, newest first.`,
     ...(regions.length ? [`- [${en['map.title']}](${url('/game/map/')}): ${en['map.description']}`] : []),
+    ...(characters.length
+      ? [`- [${en['characters.title']}](${url('/game/characters/')}): ${en['characters.description']}`]
+      : []),
     ...(clips
       ? [`- [${en['clips.title']}](${url('/clips/')}): ${en['clips.description'].replace('{h}', String(clips.rules.windowHours))}`]
       : []),
@@ -55,6 +60,9 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     ...(regions.length
       ? ['## Areas of Leonida', '', ...regions.map((region) => `- [${region.title}](${url(region.href)}): ${region.description}`), '']
+      : []),
+    ...(characters.length
+      ? ['## Characters', '', ...characters.map((character) => `- [${character.title}](${url(character.href)}): ${character.description}`), '']
       : []),
   ];
 

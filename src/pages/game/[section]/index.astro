@@ -1,29 +1,38 @@
 ---
 /*
- * Een Game-sectie in het Engels: /game/map. Bij lancering is `map` de enige
- * sectie met inhoud (§4).
+ * Een Game-sectie in het Engels: /game/map en /game/characters.
  *
  * De route is dynamisch en niet statisch, en dat is met opzet: zo kan hij
- * wegblijven. Nul gebieden betekent geen pagina en ook geen tab, want beide
+ * wegblijven. Nul gebieden betekent geen kaartpagina en geen submenu Map,
+ * nul personages geen overzicht en geen submenu Characters, want beide
  * leiden zich af uit dezelfde bestanden (§4.1). Een sectie erbij is hier
- * later een regel in getStaticPaths.
+ * een regel in getStaticPaths.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CharactersLayout from '../../../layouts/CharactersLayout.astro';
 import LeonidaMap from '../../../components/LeonidaMap.astro';
 import RegionList from '../../../components/RegionList.astro';
 import { getRegions } from '../../../lib/regions';
+import { getCharacters } from '../../../lib/characters';
 import { defaultLocale } from '../../../i18n/ui';
 import { localizePath, useTranslations } from '../../../i18n/utils';
 import { breadcrumbJsonLd } from '../../../lib/structured-data';
 
 export async function getStaticPaths() {
-  const regions = await getRegions(defaultLocale);
-  return regions.length > 0 ? [{ params: { section: 'map' } }] : [];
+  const [regions, characters] = await Promise.all([
+    getRegions(defaultLocale),
+    getCharacters(defaultLocale),
+  ]);
+  return [
+    ...(regions.length > 0 ? [{ params: { section: 'map' } }] : []),
+    ...(characters.length > 0 ? [{ params: { section: 'characters' } }] : []),
+  ];
 }
 
 const locale = defaultLocale;
+const { section } = Astro.params;
 const t = useTranslations(locale);
-const regions = await getRegions(locale);
+const regions = section === 'map' ? await getRegions(locale) : [];
 
 /*
  * De broodkruimel als gestructureerde data (§17). Hier en niet in de
@@ -41,17 +50,21 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout locale={locale} title={t('map.title')} description={t('map.description')} fixedHeight>
-  <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
-  <div class="mm-mappage">
-    <h1 class="mm-mappage__title">{t('map.title')}</h1>
+{section === 'characters' ? (
+  <CharactersLayout locale={locale} />
+) : (
+  <BaseLayout locale={locale} title={t('map.title')} description={t('map.description')} fixedHeight>
+    <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
+    <div class="mm-mappage">
+      <h1 class="mm-mappage__title">{t('map.title')}</h1>
 
-    <div class="mm-mappage__cols">
-      <LeonidaMap locale={locale} regions={regions} fill />
-      <RegionList locale={locale} regions={regions} />
+      <div class="mm-mappage__cols">
+        <LeonidaMap locale={locale} regions={regions} fill />
+        <RegionList locale={locale} regions={regions} />
+      </div>
     </div>
-  </div>
-</BaseLayout>
+  </BaseLayout>
+)}
 
 <style>
   /*

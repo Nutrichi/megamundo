@@ -144,10 +144,9 @@ button {
   flex: 1 1 auto;
   min-width: 0;
   /*
-   * De onderrand houdt rekening met de vastgeplakte voettekst. Technisch
-   * verdwijnt er niets achter: zodra je onderaan bent, staat de voettekst
-   * op zijn eigen plek. Maar zonder deze ruimte kleeft de laatste knop of
-   * alinea tegen de balk aan en dat leest slecht.
+   * Ruimte tussen de laatste knop of alinea en de voettekst. Zonder die
+   * ruimte kleeft de inhoud tegen de rand van de voettekst en dat leest
+   * slecht. De voettekst plakt sinds 13 september 2026 nergens meer vast.
    */
   padding: 24px 26px 56px;
 }

@@ -13,12 +13,13 @@
  */
 import { defaultLocale, localeTags, type Locale } from '../i18n/ui';
 import { alternateLinks, useTranslations } from '../i18n/utils';
-import { getNav } from '../config/nav';
+import { getNav, isCurrent } from '../config/nav';
 import { ga4Id } from '../config/site';
 import Header from '../components/Header.astro';
 import MobileMenu from '../components/MobileMenu.astro';
 import CountdownBar from '../components/CountdownBar.astro';
 import CategoryFilter from '../components/CategoryFilter.astro';
+import GameTabs from '../components/GameTabs.astro';
 import SpectrumBar from '../components/SpectrumBar.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/tokens.css';
@@ -71,6 +72,16 @@ const {
 const t = useTranslations(locale);
 const pathname = Astro.url.pathname;
 const nav = await getNav(locale);
+
+/*
+ * Op elke pagina onder Game staan de submenu's als chips rechts in de
+ * aftelbalk (Nutri, 13 september 2026). Vanaf twee; met één valt er niets te
+ * kiezen. Op die pagina's is de balk nooit compact, zodat de chips overal op
+ * dezelfde plek staan: op de kaart, het overzicht en een losse pagina.
+ */
+const gameItem = nav.find((item) => item.id === 'game');
+const gameTabs = gameItem && isCurrent(gameItem.path, pathname) ? gameItem.children ?? [] : [];
+const hasGameTabs = gameTabs.length > 1;
 
 const withAnalytics = analytics ?? index;
 const pageTitle = title ? `${title} · ${t('site.title')}` : t('site.title');
@@ -171,8 +182,9 @@ gtag('config', '${ga4Id}');`;
     <div class="mm-top">
       <Header locale={locale} nav={nav} pathname={pathname} />
       {countdown && (
-        <CountdownBar locale={locale} compact={compactCountdown}>
+        <CountdownBar locale={locale} compact={compactCountdown && !hasGameTabs}>
           {filter && <CategoryFilter locale={locale} />}
+          {hasGameTabs && <GameTabs locale={locale} tabs={gameTabs} pathname={pathname} />}
         </CountdownBar>
       )}
     </div>

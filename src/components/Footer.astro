@@ -61,26 +61,18 @@ const links = [
 <style>
   .mm-footer {
     /*
-     * Blijft onderaan het scherm staan op een breed scherm. Afspraak met
-     * Nutri op 10 september 2026: de disclaimer en de sociale links horen
-     * altijd binnen bereik te zijn.
+     * Staat aan het einde van de pagina, niet vast onderaan het scherm, op
+     * elke breedte (Nutri, 13 september 2026). Wie de disclaimer of de
+     * links zoekt, scrolt naar beneden.
      *
-     * `sticky` en niet `fixed`: zo houdt de voettekst zijn eigen plek in de
-     * opmaak. Aan het einde van een lange pagina schuift hij netjes onder de
-     * laatste alinea in plaats van er overheen te blijven liggen.
+     * Tot dan plakte hij op een breed scherm vast met `sticky`. Op een
+     * telefoon scrolde hij al sinds 11 september mee: daar kostte hij 102
+     * pixels van een scherm van 673, permanent. Nu geldt dat overal, en kost
+     * hij tijdens het lezen niets.
      *
-     * **Op een telefoon niet vastgeplakt** (11 september 2026). Daar kostte
-     * hij 102 pixels van een scherm van 673, permanent, en dat is een zesde
-     * van wat je aan het lezen bent. Nu scrollt hij gewoon mee en kost hij
-     * tijdens het lezen niets. De disclaimer blijft staan: die is de reden
-     * dat de voettekst bestaat.
-     *
-     * Het mobiele menu ligt hierboven (z-index 60), zodat de overlay de
-     * voettekst afdekt en niet andersom.
+     * De kaartpagina vult precies het scherm (`is-fixed` in global.css), dus
+     * daar staat de voettekst vanzelf onderaan in beeld.
      */
-    position: sticky;
-    bottom: 0;
-    z-index: 15;
     border-top: 1px solid var(--mm-border);
     background: var(--mm-header);
   }
@@ -131,9 +123,6 @@ const links = [
   .mm-footer__link:hover { color: var(--mm-ink); }
 
   @media (max-width: 899px) {
-    /* Meescrollen in plaats van vastplakken: zie de uitleg bovenaan. */
-    .mm-footer { position: static; }
-
     .mm-footer__inner {
       gap: 6px 14px;
       padding: 10px 16px 12px;

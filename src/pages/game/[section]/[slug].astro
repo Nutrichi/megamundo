@@ -1,22 +1,31 @@
 ---
 /*
- * Eén gebied van de kaart in het Engels: /game/map/<slug>.
+ * Eén pagina onder Game in het Engels: een gebied van de kaart
+ * (/game/map/<slug>) of een personage (/game/characters/<slug>).
  */
 import RegionLayout from '../../../layouts/RegionLayout.astro';
+import CharacterLayout from '../../../layouts/CharacterLayout.astro';
 import { getRegion, getRegionSlugs } from '../../../lib/regions';
+import { getCharacter, getCharacterSlugs } from '../../../lib/characters';
 import { defaultLocale } from '../../../i18n/ui';
 
 export async function getStaticPaths() {
-  const slugs = await getRegionSlugs();
-  return slugs.map((slug) => ({ params: { section: 'map', slug } }));
+  const [regions, characters] = await Promise.all([getRegionSlugs(), getCharacterSlugs()]);
+  return [
+    ...regions.map((slug) => ({ params: { section: 'map', slug } })),
+    ...characters.map((slug) => ({ params: { section: 'characters', slug } })),
+  ];
 }
 
 const locale = defaultLocale;
-const region = await getRegion(Astro.params.slug!, locale);
+const { section, slug } = Astro.params;
+const region = section === 'map' ? await getRegion(slug!, locale) : undefined;
+const character = section === 'characters' ? await getCharacter(slug!, locale) : undefined;
 
 // Kan niet gebeuren: de slug komt uit dezelfde lijst. Faalt hij toch, dan
 // faalt de build luid in plaats van een halve pagina te publiceren (§14).
-if (!region) throw new Error(`Onbekend gebied: ${Astro.params.slug}`);
+if (!region && !character) throw new Error(`Onbekende pagina: game/${section}/${slug}`);
 ---
 
-<RegionLayout region={region} locale={locale} />
+{region && <RegionLayout region={region} locale={locale} />}
+{character && <CharacterLayout character={character} locale={locale} />}

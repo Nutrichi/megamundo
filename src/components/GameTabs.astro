@@ -1,0 +1,91 @@
+---
+/*
+ * De subtabs van Game (Map, Characters, ...), rechts in de aftelbalk op elke
+ * Game-pagina (Nutri, 13 september 2026). Dezelfde vorm als de
+ * categoriechips op de homepage, zodat de tweede balk overal hetzelfde doet:
+ * kiezen binnen wat je bekijkt.
+ *
+ * De tabs komen uit getNav(), dus alleen submenu's met inhoud staan erin
+ * (§4.1). Met minder dan twee valt er niets te kiezen en blijft de rij weg,
+ * dezelfde regel als bij de categoriefilters (§5.2).
+ *
+ * Echte links, want elk submenu is een eigen pagina. De actieve tab draagt
+ * aria-current="page", ook op de pagina van één gebied of personage.
+ *
+ * Let op bij het weghalen van de aftelbalk na de release: deze tabs staan in
+ * zijn slot en hebben dan een nieuwe plek nodig.
+ */
+import type { Locale } from '../i18n/ui';
+import type { NavItem } from '../config/nav';
+import { isCurrent } from '../config/nav';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+  tabs: NavItem[];
+  pathname: string;
+}
+
+const { locale, tabs, pathname } = Astro.props;
+const t = useTranslations(locale);
+---
+
+{tabs.length > 1 && (
+  <nav class="mm-gametabs" aria-label={t('nav.gameSections')}>
+    {tabs.map((tab) => {
+      const current = isCurrent(tab.path, pathname);
+      return (
+        <a
+          class="mm-gametabs__tab"
+          href={tab.path}
+          aria-current={current ? 'page' : undefined}
+        >{t(tab.labelKey)}</a>
+      );
+    })}
+  </nav>
+)}
+
+<style>
+  /* Zelfde maten en toestanden als .mm-filter__chip in CategoryFilter. */
+  .mm-gametabs {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  .mm-gametabs__tab {
+    flex: none;
+    font-size: 12px;
+    padding: 3px 11px;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-pill);
+    color: var(--mm-muted);
+    white-space: nowrap;
+    transition: var(--mm-transition), color .16s ease, background-color .16s ease;
+  }
+
+  .mm-gametabs__tab:hover {
+    border-color: var(--mm-accent-cyan);
+    color: var(--mm-ink);
+  }
+
+  .mm-gametabs__tab[aria-current="page"] {
+    background: var(--mm-accent-pink-wash);
+    border-color: var(--mm-accent-pink);
+    color: var(--mm-ink);
+  }
+
+  /* Mobiel: horizontaal schuiven in plaats van een tweede regel. */
+  @media (max-width: 899px) {
+    .mm-gametabs {
+      width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 2px 0;
+      justify-content: center;
+    }
+
+    .mm-gametabs::-webkit-scrollbar { display: none; }
+  }
+</style>

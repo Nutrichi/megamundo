@@ -85,7 +85,13 @@ const gameTabs = gameItem && isCurrent(gameItem.path, pathname) ? gameItem.child
 const hasGameTabs = gameTabs.length > 1;
 
 const withAnalytics = analytics ?? index;
-const pageTitle = title ? `${title} · ${t('site.title')}` : t('site.title');
+/*
+ * Zonder eigen titel is dit een homepage (elke andere pagina geeft er een
+ * mee), en die krijgt de titel die in Google moet staan: "Megamundo - GTA VI
+ * News Hub", vertaald per taal (Nutri, 13 september 2026). De sitenaam in
+ * og:site_name en de JSON-LD blijft gewoon Megamundo (PROJECT_SPEC.md §1).
+ */
+const pageTitle = title ? `${title} · ${t('site.title')}` : t('site.homeTitle');
 const pageDescription = description ?? t('site.description');
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://megamundo.be').href;

@@ -121,7 +121,8 @@ if (list && items) {
     else next.set('language', language);
 
     const search = next.toString();
-    const url = `${window.location.pathname}${search ? `?${search}` : ''}`;
+    // Het anker (#...) blijft staan; tot 13 september 2026 viel het hier weg.
+    const url = `${window.location.pathname}${search ? `?${search}` : ''}${window.location.hash}`;
     window.history.replaceState({}, '', url);
   };
 

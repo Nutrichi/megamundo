@@ -91,6 +91,16 @@ const pageDescription = description ?? t('site.description');
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://megamundo.be').href;
 const alternates = alternateLinks(pathname, Astro.site);
 const xDefault = alternates.find((a) => a.locale === defaultLocale);
+
+/*
+ * De taal van deze browser (Nutri, 13 september 2026, §11). Het script in de
+ * head krijgt dezelfde pagina in alle zes de talen mee, en de taal van deze
+ * pagina. Alleen op een indexeerbare pagina.
+ */
+const langTargets = index
+  ? Object.fromEntries(alternates.map((alt) => [alt.locale, new URL(alt.href).pathname]))
+  : null;
+const langCurrent = locale;
 const fallbackImage = '/assets/og-image.png';
 const ogImage = new URL(image ?? fallbackImage, Astro.site ?? 'https://megamundo.be').href;
 
@@ -107,6 +117,61 @@ gtag('config', '${ga4Id}');`;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--
+      De taal van deze browser (Nutri, 13 september 2026, PROJECT_SPEC.md
+      §11). Staat vóór de Google-tag, zodat een doorgestuurd bezoek niet
+      dubbel telt. Op de server kan het niet: GitHub Pages leest de
+      browsertaal niet.
+
+      1. Zelf gekozen (mm-lang, geschreven door de taalkiezer): die taal ligt
+         vast voor deze browser. Een pagina in een andere taal, bijvoorbeeld
+         via een gedeelde link, gaat naar dezelfde pagina in de gekozen taal.
+      2. Nog niets gekozen: één keer per browser (mm-lang-auto) kijkt het
+         script naar navigator.languages, en alleen vanuit het Engels. Staat
+         daar vóór het Engels een van de vijf andere talen, dan gaat de
+         bezoeker naar dezelfde pagina in die taal; anders blijft het Engels.
+
+      Zonder localStorage gebeurt er niets. Zoekmachines merken er niets van:
+      Googlebot rendert met Engels en onthoudt niets tussen twee pagina's.
+    -->
+    {index && (
+      <script is:inline define:vars={{ langTargets, langCurrent }}>
+        (function () {
+          try {
+            var go = function (code) {
+              if (code !== langCurrent && langTargets[code]) {
+                window.location.replace(langTargets[code] + window.location.search + window.location.hash);
+              }
+            };
+
+            var chosen = localStorage.getItem('mm-lang');
+            if (chosen) {
+              go(chosen);
+              return;
+            }
+
+            if (localStorage.getItem('mm-lang-auto')) return;
+            localStorage.setItem('mm-lang-auto', '1');
+            if (langCurrent !== 'en') return;
+
+            var wanted = navigator.languages && navigator.languages.length
+              ? navigator.languages
+              : [navigator.language || ''];
+            for (var i = 0; i < wanted.length; i += 1) {
+              var code = String(wanted[i]).toLowerCase().split('-')[0];
+              if (code === 'en') return;
+              if (langTargets[code]) {
+                go(code);
+                return;
+              }
+            }
+          } catch (error) {
+            // Privémodus of geblokkeerde opslag: dan blijft de pagina zoals ze is.
+          }
+        })();
+      </script>
+    )}
 
     <!--
       Google tag (gtag.js). Staat hoog in de head, meteen na charset en

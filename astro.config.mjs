@@ -17,7 +17,8 @@ export default defineConfig({
     locales: ['en', 'nl', 'fr', 'es', 'it', 'de'],
     routing: {
       prefixDefaultLocale: false,
-      // Geen automatische doorverwijzing op browsertaal: dat breekt crawlers (§11).
+      // Geen doorverwijzing door de server. De browsertaal kiest alleen bij het
+      // allereerste bezoek, in de browser zelf (BaseLayout, §11).
       redirectToDefaultLocale: false,
     },
   },

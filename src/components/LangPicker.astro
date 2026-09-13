@@ -6,8 +6,8 @@
  * er zes, dus op mobiel twee rijen van drie.
  *
  * Gebouwd met <details> en echte links: werkt zonder JavaScript, en een
- * crawler ziet de zes URL's staan. Geen automatische doorverwijzing op
- * browsertaal — de bezoeker kiest zelf.
+ * crawler ziet de zes URL's staan. De browsertaal kiest alleen bij het
+ * allereerste bezoek (BaseLayout, §11); daarna kiest de bezoeker hier zelf.
  */
 import { locales, localeNames, localeShort, type Locale } from '../i18n/ui';
 import { localizePath, stripLocale, useTranslations } from '../i18n/utils';
@@ -190,3 +190,27 @@ const options = locales.map((code) => ({
     color: var(--mm-ink);
   }
 </style>
+
+<script>
+  /*
+   * Een zelf gekozen taal ligt vast voor deze browser (Nutri, 13 september
+   * 2026, §11). Bij een klik op een taal, in de koptekst of in het mobiele
+   * menu, wordt die weggeschreven voor de link zijn werk doet. Het script in
+   * de head van BaseLayout leest hem op elke volgende pagina en stuurt een
+   * pagina in een andere taal naar de gekozen taal.
+   *
+   * Eén luisteraar op het document, zodat beide taalkiezers meedoen. Zonder
+   * localStorage blijft de link gewoon een link.
+   */
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element)) return;
+    const code = event.target.closest<HTMLAnchorElement>('[data-mm-lang-pick]')?.dataset.mmLangPick;
+    if (!code) return;
+    try {
+      localStorage.setItem('mm-lang', code);
+      localStorage.setItem('mm-lang-auto', '1');
+    } catch {
+      // Privémodus: de keuze geldt dan alleen voor deze klik.
+    }
+  });
+</script>

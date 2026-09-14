@@ -15,7 +15,8 @@
  * lijn aan beide kanten, juist zodat alle hartjes netjes onder elkaar
  * uitlijnen. Dat is het hele punt van die kolom.
  *
- * Mobiel: de titel kapt af met een ellipsis; links en rechts krimpen nooit.
+ * Mobiel (onder 900 px): de titel loopt over hoogstens twee regels en kapt
+ * daarna af met een ellipsis; links en rechts krimpen nooit.
  * `min-width: 0` op de titelcel is daarvoor essentieel — zonder dat werkt
  * de ellipsis niet.
  */
@@ -204,8 +205,23 @@ const categoryLabel = category.label;
     .mm-pill { min-height: 44px; } /* raakvlak */
     .mm-pill__cat { width: 34px; }
     .mm-pill__palm { width: 14px; height: 14px; }
-    .mm-pill__link { font-size: 13.5px; }
+    .mm-pill__link { font-size: 13.5px; padding-block: 6px; }
     .mm-pill__value { width: 62px; }
+
+    /*
+     * Op mobiel mag de titel over twee regels lopen en kapt pas daarna af
+     * (Nutri, 14 september 2026, proef in tst). Een korte titel blijft één
+     * regel en de pil dus 44 px.
+     */
+    .mm-pill__title {
+      white-space: normal;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

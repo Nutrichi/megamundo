@@ -34,8 +34,11 @@ export const localeTags: Record<Locale, string> = {
 export const ui = {
   en: {
     'site.title': 'Megamundo',
-    /* De titel van de homepage, zoals Google hem toont (Nutri, 13 september 2026). */
-    'site.homeTitle': 'Megamundo - GTA VI News Hub',
+    /* De titel van de homepage, zoals Google hem toont (Nutri, 13 september 2026).
+     * Hier bewust "GTA 6" en niet "GTA VI": op dit ene veld telt waar mensen
+     * op zoeken, en daar wint het Arabische cijfer (Nutri, 15 september 2026).
+     * SCHRIJFSTIJL.md §6 blijft gelden voor alle lopende tekst. */
+    'site.homeTitle': 'Megamundo - GTA 6 News Hub',
     'site.description': 'An independent GTA fansite counting down to Grand Theft Auto VI.',
     'site.tagline': 'An independent fansite for Grand Theft Auto, counting down to GTA VI.',
     'site.disclaimer':
@@ -177,7 +180,7 @@ export const ui = {
   },
 
   nl: {
-    'site.homeTitle': 'Megamundo - GTA VI-nieuwshub',
+    'site.homeTitle': 'Megamundo - GTA 6-nieuwshub',
     'site.description': 'Een onafhankelijke GTA-fansite die aftelt naar Grand Theft Auto VI.',
     'site.tagline': 'Een onafhankelijke fansite over Grand Theft Auto, aftellend naar GTA VI.',
     'site.disclaimer':
@@ -312,7 +315,7 @@ export const ui = {
   },
 
   fr: {
-    'site.homeTitle': 'Megamundo - Le hub d’actualités GTA VI',
+    'site.homeTitle': 'Megamundo - Le hub d’actualités GTA 6',
     'site.description': 'Un site de fans indépendant qui compte les jours jusqu’à Grand Theft Auto VI.',
     'site.tagline': 'Un site de fans indépendant sur Grand Theft Auto, en route vers GTA VI.',
     'site.disclaimer':
@@ -447,7 +450,7 @@ export const ui = {
   },
 
   es: {
-    'site.homeTitle': 'Megamundo - Centro de noticias de GTA VI',
+    'site.homeTitle': 'Megamundo - Centro de noticias de GTA 6',
     'site.description': 'Un sitio de fans independiente que cuenta los días hasta Grand Theft Auto VI.',
     'site.tagline': 'Un sitio de fans independiente sobre Grand Theft Auto, camino a GTA VI.',
     'site.disclaimer':
@@ -582,7 +585,7 @@ export const ui = {
   },
 
   it: {
-    'site.homeTitle': 'Megamundo - Hub di notizie su GTA VI',
+    'site.homeTitle': 'Megamundo - Hub di notizie su GTA 6',
     'site.description': 'Un sito di fan indipendente che conta i giorni fino a Grand Theft Auto VI.',
     'site.tagline': 'Un sito di fan indipendente su Grand Theft Auto, in attesa di GTA VI.',
     'site.disclaimer':
@@ -717,7 +720,7 @@ export const ui = {
   },
 
   de: {
-    'site.homeTitle': 'Megamundo - GTA VI News-Hub',
+    'site.homeTitle': 'Megamundo - GTA 6 News-Hub',
     'site.description': 'Eine unabhängige GTA-Fanseite, die bis Grand Theft Auto VI zählt.',
     'site.tagline': 'Eine unabhängige Fanseite über Grand Theft Auto, auf dem Weg zu GTA VI.',
     'site.disclaimer':

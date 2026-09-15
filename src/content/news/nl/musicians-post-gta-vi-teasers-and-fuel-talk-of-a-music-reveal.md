@@ -1,6 +1,6 @@
 ---
 title: "Muzikanten plaatsen GTA VI-teasers en voeden praat over een muziekonthulling"
-description: "Morgan Wallen, Travis Scott, Keith Richards en label Freebandz plaatsten op dezelfde dag beelden in de stijl van GTA VI. Rockstar heeft niets aangekondigd."
+description: "Morgan Wallen, Travis Scott, Freebandz, Keith Richards en Rauw Alejandro plaatsten op dezelfde dag beelden in de stijl van GTA VI. Rockstar heeft niets aangekondigd."
 date: 2026-09-15
 category: gta6
 lang: nl
@@ -13,19 +13,72 @@ featured: false
 draft: false
 manual: true
 ---
-Meerdere muzikanten plaatsten op 15 september teasers in de stijl van GTA. Fans
-lezen die als de aanloop naar een muziekaankondiging voor GTA VI, meldt
-GameSpot. Rockstar Games zelf heeft niets gezegd. Waar de teasers naar
-verwijzen, is niet bekend.
+Vijf muzikanten plaatsten op 15 september teasers in de stijl van GTA VI. Fans
+lezen die als de aanloop naar een muziekaankondiging, meldt GameSpot. Rockstar
+Games zelf heeft niets gezegd. Waar de teasers naar verwijzen, is niet bekend.
 
-Countrypopzanger Morgan Wallen plaatste een beeld van een zwembad zonder water,
-in de stijl van GTA VI. Rapper Travis Scott deelde een beeld van hoge hakken op
-een paal. Hij schreef "See yall soon" en tagde Rockstar Games in zijn bericht.
-Keith Richards van de Rolling Stones plaatste eveneens een teaser.
+De vijf beelden delen één uiterlijk: vlakke illustratie, zonkleuren, scherpe
+lichtjes. Geen van alle draagt een datum of een titel. Rockstar Games wordt in
+geen enkel bericht genoemd, behalve door Travis Scott, die de studio tagde.
 
-Platenlabel Freebandz plaatste een foto van een auto met de nummerplaat "VCE
-BBY" uit Leonida. Leonida is de staat waarin GTA VI speelt. Of de vier
-berichten vooraf afgesproken waren, is onbekend.
+## De vijf teasers
+
+Countrypopzanger Morgan Wallen plaatste een beeld van een leeggelopen zwembad
+met twee ligstoelen aan de rand.
+
+<figure>
+
+![Een leeggelopen zwembad met een metalen ladder en twee ligstoelen aan de rand, in de stijl van GTA VI.](../../../assets/posts/gta-vi-teaser-morgan-wallen.jpg)
+
+<figcaption>Morgan Wallen op X, 15 september 2026.</figcaption>
+</figure>
+
+Rapper Travis Scott deelde een beeld van hoge hakken op een paal. Hij schreef
+"See yall soon" en tagde Rockstar Games. Zijn bijschrift luidt "Phase 1", wat
+doet vermoeden dat er meer volgt.
+
+<figure>
+
+![Paarse hoge hakken rond een paal, in de stijl van GTA VI.](../../../assets/posts/gta-vi-teaser-travis-scott.jpg)
+
+<figcaption>Travis Scott op Instagram, 15 september 2026.</figcaption>
+</figure>
+
+Platenlabel Freebandz plaatste de achterkant van een paarse sportwagen. Op de
+nummerplaat staat "VCE BBY", met de naam Leonida, de staat waarin GTA VI
+speelt. De modelnaam op de kofferklep is Coquette, een auto uit eerdere delen.
+
+<figure>
+
+![De achterkant van een paarse Coquette met een nummerplaat uit Leonida met VCE BBY, in de stijl van GTA VI.](../../../assets/posts/gta-vi-teaser-freebandz.jpg)
+
+<figcaption>Freebandz op Instagram, 15 september 2026.</figcaption>
+</figure>
+
+Keith Richards van de Rolling Stones plaatste een leguaan in paars en groen.
+Het dier komt overal in Leonida voor, en Rockstar gebruikte het eerder in zijn
+eigen artwork.
+
+<figure>
+
+![Een paars met groene leguaan in profiel tegen een gele achtergrond, in de stijl van GTA VI.](../../../assets/posts/gta-vi-teaser-keith-richards.jpg)
+
+<figcaption>Keith Richards op X, 15 september 2026.</figcaption>
+</figure>
+
+De Puerto Ricaanse zanger Rauw Alejandro plaatste een roze opblaasflamingo aan
+de rand van een zwembad. GameSpot noemt hem niet in zijn artikel, dat vier
+teasers opsomt.
+
+<figure>
+
+![Een roze opblaasflamingo aan de rand van een zwembad, in de stijl van GTA VI.](../../../assets/posts/gta-vi-teaser-rauw-alejandro.jpg)
+
+<figcaption>Rauw Alejandro op Instagram, 15 september 2026.</figcaption>
+</figure>
+
+Of de vijf berichten vooraf afgesproken waren, is onbekend. Evenmin of er nog
+meer volgen.
 
 ## Muziek hoort altijd bij de reeks
 

@@ -233,8 +233,33 @@ const jsonLd = {
   }
 
   .mm-prose :global(img) {
+    max-width: 100%;
+    height: auto;
     border-radius: var(--mm-r-card-sm);
     border: 1px solid var(--mm-border);
+  }
+
+  /* Een beeld in de lopende tekst, met zijn bronregel eronder. In de Markdown
+     is dat een <figure> met daarin een gewone Markdown-afbeelding, zodat de
+     beeldpijplijn van Astro er nog altijd webp met breedte en hoogte van
+     maakt (§14). De figure staat los van de tekstkolom-ritmiek en krijgt
+     daarom zijn eigen ruimte. */
+  .mm-prose :global(figure) {
+    margin: 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mm-prose :global(figure img) {
+    width: 100%;
+    display: block;
+  }
+
+  .mm-prose :global(figcaption) {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--mm-muted);
   }
 
   .mm-prose :global(code) {

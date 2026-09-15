@@ -1,6 +1,6 @@
 ---
 title: "Mehrere Musiker veröffentlichen GTA VI-Teaser und nähren Gerüchte über eine Musikankündigung"
-description: "Morgan Wallen, Travis Scott, Keith Richards und das Label Freebandz veröffentlichten am selben Tag Bilder im Stil von GTA VI. Rockstar hat nichts angekündigt."
+description: "Morgan Wallen, Travis Scott, Freebandz, Keith Richards und Rauw Alejandro veröffentlichten am selben Tag Bilder im Stil von GTA VI. Rockstar hat nichts angekündigt."
 date: 2026-09-15
 category: gta6
 lang: de
@@ -13,20 +13,74 @@ featured: false
 draft: false
 manual: true
 ---
-Mehrere Musiker haben am 15. September Teaser im Stil von GTA veröffentlicht.
-Fans lesen sie als Auftakt zu einer Musikankündigung für GTA VI, berichtet
-GameSpot. Rockstar Games selbst hat nichts gesagt. Worauf die Teaser deuten,
-ist nicht bekannt.
+Fünf Musiker haben am 15. September Teaser im Stil von GTA VI veröffentlicht.
+Fans lesen sie als Auftakt zu einer Musikankündigung, berichtet GameSpot.
+Rockstar Games selbst hat nichts gesagt. Worauf die Teaser deuten, ist nicht
+bekannt.
 
-Country-Pop-Sänger Morgan Wallen veröffentlichte das Bild eines Pools ohne
-Wasser, im Stil von GTA VI. Rapper Travis Scott teilte das Bild von hohen
-Absätzen an einer Stange. Er schrieb "See yall soon" und markierte Rockstar
-Games in seinem Beitrag. Auch Keith Richards von den Rolling Stones
-veröffentlichte einen Teaser.
+Die fünf Bilder teilen ein Aussehen: flache Illustration, Sonnenfarben, scharfe
+Glanzlichter. Keines trägt ein Datum oder einen Titel. Rockstar Games wird in
+keinem Beitrag genannt, außer von Travis Scott, der das Studio markierte.
 
-Das Label Freebandz veröffentlichte das Foto eines Autos mit dem Kennzeichen
-"VCE BBY" aus Leonida. Leonida ist der Bundesstaat, in dem GTA VI spielt. Ob
-die vier Beiträge vorher abgesprochen waren, ist unbekannt.
+## Die fünf Teaser
+
+Country-Pop-Sänger Morgan Wallen veröffentlichte das Bild eines abgelassenen
+Pools mit zwei Liegestühlen am Rand.
+
+<figure>
+
+![Ein abgelassener Pool mit einer Metallleiter und zwei Liegestühlen am Rand, im Stil von GTA VI.](../../../assets/posts/gta-vi-teaser-morgan-wallen.jpg)
+
+<figcaption>Morgan Wallen auf X, 15. September 2026.</figcaption>
+</figure>
+
+Rapper Travis Scott teilte das Bild von hohen Absätzen an einer Stange. Er
+schrieb "See yall soon" und markierte Rockstar Games. Seine Bildunterschrift
+lautet "Phase 1", was vermuten lässt, dass mehr folgt.
+
+<figure>
+
+![Violette hohe Absätze um eine Stange, im Stil von GTA VI.](../../../assets/posts/gta-vi-teaser-travis-scott.jpg)
+
+<figcaption>Travis Scott auf Instagram, 15. September 2026.</figcaption>
+</figure>
+
+Das Label Freebandz veröffentlichte das Heck eines violetten Sportwagens. Auf
+dem Kennzeichen steht "VCE BBY", dazu der Name Leonida, der Bundesstaat, in dem
+GTA VI spielt. Der Modellname auf der Heckklappe ist Coquette, ein Auto aus
+früheren Teilen.
+
+<figure>
+
+![Das Heck einer violetten Coquette mit einem Kennzeichen aus Leonida mit der Aufschrift VCE BBY, im Stil von GTA VI.](../../../assets/posts/gta-vi-teaser-freebandz.jpg)
+
+<figcaption>Freebandz auf Instagram, 15. September 2026.</figcaption>
+</figure>
+
+Keith Richards von den Rolling Stones veröffentlichte einen Leguan in Violett
+und Grün. Das Tier kommt überall in Leonida vor, und Rockstar hatte es zuvor in
+eigenen Illustrationen verwendet.
+
+<figure>
+
+![Ein violett-grüner Leguan im Profil vor gelbem Hintergrund, im Stil von GTA VI.](../../../assets/posts/gta-vi-teaser-keith-richards.jpg)
+
+<figcaption>Keith Richards auf X, 15. September 2026.</figcaption>
+</figure>
+
+Der puerto-ricanische Sänger Rauw Alejandro veröffentlichte einen rosa
+aufblasbaren Flamingo am Rand eines Pools. GameSpot nennt ihn nicht in seinem
+Artikel, der vier Teaser aufzählt.
+
+<figure>
+
+![Ein rosa aufblasbarer Flamingo am Rand eines Pools, im Stil von GTA VI.](../../../assets/posts/gta-vi-teaser-rauw-alejandro.jpg)
+
+<figcaption>Rauw Alejandro auf Instagram, 15. September 2026.</figcaption>
+</figure>
+
+Ob die fünf Beiträge vorher abgesprochen waren, ist unbekannt. Ebenso wenig, ob
+noch mehr folgen.
 
 ## Musik gehört seit jeher zur Reihe
 

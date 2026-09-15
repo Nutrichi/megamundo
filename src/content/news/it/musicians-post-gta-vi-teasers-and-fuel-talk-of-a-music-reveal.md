@@ -1,6 +1,6 @@
 ---
 title: "Diversi musicisti pubblicano teaser di GTA VI e alimentano le voci su un annuncio musicale"
-description: "Morgan Wallen, Travis Scott, Keith Richards e l'etichetta Freebandz hanno pubblicato lo stesso giorno immagini nello stile di GTA VI. Rockstar non ha annunciato nulla."
+description: "Morgan Wallen, Travis Scott, Freebandz, Keith Richards e Rauw Alejandro hanno pubblicato lo stesso giorno immagini nello stile di GTA VI. Rockstar non ha annunciato nulla."
 date: 2026-09-15
 category: gta6
 lang: it
@@ -13,20 +13,73 @@ featured: false
 draft: false
 manual: true
 ---
-Diversi musicisti hanno pubblicato il 15 settembre teaser nello stile di GTA. I
-fan li leggono come l'avvicinamento a un annuncio musicale per GTA VI, riporta
-GameSpot. Rockstar Games non ha detto nulla. A che cosa puntino i teaser non è
-noto.
+Cinque musicisti hanno pubblicato il 15 settembre teaser nello stile di GTA VI.
+I fan li leggono come l'avvicinamento a un annuncio musicale, riporta GameSpot.
+Rockstar Games non ha detto nulla. A che cosa puntino i teaser non è noto.
+
+Le cinque immagini condividono lo stesso aspetto: illustrazione piatta, colori
+del sole, riflessi netti. Nessuna porta una data o un titolo. Rockstar Games
+non è nominato in alcun post, tranne da Travis Scott, che ha taggato lo studio.
+
+## I cinque teaser
 
 Il cantante country pop Morgan Wallen ha pubblicato l'immagine di una piscina
-senza acqua, nello stile di GTA VI. Il rapper Travis Scott ha condiviso
-l'immagine di tacchi alti su un palo. Ha scritto "See yall soon" e ha taggato
-Rockstar Games nel suo post. Anche Keith Richards dei Rolling Stones ha
-pubblicato un teaser.
+svuotata con due lettini sul bordo.
 
-L'etichetta Freebandz ha pubblicato la foto di un'auto con la targa "VCE BBY"
-di Leonida. Leonida è lo stato in cui è ambientato GTA VI. Se i quattro post
-fossero concordati in anticipo non è noto.
+<figure>
+
+![Una piscina svuotata con una scaletta di metallo e due lettini sul bordo, nello stile di GTA VI.](../../../assets/posts/gta-vi-teaser-morgan-wallen.jpg)
+
+<figcaption>Morgan Wallen su X, 15 settembre 2026.</figcaption>
+</figure>
+
+Il rapper Travis Scott ha condiviso l'immagine di tacchi alti su un palo. Ha
+scritto "See yall soon" e ha taggato Rockstar Games. La sua didascalia dice
+"Phase 1", il che lascia pensare che ne arriveranno altri.
+
+<figure>
+
+![Tacchi alti viola attorno a un palo, nello stile di GTA VI.](../../../assets/posts/gta-vi-teaser-travis-scott.jpg)
+
+<figcaption>Travis Scott su Instagram, 15 settembre 2026.</figcaption>
+</figure>
+
+L'etichetta Freebandz ha pubblicato il retro di un'auto sportiva viola. Sulla
+targa c'è scritto "VCE BBY", con il nome Leonida, lo stato in cui è ambientato
+GTA VI. Il nome del modello sul cofano posteriore è Coquette, un'auto dei
+giochi precedenti.
+
+<figure>
+
+![Il retro di una Coquette viola con una targa di Leonida con la scritta VCE BBY, nello stile di GTA VI.](../../../assets/posts/gta-vi-teaser-freebandz.jpg)
+
+<figcaption>Freebandz su Instagram, 15 settembre 2026.</figcaption>
+</figure>
+
+Keith Richards dei Rolling Stones ha pubblicato un'iguana viola e verde.
+L'animale si trova in tutta la Leonida, e Rockstar lo aveva già usato nelle
+proprie illustrazioni.
+
+<figure>
+
+![Un'iguana viola e verde di profilo su sfondo giallo, nello stile di GTA VI.](../../../assets/posts/gta-vi-teaser-keith-richards.jpg)
+
+<figcaption>Keith Richards su X, 15 settembre 2026.</figcaption>
+</figure>
+
+Il cantante portoricano Rauw Alejandro ha pubblicato un fenicottero gonfiabile
+rosa sul bordo di una piscina. GameSpot non lo nomina nel suo articolo, che
+elenca quattro teaser.
+
+<figure>
+
+![Un fenicottero gonfiabile rosa sul bordo di una piscina, nello stile di GTA VI.](../../../assets/posts/gta-vi-teaser-rauw-alejandro.jpg)
+
+<figcaption>Rauw Alejandro su Instagram, 15 settembre 2026.</figcaption>
+</figure>
+
+Se i cinque post fossero concordati in anticipo non è noto. Nemmeno se ne
+arriveranno altri.
 
 ## La musica fa da sempre parte della serie
 

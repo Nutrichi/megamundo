@@ -1,6 +1,6 @@
 ---
 title: "Varios músicos publican teasers de GTA VI y alimentan los rumores de un anuncio musical"
-description: "Morgan Wallen, Travis Scott, Keith Richards y el sello Freebandz publicaron el mismo día imágenes al estilo de GTA VI. Rockstar no ha anunciado nada."
+description: "Morgan Wallen, Travis Scott, Freebandz, Keith Richards y Rauw Alejandro publicaron el mismo día imágenes al estilo de GTA VI. Rockstar no ha anunciado nada."
 date: 2026-09-15
 category: gta6
 lang: es
@@ -13,20 +13,74 @@ featured: false
 draft: false
 manual: true
 ---
-Varios músicos publicaron el 15 de septiembre teasers al estilo de GTA. Los
-fans los interpretan como la antesala de un anuncio musical para GTA VI,
-informa GameSpot. Rockstar Games no ha dicho nada. A qué apuntan los teasers no
-se sabe.
+Cinco músicos publicaron el 15 de septiembre teasers al estilo de GTA VI. Los
+fans los interpretan como la antesala de un anuncio musical, informa GameSpot.
+Rockstar Games no ha dicho nada. A qué apuntan los teasers no se sabe.
 
-El cantante de country pop Morgan Wallen publicó la imagen de una piscina sin
-agua, al estilo de GTA VI. El rapero Travis Scott compartió la imagen de unos
-tacones sobre una barra. Escribió "See yall soon" y etiquetó a Rockstar Games
-en su publicación. Keith Richards, de los Rolling Stones, publicó también un
-teaser.
+Las cinco imágenes comparten un mismo aspecto: ilustración plana, colores de
+sol, brillos marcados. Ninguna lleva fecha ni título. Rockstar Games no aparece
+nombrado en ninguna publicación, salvo por Travis Scott, que etiquetó al
+estudio.
 
-El sello Freebandz publicó la foto de un coche con la matrícula "VCE BBY" de
-Leonida. Leonida es el estado en el que transcurre GTA VI. Si las cuatro
-publicaciones estaban acordadas de antemano se desconoce.
+## Los cinco teasers
+
+El cantante de country pop Morgan Wallen publicó la imagen de una piscina
+vaciada con dos tumbonas al borde.
+
+<figure>
+
+![Una piscina vaciada con una escalera metálica y dos tumbonas al borde, al estilo de GTA VI.](../../../assets/posts/gta-vi-teaser-morgan-wallen.jpg)
+
+<figcaption>Morgan Wallen en X, 15 de septiembre de 2026.</figcaption>
+</figure>
+
+El rapero Travis Scott compartió la imagen de unos tacones sobre una barra.
+Escribió "See yall soon" y etiquetó a Rockstar Games. Su pie de foto dice
+"Phase 1", lo que hace pensar que vendrán más.
+
+<figure>
+
+![Unos tacones morados alrededor de una barra, al estilo de GTA VI.](../../../assets/posts/gta-vi-teaser-travis-scott.jpg)
+
+<figcaption>Travis Scott en Instagram, 15 de septiembre de 2026.</figcaption>
+</figure>
+
+El sello Freebandz publicó la parte trasera de un deportivo morado. La matrícula
+pone "VCE BBY" y lleva el nombre de Leonida, el estado en el que transcurre GTA
+VI. El nombre del modelo en el maletero es Coquette, un coche de juegos
+anteriores.
+
+<figure>
+
+![La parte trasera de un Coquette morado con una matrícula de Leonida que pone VCE BBY, al estilo de GTA VI.](../../../assets/posts/gta-vi-teaser-freebandz.jpg)
+
+<figcaption>Freebandz en Instagram, 15 de septiembre de 2026.</figcaption>
+</figure>
+
+Keith Richards, de los Rolling Stones, publicó una iguana en morado y verde. El
+animal aparece por toda Leonida, y Rockstar ya lo había usado en sus propias
+ilustraciones.
+
+<figure>
+
+![Una iguana morada y verde de perfil sobre fondo amarillo, al estilo de GTA VI.](../../../assets/posts/gta-vi-teaser-keith-richards.jpg)
+
+<figcaption>Keith Richards en X, 15 de septiembre de 2026.</figcaption>
+</figure>
+
+El cantante puertorriqueño Rauw Alejandro publicó un flamenco hinchable rosa al
+borde de una piscina. GameSpot no lo nombra en su artículo, que recoge cuatro
+teasers.
+
+<figure>
+
+![Un flamenco hinchable rosa al borde de una piscina, al estilo de GTA VI.](../../../assets/posts/gta-vi-teaser-rauw-alejandro.jpg)
+
+<figcaption>Rauw Alejandro en Instagram, 15 de septiembre de 2026.</figcaption>
+</figure>
+
+Si las cinco publicaciones estaban acordadas de antemano se desconoce. Tampoco
+se sabe si vendrán más.
 
 ## La música siempre ha formado parte de la serie
 

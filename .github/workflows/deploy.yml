@@ -111,3 +111,32 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v5
+
+      # De app een seintje geven dat er nieuws kan zijn (IOS-APP-PLAN.md, fase 4).
+      #
+      # Deze aanroep geeft niets mee en mag dus bij elke build gebeuren, ook bij
+      # de geplande runs voor Clips en Streams. De Edge Function haalt zelf het
+      # manifest op, claimt de nieuwste post in sent_notifications en stuurt
+      # alleen als dat claimen lukt. Twee builds achter elkaar leveren dus één
+      # melding, en nul als er geen nieuwe post is.
+      #
+      # Mislukt de aanroep, dan is de site gewoon uitgerold en gaat de run niet
+      # rood: een gemiste melding is geen kapotte site. Zonder het geheim slaat
+      # de stap zichzelf over, zodat een fork of een test niets probeert.
+      #
+      # Het geheim gaat als omgevingsvariabele en niet in de opdrachtregel: zo
+      # staat het niet in het commando dat in het logboek terechtkomt. De
+      # controle staat in de shell en niet in een `if`, omdat de secrets-context
+      # daar niet betrouwbaar beschikbaar is.
+      - name: De app een seintje geven
+        continue-on-error: true
+        env:
+          NOTIFY_TOKEN: ${{ secrets.NOTIFY_TOKEN }}
+        run: |
+          if [ -z "$NOTIFY_TOKEN" ]; then
+            echo "Geen NOTIFY_TOKEN ingesteld; deze stap doet niets."
+            exit 0
+          fi
+          curl -fsS -X POST \
+            -H "x-notify-token: $NOTIFY_TOKEN" \
+            https://onryvgtkejqwzkhpovzf.supabase.co/functions/v1/notify

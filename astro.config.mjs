@@ -43,8 +43,8 @@ export default defineConfig({
   /*
    * De sitemap (§17, fase 5), bij elke build opnieuw, met de taalversies van
    * elke pagina erbij. Lege secties staan er vanzelf niet in, want die hebben
-   * geen pagina (§4.1). De inzendpagina draagt noindex en hoort er dus ook
-   * niet in.
+   * geen pagina (§4.1). De inzendpagina en het privacybeleid dragen
+   * noindex en horen er dus ook niet in.
    */
   integrations: [
     sitemap({
@@ -52,7 +52,7 @@ export default defineConfig({
         defaultLocale: 'en',
         locales: { en: 'en', nl: 'nl', fr: 'fr', es: 'es', it: 'it', de: 'de' },
       },
-      filter: (page) => !/\/submit\/?$/.test(new URL(page).pathname),
+      filter: (page) => !/\/(submit|privacy)\/?$/.test(new URL(page).pathname),
     }),
   ],
 

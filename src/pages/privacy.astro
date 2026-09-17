@@ -1,0 +1,178 @@
+---
+/*
+ * Het privacybeleid, op /privacy/.
+ *
+ * Deze pagina bestaat omdat App Store Connect een Privacy Policy URL eist voor
+ * elke app in de store. Ze is met opzet kaal: geen BaseLayout, geen huisstijl,
+ * geen CSS, geen scripts en geen GA4-tag. Platte tekst, want dat is wat een
+ * beleid moet zijn en er valt niets aan te ontwerpen.
+ *
+ * Noindex, want ze hoort niet in de zoekresultaten van een fansite (Nutri,
+ * 17 september 2026). Ze staat daarom ook niet in de sitemap; de uitzondering
+ * staat bij de filter in `astro.config.mjs`, naast die van de inzendpagina.
+ *
+ * Eén taal. De site doet er zes, maar App Store Connect wil één adres en een
+ * beleid vertalen betekent zes teksten die uit elkaar kunnen lopen; dan is één
+ * juiste versie beter dan zes die niet meer gelijk zijn. Engels, de
+ * standaardtaal van de site.
+ *
+ * Geen bedrijfsgegevens, geen naam en geen adres in de tekst (§2). Contact
+ * loopt via de inzendpagina, die er al is.
+ *
+ * Wat hier staat hoort overeen te komen met `PrivacyInfo.xcprivacy` in de app
+ * en met het privacyformulier in App Store Connect. Verandert er iets aan wat
+ * de app of de site bewaart, dan verandert het op die drie plekken samen.
+ */
+const updated = '17 September 2026';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Privacy Policy - Megamundo</title>
+  </head>
+  <body>
+    <h1>Megamundo Privacy Policy</h1>
+
+    <p>Last updated: {updated}</p>
+
+    <p>
+      Megamundo is an independent fan site about Grand Theft Auto. It is not
+      affiliated with, endorsed by, or connected to Rockstar Games or Take-Two
+      Interactive. This policy covers the website at megamundo.be and the
+      Megamundo app for iPhone and iPad.
+    </p>
+
+    <p>
+      The short version: there are no accounts, you are never asked for your
+      name, your email address or any other personal detail, and nothing you do
+      here is sold or handed to advertisers.
+    </p>
+
+    <h2>1. No account, ever</h2>
+    <p>
+      You cannot sign up and you cannot log in. Reading the news, liking an
+      article, watching a clip and receiving a notification all work without an
+      identity. Nothing on this site or in the app asks who you are.
+    </p>
+
+    <h2>2. The app</h2>
+
+    <h3>Notifications</h3>
+    <p>
+      If you allow notifications, Apple gives the app a push token for your
+      device. That token is stored together with the language you read in and
+      whether the app is a test build or a store build, and it is used for one
+      thing only: sending you a short message when a new article is published.
+      The token points to a device, not to a person, and it is never used for
+      anything else. Turning notifications off in iOS Settings, or deleting the
+      app, stops it from working; the token then expires on Apple's side and
+      is removed.
+    </p>
+
+    <h3>Likes</h3>
+    <p>
+      The first time you like an article, the app generates a random identifier
+      and keeps it on your device. That identifier is sent along with each like
+      so that the same device cannot like the same article twice. It is not
+      derived from your device, your Apple Account or anything about you, and
+      it is not connected to the push token or to any other data. Deleting the
+      app deletes it.
+    </p>
+
+    <h3>Settings</h3>
+    <p>
+      Your language, your choice between day and night mode, and the list of
+      articles you liked stay on your device and are not sent anywhere.
+    </p>
+
+    <h3>No analytics</h3>
+    <p>
+      The app contains no analytics, no advertising identifier and no tracking
+      of any kind, and it shares nothing with third parties beyond what is
+      described above.
+    </p>
+
+    <h2>3. The website</h2>
+
+    <h3>Visitor statistics</h3>
+    <p>
+      The website uses Google Analytics to count visits and see which articles
+      are read. Google sets its own cookies for this and receives your IP
+      address. The reports we see are totals, not individuals. The app does not
+      use Google Analytics.
+    </p>
+
+    <h3>Likes</h3>
+    <p>
+      Liking an article in a browser works the same way as in the app: a random
+      identifier is stored in your browser and sent with the like. Clearing
+      your browser data removes it.
+    </p>
+
+    <h3>Embedded clips and streams</h3>
+    <p>
+      Clips and streams are played by YouTube and Twitch inside their own
+      players. Those players set their own cookies and follow the privacy
+      policies of Google and Amazon respectively, over which we have no
+      control.
+    </p>
+
+    <h2>4. Sending in news</h2>
+    <p>
+      If you use the form to send in a tip, what you type in it is stored: the
+      headline, the optional link to the source, an optional note, and the name
+      or nickname you choose to add. The name field is optional and exists only
+      so you can be credited. Tips are read by a person and are not published
+      automatically.
+    </p>
+
+    <h2>5. Where the data is kept</h2>
+    <p>
+      The pages, the articles and the images are static files served by GitHub
+      Pages. Likes, push tokens and tips are stored in a hosted PostgreSQL
+      database provided by Supabase. Notifications are delivered by Apple.
+      These providers process the data on our behalf; none of them receive it
+      for their own purposes.
+    </p>
+
+    <h2>6. How long it is kept</h2>
+    <p>
+      A like is a number in a counter and stays as long as the article exists.
+      A push token is kept until it stops working or you turn notifications
+      off. A tip is kept until it has been dealt with.
+    </p>
+
+    <h2>7. Children</h2>
+    <p>
+      Megamundo is not aimed at children under 13 and does not knowingly
+      collect anything from them. Since nothing here identifies anyone, there
+      is nothing to collect in the first place.
+    </p>
+
+    <h2>8. Your rights</h2>
+    <p>
+      Under the GDPR you can ask what is held about you, and ask for it to be
+      corrected or erased. Because there are no accounts and no identifiers
+      that point back to a person, there is in practice nothing to look up: we
+      cannot tell which likes came from your device, and we would not be able
+      to find them even if you asked. You can remove everything from your side
+      yourself, by turning notifications off, clearing your browser data, or
+      deleting the app.
+    </p>
+
+    <h2>9. Changes</h2>
+    <p>
+      If this policy changes, the date at the top changes with it.
+    </p>
+
+    <h2>10. Contact</h2>
+    <p>
+      Questions about this policy can be sent through the form at
+      <a href="https://megamundo.be/submit/">megamundo.be/submit</a>.
+    </p>
+  </body>
+</html>

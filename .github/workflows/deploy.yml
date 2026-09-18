@@ -124,12 +124,25 @@ jobs:
       # rood: een gemiste melding is geen kapotte site. Zonder het geheim slaat
       # de stap zichzelf over, zodat een fork of een test niets probeert.
       #
+      # Maar niet rood worden is iets anders dan zwijgen. Hier stond eerst
+      # `continue-on-error: true` met een `curl -f`, en dan meldt GitHub de stap
+      # als geslaagd, ook bij een fout. Op 18 september 2026 liepen er zo twee
+      # groene runs terwijl notify allebei de keren 401 gaf en er niets verstuurd
+      # werd; dat kwam pas boven water door het logboek met de hand te lezen.
+      # Daarom leest deze stap nu de statuscode uit en maakt er bij alles buiten
+      # de 200-reeks een `::warning::` van. De run blijft groen, de mislukking
+      # staat in het overzicht.
+      #
+      # Alleen de statuscode telt, niet de inhoud van het antwoord. De functie
+      # geeft met opzet een 200 bij "al gemeld" en bij "geen toestellen": dat
+      # zijn normale uitkomsten die bij elke geplande build voorbijkomen, en
+      # daar een waarschuwing van maken zou de echte fouten ondersneeuwen.
+      #
       # Het geheim gaat als omgevingsvariabele en niet in de opdrachtregel: zo
       # staat het niet in het commando dat in het logboek terechtkomt. De
       # controle staat in de shell en niet in een `if`, omdat de secrets-context
       # daar niet betrouwbaar beschikbaar is.
       - name: De app een seintje geven
-        continue-on-error: true
         env:
           NOTIFY_TOKEN: ${{ secrets.NOTIFY_TOKEN }}
         run: |
@@ -137,6 +150,21 @@ jobs:
             echo "Geen NOTIFY_TOKEN ingesteld; deze stap doet niets."
             exit 0
           fi
-          curl -fsS -X POST \
+
+          # Geen -f, want die gooit het antwoord weg en juist daar staat de
+          # reden in. || 000 vangt een curl die zelf struikelt, zodat de shell
+          # met -e deze stap niet alsnog rood maakt.
+          status=$(curl -s -o /tmp/notify-antwoord.txt -w '%{http_code}' -X POST \
             -H "x-notify-token: $NOTIFY_TOKEN" \
-            https://onryvgtkejqwzkhpovzf.supabase.co/functions/v1/notify
+            https://onryvgtkejqwzkhpovzf.supabase.co/functions/v1/notify) || status=000
+
+          antwoord=$(head -c 400 /tmp/notify-antwoord.txt 2>/dev/null | tr '\n' ' ' || true)
+          echo "notify gaf $status"
+          echo "$antwoord"
+
+          case "$status" in
+            2??) exit 0 ;;
+          esac
+
+          echo "::warning title=Melding niet verstuurd::notify gaf $status. $antwoord"
+          exit 0

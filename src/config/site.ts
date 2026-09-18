@@ -17,7 +17,9 @@ export const releaseDate = '2026-11-19T00:00:00Z';
  * volstaat om er een te verbergen.
  */
 export const social = {
-  youtube: 'https://www.youtube.com/@nutri_r1',
+  /* `sub_confirmation=1` opent meteen het venster om te abonneren (Nutri,
+     18 september 2026). Zonder die parameter kom je gewoon op het kanaal uit. */
+  youtube: 'https://www.youtube.com/@nutri_r1?sub_confirmation=1',
   discord: 'https://discord.gg/E7AY5vPwcQ',
 };
 

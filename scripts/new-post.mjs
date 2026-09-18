@@ -9,7 +9,13 @@
  *   npm run new-post -- "Fastest cars in GTA Online" --guide --game gta-online
  *
  * Schrijft altijd naar de Engelse map: Engels is de brontaal (§11). De vijf
- * vertalingen maakt `npm run translate` daarna.
+ * vertalingen zijn handwerk, met `manual: true` in de frontmatter: er is met
+ * opzet geen API-sleutel, dus `npm run translate` draait hier nooit (§11.1).
+ *
+ * Vergeet er geen. Een ontbrekende vertaling breekt niets en zegt niets: de
+ * site valt stil terug op het Engels en een lezer in die taal krijgt een Engels
+ * artikel zonder dat er iets bij staat. `tools/promote.sh` telt ze na en weigert
+ * te promoten zolang er een ontbreekt.
  */
 
 import { mkdir, writeFile, access } from 'node:fs/promises';
@@ -126,4 +132,11 @@ await writeFile(file, frontmatter, 'utf8');
 
 console.log(`Aangemaakt: src/content/${collection}/en/${slug}.md`);
 console.log(`Pad op de site: /${collection}/${slug}`);
-console.log('Zet draft op false zodra hij klaar is, en draai dan npm run translate.');
+console.log('Zet draft op false zodra hij klaar is.');
+console.log('Schrijf daarna de vijf vertalingen met de hand, elk met manual: true:');
+console.log(
+  ['nl', 'fr', 'es', 'it', 'de']
+    .map((taal) => `  src/content/${collection}/${taal}/${slug}.md`)
+    .join('\n'),
+);
+console.log('promote.sh weigert te promoten zolang er een ontbreekt.');

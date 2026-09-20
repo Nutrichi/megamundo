@@ -1,5 +1,5 @@
 ---
-title: "Rockstar stelt GTA VI opnieuw uit tot 19 november 2026"
+title: "GTA VI verschuift naar 19 november 2026"
 description: "GTA VI is opnieuw uitgesteld en staat nu gepland voor 19 november 2026. Rockstar biedt excuses aan en zegt de extra maanden nodig te hebben om af te werken."
 date: 2025-11-06
 category: gta6

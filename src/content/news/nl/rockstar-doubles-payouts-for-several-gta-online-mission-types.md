@@ -1,5 +1,5 @@
 ---
-title: "Rockstar verdubbelt de uitbetaling van meerdere missietypes in GTA Online"
+title: "GTA Online verdubbelt de uitbetaling van meerdere missietypes"
 description: "De basisuitbetaling van Mobile Operations, Casino Work, verhaalmissies en Project Overthrow gaat omhoog. Rockstar verlaagt ook de prijs van meer dan 30 voertuigen."
 date: 2026-05-07
 category: gta-online

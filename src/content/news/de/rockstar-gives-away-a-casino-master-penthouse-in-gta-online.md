@@ -1,5 +1,5 @@
 ---
-title: "Rockstar verschenkt ein Casino Master Penthouse in GTA Online"
+title: "GTA Online verschenkt ein Casino Master Penthouse"
 description: "Das Master Penthouse über dem Diamond Casino and Resort ist diese Woche gratis. Arbeit im Casino zahlt doppelt, ebenso die tägliche Chipzuteilung."
 date: 2025-11-20
 category: gta-online

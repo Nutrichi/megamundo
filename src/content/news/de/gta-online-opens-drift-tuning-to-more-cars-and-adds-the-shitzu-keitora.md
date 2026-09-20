@@ -1,5 +1,5 @@
 ---
-title: "GTA Online öffnet Drift Tuning für mehr Autos und ergänzt den Shitzu Keitora"
+title: "GTA Online öffnet Drift Tuning und bekommt den Shitzu Keitora"
 description: "Mehr Fahrzeuge in GTA Online lassen sich mit Drift Tuning ausrüsten. Rockstar ergänzt zudem den Shitzu Keitora, und Drift Races zahlen während des Drift Events das Dreifache."
 date: 2026-02-26
 category: gta-online

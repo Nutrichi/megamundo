@@ -1,5 +1,5 @@
 ---
-title: "Rockstar dates The Kortz Center Heist for 14 July"
+title: "The Kortz Center Heist opens on 14 July"
 description: "The Kortz Center Heist arrives in GTA Online on 14 July. The robbery targets an art museum and requires an Art Studio expansion in a Mansion property."
 date: 2026-07-09
 category: gta-online

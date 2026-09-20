@@ -1,5 +1,5 @@
 ---
-title: "Rockstar abre el Fine Art Collector Program en GTA Online"
+title: "GTA Online abre el Fine Art Collector Program"
 description: "El programa va del 18 de junio al 13 de julio y prepara The Kortz Center Heist. Tiene tres niveles y paga hasta GTA$1.500.000 en bonificaciones."
 date: 2026-06-18
 category: gta-online

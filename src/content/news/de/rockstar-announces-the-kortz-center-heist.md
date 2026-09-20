@@ -1,5 +1,5 @@
 ---
-title: "Rockstar kündigt The Kortz Center Heist für GTA Online an"
+title: "The Kortz Center Heist kommt zu GTA Online"
 description: "GTA Online bekommt im Juli einen neuen Coup. Spieler überfallen eine Kunstgalerie in Pacific Bluffs, dafür ist ein Art Studio in einer Mansion nötig. Rockstar nennt den 14. Juli."
 date: 2026-06-17
 category: gta-online

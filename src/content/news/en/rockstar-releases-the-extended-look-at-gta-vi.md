@@ -1,5 +1,5 @@
 ---
-title: "Rockstar releases the extended look at GTA VI"
+title: "The extended look at GTA VI is out now"
 description: "The extended look at GTA VI is out on Netflix, YouTube and the official site. Rockstar says everything in it was captured in-game on a PlayStation 5."
 date: 2026-08-27
 category: gta6

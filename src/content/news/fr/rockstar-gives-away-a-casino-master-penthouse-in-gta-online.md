@@ -1,5 +1,5 @@
 ---
-title: "Rockstar offre un Casino Master Penthouse dans GTA Online"
+title: "GTA Online offre un Casino Master Penthouse"
 description: "Le Master Penthouse au-dessus du Diamond Casino and Resort est offert cette semaine. Le travail au casino rapporte le double, tout comme la dotation quotidienne de jetons."
 date: 2025-11-20
 category: gta-online

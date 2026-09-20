@@ -1,5 +1,5 @@
 ---
-title: "Rockstar duplica los pagos de varios tipos de misión en GTA Online"
+title: "GTA Online duplica los pagos de varios tipos de misión"
 description: "Los pagos base de Mobile Operations, Casino Work, misiones de la historia y Project Overthrow se duplican. Rockstar también baja el precio de más de 30 vehículos."
 date: 2026-05-07
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar adds six player-made missions to GTA Online"
+title: "GTA Online adds six player-made missions"
 description: "Six new player-made missions join the Community Mission Series, alongside a returning seventh. Completing all seven pays a bonus in each of two weeks."
 date: 2026-06-04
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar voegt drie Random Transform Races toe aan GTA Online"
+title: "GTA Online krijgt drie Random Transform Races"
 description: "Drie nieuwe Random Transform Races leveren deze week driemaal GTA$ en RP op. Spelers wisselen door een vaste lijst voertuigen tot elk voertuig gebruikt is."
 date: 2026-08-27
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar draait de hele september het Business Rivalries-event in GTA Online"
+title: "Het Business Rivalries-event loopt de hele september in GTA Online"
 description: "GTA Online staat heel september in het teken van Business Rivalries. Elke week krijgt een ander bedrijfstype de aandacht, er is elke week een gratis pand, en de weekopdrachten betalen tien keer zoveel."
 date: 2026-09-03
 category: gta-online

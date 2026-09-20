@@ -1,5 +1,5 @@
 ---
-title: "Rockstar toont op 27 augustus nieuwe beelden van GTA VI"
+title: "Nieuwe beelden van GTA VI verschijnen op 27 augustus"
 description: "Rockstar toont op 27 augustus nieuwe beelden van GTA VI. De video debuteert om 21.00 uur op Netflix en komt zes uur later op YouTube."
 date: 2026-08-06
 category: gta6

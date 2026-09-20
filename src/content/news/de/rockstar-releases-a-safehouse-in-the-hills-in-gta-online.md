@@ -1,5 +1,5 @@
 ---
-title: "Rockstar veröffentlicht A Safehouse in the Hills in GTA Online"
+title: "A Safehouse in the Hills ist in GTA Online verfügbar"
 description: "Das Update bringt Villen an drei Orten, eine Missionsreihe gegen eine Firma für selbstfahrende Autos und den Mission Creator. Michael De Santa taucht als Nachbar auf."
 date: 2025-12-10
 category: gta-online

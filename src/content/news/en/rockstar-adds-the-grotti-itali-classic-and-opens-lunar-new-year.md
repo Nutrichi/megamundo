@@ -1,5 +1,5 @@
 ---
-title: "Rockstar adds the Grotti Itali Classic and opens Lunar New Year in GTA Online"
+title: "GTA Online adds the Grotti Itali Classic and opens Lunar New Year"
 description: "The Grotti Itali Classic is on sale at Legendary Motorsport. GTA Online also starts its Year of the Horse celebration, with a new stunt race and 36 hidden Yuanbao."
 date: 2026-02-12
 category: gta-online

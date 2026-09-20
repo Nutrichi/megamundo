@@ -1,5 +1,5 @@
 ---
-title: "Rockstar kondigt The Kortz Center Heist aan voor GTA Online"
+title: "The Kortz Center Heist komt naar GTA Online"
 description: "GTA Online krijgt in juli een nieuwe heist. Spelers overvallen een kunstgalerie in Pacific Bluffs, en daarvoor is een Art Studio in een Mansion nodig. Rockstar noemt 14 juli als datum."
 date: 2026-06-17
 category: gta-online

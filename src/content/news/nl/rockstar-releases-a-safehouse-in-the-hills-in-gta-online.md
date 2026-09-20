@@ -1,5 +1,5 @@
 ---
-title: "Rockstar brengt A Safehouse in the Hills uit in GTA Online"
+title: "A Safehouse in the Hills staat live in GTA Online"
 description: "De update voegt villa's op drie locaties toe, een missiereeks tegen een bedrijf in zelfrijdende auto's, en de Mission Creator. Michael De Santa duikt op als buurman."
 date: 2025-12-10
 category: gta-online

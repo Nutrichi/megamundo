@@ -1,5 +1,5 @@
 ---
-title: "Rockstar voegt zes spelersmissies toe aan GTA Online"
+title: "GTA Online krijgt zes spelersmissies erbij"
 description: "Zes nieuwe missies van spelers komen in de Community Mission Series, naast een terugkerende zevende. Wie alle zeven speelt, krijgt in twee weken twee keer een bonus."
 date: 2026-06-04
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar ergänzt die Grotti Itali Classic und startet das Mondneujahr in GTA Online"
+title: "GTA Online bekommt die Grotti Itali Classic und startet das Mondneujahr"
 description: "Die Grotti Itali Classic steht bei Legendary Motorsport zum Verkauf. GTA Online startet außerdem das Jahr des Pferdes, mit einem neuen Stuntrennen und 36 versteckten Yuanbao."
 date: 2026-02-12
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar añade el Grotti Itali Classic y abre el Año Nuevo lunar en GTA Online"
+title: "GTA Online suma el Grotti Itali Classic y abre el Año Nuevo lunar"
 description: "El Grotti Itali Classic está a la venta en Legendary Motorsport. GTA Online arranca también su Año del Caballo, con una carrera de acrobacias y 36 Yuanbao escondidos."
 date: 2026-02-12
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar porta A Safehouse in the Hills su GTA Online il 10 dicembre"
+title: "A Safehouse in the Hills arriva su GTA Online il 10 dicembre"
 description: "Il nuovo aggiornamento di GTA Online aggiunge ville sulle colline di Los Santos, una storia su una rete di sorveglianza e un editor di missioni."
 date: 2025-12-05
 category: gta-online

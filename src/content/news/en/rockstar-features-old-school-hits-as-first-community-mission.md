@@ -1,5 +1,5 @@
 ---
-title: "Rockstar features Old School Hits as the first Community Mission"
+title: "Old School Hits is the first featured Community Mission"
 description: "Old School Hits is the first featured Community Mission and was built with the new Rockstar Mission Creator. It pays out through 6 May."
 date: 2026-04-30
 category: gta-online

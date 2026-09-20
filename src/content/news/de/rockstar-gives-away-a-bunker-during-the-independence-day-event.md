@@ -1,5 +1,5 @@
 ---
-title: "Rockstar verschenkt einen Bunker während des Independence-Day-Events"
+title: "GTA Online verschenkt einen Bunker während des Independence-Day-Events"
 description: "Der Lago Zancudo Bunker ist bis zum 13. Juli kostenlos. Rockstar nennt den begleitenden Ausverkauf den größten aller Zeiten und sagt, gegen Beleidigungen im Sprachchat vorzugehen."
 date: 2026-07-02
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar releases The Kortz Center Heist in GTA Online"
+title: "The Kortz Center Heist is live in GTA Online"
 description: "The Kortz Center Heist is live in GTA Online. Players rob an art museum, and can sell the painting or hang it in their own mansion."
 date: 2026-07-14
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar apre il Mission Creator ai giocatori di GTA Online"
+title: "GTA Online apre il Mission Creator ai giocatori"
 description: "Il Rockstar Mission Creator permette di costruire missioni proprie in GTA Online, fino a otto giocatori, e di condividerle. La prima creazione in evidenza arriva il 30 aprile."
 date: 2026-04-28
 category: gta-online

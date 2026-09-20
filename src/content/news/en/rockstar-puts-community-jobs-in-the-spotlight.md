@@ -1,5 +1,5 @@
 ---
-title: "Rockstar puts player made jobs in the spotlight in GTA Online"
+title: "GTA Online puts player made jobs in the spotlight"
 description: "The Community Series Showcase runs from 12 March to 1 April. Player made jobs pay triple, everyone who logs in receives GTA$1,000,000, and featured creators get GTA$10,000,000."
 date: 2026-03-12
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar verdoppelt die Auszahlungen mehrerer Missionsarten in GTA Online"
+title: "GTA Online verdoppelt die Auszahlungen mehrerer Missionsarten"
 description: "Die Grundauszahlungen von Mobile Operations, Casino Work, Story-Missionen und Project Overthrow verdoppeln sich. Rockstar senkt außerdem den Preis von über 30 Fahrzeugen."
 date: 2026-05-07
 category: gta-online

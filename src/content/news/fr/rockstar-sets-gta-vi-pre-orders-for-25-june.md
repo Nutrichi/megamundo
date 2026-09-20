@@ -1,5 +1,5 @@
 ---
-title: "Rockstar fixe les précommandes de GTA VI au 25 juin"
+title: "Les précommandes de GTA VI ouvrent le 25 juin"
 description: "Les précommandes de GTA VI commencent le 25 juin, sur les boutiques numériques et chez certains revendeurs. Rockstar montre aussi la jaquette, téléchargeable sur le site officiel."
 date: 2026-06-18
 category: gta6

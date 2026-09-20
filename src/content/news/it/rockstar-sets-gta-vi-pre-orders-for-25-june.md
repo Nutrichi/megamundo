@@ -1,5 +1,5 @@
 ---
-title: "Rockstar fissa i preordini di GTA VI al 25 giugno"
+title: "I preordini di GTA VI aprono il 25 giugno"
 description: "I preordini di GTA VI iniziano il 25 giugno, sui negozi digitali e presso alcuni rivenditori. Rockstar mostra anche la copertina, scaricabile dal sito ufficiale."
 date: 2026-06-18
 category: gta6

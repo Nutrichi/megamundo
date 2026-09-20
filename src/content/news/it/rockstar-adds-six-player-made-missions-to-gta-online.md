@@ -1,5 +1,5 @@
 ---
-title: "Rockstar aggiunge sei missioni create dai giocatori a GTA Online"
+title: "GTA Online aggiunge sei missioni create dai giocatori"
 description: "Sei nuove missioni dei giocatori entrano nella Community Mission Series, insieme a una settima che torna. Completarle tutte dà un bonus per due settimane."
 date: 2026-06-04
 category: gta-online

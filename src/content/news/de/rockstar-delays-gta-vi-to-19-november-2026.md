@@ -1,5 +1,5 @@
 ---
-title: "Rockstar verschiebt GTA VI auf den 19. November 2026"
+title: "GTA VI verschiebt sich auf den 19. November 2026"
 description: "GTA VI wird erneut verschoben und erscheint nun am 19. November 2026. Rockstar entschuldigt sich und sagt, die zusätzlichen Monate seien für den Feinschliff nötig."
 date: 2025-11-06
 category: gta6

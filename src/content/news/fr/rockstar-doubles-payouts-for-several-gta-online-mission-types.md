@@ -1,5 +1,5 @@
 ---
-title: "Rockstar double les gains de plusieurs types de missions dans GTA Online"
+title: "GTA Online double les gains de plusieurs types de missions"
 description: "Les gains de base des Mobile Operations, du Casino Work, des missions scénarisées et de Project Overthrow doublent. Rockstar baisse aussi le prix de plus de 30 véhicules."
 date: 2026-05-07
 category: gta-online

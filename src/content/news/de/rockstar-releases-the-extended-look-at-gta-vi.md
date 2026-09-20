@@ -1,5 +1,5 @@
 ---
-title: "Rockstar veröffentlicht den Extended Look zu GTA VI"
+title: "Der Extended Look zu GTA VI ist online"
 description: "Der Extended Look zu GTA VI ist online, auf Netflix, YouTube und der offiziellen Seite. Rockstar sagt, alles sei im Spiel selbst aufgenommen worden, auf einer PlayStation 5."
 date: 2026-08-27
 category: gta6

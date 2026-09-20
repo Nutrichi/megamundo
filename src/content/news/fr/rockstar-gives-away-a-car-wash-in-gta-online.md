@@ -1,5 +1,5 @@
 ---
-title: "Rockstar offre un lavage auto dans GTA Online"
+title: "GTA Online offre un lavage auto"
 description: "Les joueurs peuvent réclamer un Hands On Car Wash sans frais jusqu’au 14 janvier. Les fronts légaux rapportent le triple cette semaine, et Rockstar annonce trois nouveaux Odd Jobs plus tard dans le mois."
 date: 2026-01-08
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar gives away a bunker during the Independence Day event"
+title: "GTA Online gives away a bunker during the Independence Day event"
 description: "The Lago Zancudo Bunker is free through 13 July. Rockstar calls the accompanying sale its biggest ever and says it is acting against abusive voice chat."
 date: 2026-07-02
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar announces the GTA VI album with 34 songs, on CD for 17 euro"
+title: "The GTA VI album holds 34 songs, on CD for 17 euro"
 description: "Grand Theft Auto VI: The Album arrives on 19 November on streaming, CD and vinyl. The limited edition of 123,99 euro was sold out on the official shop on the day of the announcement."
 date: 2026-09-17
 category: gta6

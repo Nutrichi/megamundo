@@ -1,5 +1,5 @@
 ---
-title: "Rockstar añade NBA 2K26 a la biblioteca de juegos de GTA+"
+title: "La biblioteca de juegos de GTA+ suma NBA 2K26"
 description: "Los miembros de GTA+ reciben NBA 2K26 del 10 de marzo al 20 de abril, en PlayStation 5 y Xbox Series X y S. El Vapid Firebolt ASP es gratis hasta el 1 de abril."
 date: 2026-03-05
 category: gta-online

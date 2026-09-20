@@ -1,5 +1,5 @@
 ---
-title: "Rockstar nimmt Grand Theft Auto V in die GTA+ Games Library auf"
+title: "Die GTA+ Games Library bekommt Grand Theft Auto V"
 description: "Grand Theft Auto V ist jetzt Teil der GTA+ Games Library, auch auf dem PC. Mitglieder können außerdem bis zum 13. Juli einen kostenlosen Ocelot Stromberg abholen."
 date: 2026-06-11
 category: gta5

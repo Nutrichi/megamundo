@@ -1,5 +1,5 @@
 ---
-title: "Rockstar zet NBA 2K26 in de spellenbibliotheek van GTA+"
+title: "De spellenbibliotheek van GTA+ krijgt NBA 2K26"
 description: "Leden van GTA+ krijgen NBA 2K26 van 10 maart tot 20 april, op de PlayStation 5 en de Xbox Series X en S. De Vapid Firebolt ASP is tot 1 april gratis op te halen."
 date: 2026-03-05
 category: gta-online

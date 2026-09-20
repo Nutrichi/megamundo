@@ -1,5 +1,5 @@
 ---
-title: "Rockstar adds apparel and collectibles to its store"
+title: "The Rockstar Store adds apparel and collectibles"
 description: "The new collection holds clothing, posters, stickers and two scented candles. Players who finish the New Listings missions before 7 December get an in-game sweatshirt."
 date: 2025-12-05
 category: gta-online

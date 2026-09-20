@@ -1,5 +1,5 @@
 ---
-title: "Rockstar regala un lavadero de coches en GTA Online"
+title: "GTA Online regala un lavadero de coches"
 description: "Los jugadores pueden reclamar un Hands On Car Wash sin coste hasta el 14 de enero. Los fronts legales pagan el triple esta semana, y Rockstar anuncia tres nuevos Odd Jobs para más adelante."
 date: 2026-01-08
 category: gta-online

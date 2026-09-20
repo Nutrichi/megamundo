@@ -1,5 +1,5 @@
 ---
-title: "Rockstar nimmt Kleidung und Sammlerstücke in seinen Shop auf"
+title: "Der Rockstar Store bekommt Kleidung und Sammlerstücke"
 description: "Die neue Kollektion umfasst Kleidung, Poster, Aufkleber und zwei Duftkerzen. Wer die New-Listings-Missionen vor dem 7. Dezember abschließt, bekommt den Pullover im Spiel."
 date: 2025-12-05
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar startet das Brand-Wars-Event in GTA Online"
+title: "GTA Online startet das Brand-Wars-Event"
 description: "Das Brand-Wars-Event läuft zwei Wochen in GTA Online. Spieler wählen eine Seite zwischen Sprunk und eCola und treten in Rennen, Freemode-Events und Wochenaufgaben gegeneinander an."
 date: 2026-08-13
 category: gta-online

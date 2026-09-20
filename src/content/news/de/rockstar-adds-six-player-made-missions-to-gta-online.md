@@ -1,5 +1,5 @@
 ---
-title: "Rockstar fügt GTA Online sechs von Spielern gebaute Missionen hinzu"
+title: "GTA Online bekommt sechs von Spielern gebaute Missionen"
 description: "Sechs neue Spielermissionen kommen in die Community Mission Series, dazu eine zurückkehrende siebte. Wer alle sieben schafft, bekommt in zwei Wochen zweimal einen Bonus."
 date: 2026-06-04
 category: gta-online

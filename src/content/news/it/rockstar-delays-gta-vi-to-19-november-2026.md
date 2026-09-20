@@ -1,5 +1,5 @@
 ---
-title: "Rockstar rinvia GTA VI al 19 novembre 2026"
+title: "GTA VI slitta al 19 novembre 2026"
 description: "GTA VI viene rinviato di nuovo ed è ora atteso per il 19 novembre 2026. Rockstar si scusa e dice che servono quei mesi per rifinire il gioco."
 date: 2025-11-06
 category: gta6

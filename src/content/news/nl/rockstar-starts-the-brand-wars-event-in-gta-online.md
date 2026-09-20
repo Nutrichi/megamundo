@@ -1,5 +1,5 @@
 ---
-title: "Rockstar start het Brand Wars-evenement in GTA Online"
+title: "GTA Online start het Brand Wars-evenement"
 description: "Het Brand Wars-evenement loopt twee weken in GTA Online. Spelers kiezen partij tussen Sprunk en eCola en nemen het tegen elkaar op in races, freemode-events en weekopdrachten."
 date: 2026-08-13
 category: gta-online

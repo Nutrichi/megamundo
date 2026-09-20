@@ -1,5 +1,5 @@
 ---
-title: "Rockstar wertet Yachten auf und startet Black-Friday-Rabatte in GTA Online"
+title: "GTA Online wertet Yachten auf und startet Black-Friday-Rabatte"
 description: "Wer eine Galaxy Super Yacht besitzt, kann kostenlos auf das teuerste Modell wechseln. Rockstar startet außerdem Black-Friday-Rabatte vom 27. November bis 3. Dezember."
 date: 2025-11-27
 category: gta-online

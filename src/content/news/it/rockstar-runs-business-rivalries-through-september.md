@@ -1,5 +1,5 @@
 ---
-title: "Rockstar dedica tutto settembre all’evento Business Rivalries in GTA Online"
+title: "L'evento Business Rivalries dura tutto settembre in GTA Online"
 description: "GTA Online dedica tutto settembre a Business Rivalries. Ogni settimana mette in luce un tipo di attività, ogni settimana c’è una proprietà gratuita e le sfide settimanali pagano dieci volte tanto."
 date: 2026-09-03
 category: gta-online

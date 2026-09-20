@@ -1,5 +1,5 @@
 ---
-title: "Rockstar añade bomberos, carretillas y una ruta de periódicos a GTA Online"
+title: "GTA Online suma bomberos, carretillas y una ruta de periódicos"
 description: "Tres nuevos Odd Jobs permiten trabajar de bombero, carretillero o repartidor de periódicos. Todos los Odd Jobs pagan el doble hasta el 4 de febrero."
 date: 2026-01-29
 category: gta-online

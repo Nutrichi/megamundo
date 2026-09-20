@@ -1,5 +1,5 @@
 ---
-title: "Rockstar gives away a car wash in GTA Online"
+title: "GTA Online gives away a car wash"
 description: "Players can claim a Hands On Car Wash at no cost through 14 January. Legal fronts pay triple this week, and Rockstar says three new Odd Jobs follow later in the month."
 date: 2026-01-08
 category: gta-online

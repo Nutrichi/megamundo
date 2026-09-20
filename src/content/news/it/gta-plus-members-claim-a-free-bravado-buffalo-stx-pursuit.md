@@ -1,5 +1,5 @@
 ---
-title: "Rockstar regala ai membri GTA+ un Bravado Buffalo STX Pursuit"
+title: "I membri GTA+ ricevono un Bravado Buffalo STX Pursuit gratuito"
 description: "Il Bravado Buffalo STX Pursuit è gratuito per i membri GTA+ dal 2 aprile. Gli altri devono aspettare il 9 aprile per il veicolo delle forze dell'ordine."
 date: 2026-04-02
 category: gta-online

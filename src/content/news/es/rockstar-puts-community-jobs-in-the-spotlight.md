@@ -1,5 +1,5 @@
 ---
-title: "Rockstar destaca los trabajos creados por jugadores en GTA Online"
+title: "GTA Online destaca los trabajos creados por jugadores"
 description: "La Community Series Showcase va del 12 de marzo al 1 de abril. Los trabajos creados por jugadores pagan el triple, quien entra recibe GTA$1.000.000 y los creadores destacados reciben GTA$10.000.000."
 date: 2026-03-12
 category: gta-online

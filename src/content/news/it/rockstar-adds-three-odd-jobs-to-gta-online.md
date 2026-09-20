@@ -1,5 +1,5 @@
 ---
-title: "Rockstar aggiunge pompieri, muletti e un giro di giornali a GTA Online"
+title: "GTA Online aggiunge pompieri, muletti e un giro di giornali"
 description: "Tre nuovi Odd Jobs permettono di lavorare come pompiere, mulettista o portagiornali. Tutti gli Odd Jobs pagano il doppio fino al 4 febbraio."
 date: 2026-01-29
 category: gta-online

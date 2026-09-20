@@ -1,5 +1,5 @@
 ---
-title: "Rockstar ajoute la Grotti Itali Classic et ouvre le Nouvel An lunaire dans GTA Online"
+title: "GTA Online accueille la Grotti Itali Classic et ouvre le Nouvel An lunaire"
 description: "La Grotti Itali Classic est en vente chez Legendary Motorsport. GTA Online lance aussi son Année du Cheval, avec une course de cascades et 36 Yuanbao cachés."
 date: 2026-02-12
 category: gta-online

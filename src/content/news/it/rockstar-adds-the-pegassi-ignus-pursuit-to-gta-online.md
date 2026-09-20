@@ -1,5 +1,5 @@
 ---
-title: "Rockstar aggiunge la Pegassi Ignus Pursuit a GTA Online"
+title: "GTA Online aggiunge la Pegassi Ignus Pursuit"
 description: "La Pegassi Ignus Pursuit è in vendita da Warstock Cache & Carry. Rockstar indica anche il bersaglio della settimana in The Kortz Center Heist e mette la Grotti Veleno GT in vendita generale."
 date: 2026-07-23
 category: gta-online

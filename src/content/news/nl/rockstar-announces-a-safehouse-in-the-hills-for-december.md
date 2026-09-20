@@ -1,5 +1,5 @@
 ---
-title: "Rockstar kondigt A Safehouse in the Hills aan voor december"
+title: "A Safehouse in the Hills komt in december naar GTA Online"
 description: "GTA Online: A Safehouse in the Hills komt in december en voegt landhuizen toe in exclusieve wijken van Los Santos. Rockstar geeft geen datum en geen prijzen."
 date: 2025-11-20
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar kondigt het album van GTA VI aan met 34 nummers, op cd voor 17 euro"
+title: "Het album van GTA VI telt 34 nummers, op cd voor 17 euro"
 description: "Grand Theft Auto VI: The Album verschijnt op 19 november op streaming, cd en vinyl. De limited edition van 123,99 euro was op de dag van de aankondiging al uitverkocht in de officiële webshop."
 date: 2026-09-17
 category: gta6

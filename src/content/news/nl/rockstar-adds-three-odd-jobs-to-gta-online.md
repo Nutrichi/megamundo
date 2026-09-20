@@ -1,5 +1,5 @@
 ---
-title: "Rockstar voegt brandweer, heftrucks en een krantenwijk toe aan GTA Online"
+title: "GTA Online krijgt brandweer, heftrucks en een krantenwijk"
 description: "Drie nieuwe Odd Jobs laten spelers werken als brandweerman, heftruckchauffeur of krantenbezorger. Alle Odd Jobs leveren tot 4 februari dubbele GTA$ en RP op."
 date: 2026-01-29
 category: gta-online

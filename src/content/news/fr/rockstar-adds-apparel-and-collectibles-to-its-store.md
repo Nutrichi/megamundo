@@ -1,5 +1,5 @@
 ---
-title: "Rockstar ajoute des vêtements et des objets de collection à sa boutique"
+title: "La boutique Rockstar accueille des vêtements et des objets de collection"
 description: "La nouvelle collection comprend des vêtements, des affiches, des autocollants et deux bougies parfumées. Terminer les missions New Listings avant le 7 décembre donne le sweat en jeu."
 date: 2025-12-05
 category: gta-online

@@ -1,5 +1,5 @@
 ---
-title: "Rockstar retrasa GTA VI hasta el 19 de noviembre de 2026"
+title: "GTA VI se retrasa hasta el 19 de noviembre de 2026"
 description: "GTA VI se retrasa de nuevo y ahora llega el 19 de noviembre de 2026. Rockstar pide disculpas y dice necesitar esos meses para pulir el juego."
 date: 2025-11-06
 category: gta6

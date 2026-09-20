@@ -1,5 +1,5 @@
 ---
-title: "Rockstar lanza A Safehouse in the Hills en GTA Online"
+title: "A Safehouse in the Hills ya está en GTA Online"
 description: "La actualización añade mansiones en tres ubicaciones, una tanda de misiones contra una empresa de coches autónomos, y el Mission Creator. Michael De Santa aparece como vecino."
 date: 2025-12-10
 category: gta-online

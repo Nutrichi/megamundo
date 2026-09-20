@@ -1,5 +1,5 @@
 ---
-title: "Rockstar announces The Kortz Center Heist for GTA Online"
+title: "The Kortz Center Heist comes to GTA Online"
 description: "GTA Online gets a new heist in July. Players raid an art gallery in Pacific Bluffs, and an Art Studio in a Mansion is required. Rockstar names 14 July as the date."
 date: 2026-06-17
 category: gta-online

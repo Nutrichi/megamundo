@@ -36,6 +36,17 @@ const { post, locale } = Astro.props;
 const t = useTranslations(locale);
 const { Content } = await render(post.entry);
 
+/*
+ * Draagt deze post een insluiting van X (§14.2)? Dan, en alleen dan, komt
+ * het script van X op de pagina. Elke andere postpagina blijft vrij van
+ * scripts van derden, zoals §21 het wil.
+ *
+ * Het staat hier en niet in de frontmatter, want een vlaggetje dat je kan
+ * vergeten te zetten is een vlaggetje dat vergeten wordt: de tekst zelf is
+ * de waarheid.
+ */
+const hasXEmbed = (post.entry.body ?? '').includes('twitter-tweet');
+
 const category = categories[post.category];
 /*
  * De sleutel waaronder de likes van deze post in de database staan. Bewust
@@ -124,6 +135,27 @@ const jsonLd = {
       <div class="mm-prose">
         <Content />
       </div>
+
+      {hasXEmbed && (
+        <Fragment>
+          <script is:inline>
+            /*
+             * Het thema van de insluitingen gelijkzetten met dat van de
+             * site, vóór het script van X ze omzet. Daarna leest X het
+             * attribuut zelf uit; dit hoeft dus maar één keer te gebeuren.
+             */
+            (() => {
+              const attr = document.documentElement.getAttribute('data-theme');
+              const day = attr === 'day'
+                || (attr !== 'night' && window.matchMedia('(prefers-color-scheme: light)').matches);
+              for (const quote of document.querySelectorAll('blockquote.twitter-tweet')) {
+                quote.setAttribute('data-theme', day ? 'light' : 'dark');
+              }
+            })();
+          </script>
+          <script is:inline async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </Fragment>
+      )}
 
       <div class="mm-post__like" data-pagefind-ignore>
         <LikeButton postId={postId} locale={locale} variant="post" />
@@ -231,6 +263,49 @@ const jsonLd = {
     color: var(--mm-quote);
     font-style: italic;
   }
+
+  /*
+   * Een insluiting van X (§14.2). Wat hier staat is wat de lezer ziet zolang
+   * het script van X nog niet geladen is, en wat hij blijft zien als dat
+   * script geblokkeerd wordt: de tekst van de post, wie hem plaatste, en een
+   * link naar het origineel. Geen citaatstreep en geen cursief, want dit is
+   * een kaart en geen aanhaling in de lopende tekst.
+   *
+   * Laadt het script wel, dan vervangt X de blockquote door zijn eigen
+   * iframe en krijgt die `.twitter-tweet-rendered`. Alles hieronder telt dan
+   * niet meer mee, behalve de marge en de breedte.
+   */
+  .mm-prose :global(blockquote.twitter-tweet) {
+    margin: 8px 0;
+    border: 1px solid var(--mm-border);
+    border-left: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-card-sm);
+    padding: 16px 18px;
+    background: var(--mm-raised);
+    color: var(--mm-body);
+    font-style: normal;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .mm-prose :global(blockquote.twitter-tweet p) { margin: 0 0 10px; }
+  .mm-prose :global(blockquote.twitter-tweet p:last-child) {
+    margin-bottom: 0;
+    font-size: 14.5px;
+    color: var(--mm-muted);
+  }
+
+  .mm-prose :global(blockquote.twitter-tweet-rendered) {
+    border: 0;
+    padding: 0;
+    background: none;
+    /* X kiest een vaste breedte van 550 px; die staat gecentreerd netter in
+       een kolom van 660 dan tegen de linkerkant. */
+    margin: 0 auto;
+  }
+
+  /* De iframe van X kiest zijn eigen breedte; hou hem binnen de kolom. */
+  .mm-prose :global(.twitter-tweet iframe) { max-width: 100% !important; }
 
   .mm-prose :global(img) {
     max-width: 100%;

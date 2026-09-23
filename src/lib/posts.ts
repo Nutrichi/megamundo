@@ -124,6 +124,19 @@ function toPost(
 }
 
 /**
+ * Een post met een `date` in de toekomst is ingepland: hij wordt niet
+ * gebouwd tot dat moment voorbij is. De site herbouwt zichzelf op schema,
+ * dus hij komt vanzelf online bij de eerste bouw erna. In de dev-server
+ * staat alles meteen, zodat een ingeplande post na te lezen is. Omdat alles
+ * hiervandaan leest, valt hij ook vanzelf buiten de sitemap, de feeds en de
+ * JSON-feed van de app.
+ */
+function isScheduled(date: Date): boolean {
+  if (import.meta.env.DEV) return false;
+  return date.getTime() > Date.now();
+}
+
+/**
  * Alle gepubliceerde posts in één taal, nieuwste eerst.
  * Nieuws en gidsen door elkaar, want ze delen één feed (§5).
  */
@@ -137,6 +150,7 @@ export async function getPosts(locale: Locale): Promise<Post[]> {
 
     for (const entry of all[collection]) {
       if (entry.data.draft) continue;
+      if (isScheduled(entry.data.date)) continue;
       const { lang, slug } = splitId(entry);
       if (!bySlug.has(slug)) bySlug.set(slug, new Map());
       bySlug.get(slug)!.set(lang, entry);

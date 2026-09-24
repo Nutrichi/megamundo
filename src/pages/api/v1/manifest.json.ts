@@ -26,6 +26,8 @@ export const GET: APIRoute = async ({ site }) => {
       latest: newest ? newest.date.toISOString() : null,
       latestId: newest ? `${newest.collection}/${newest.slug}` : null,
       index: new URL(`/api/v${API_SCHEMA}/${locale}/page-1.json`, base).href,
+      /* Kaart, gebieden en personages voor de app (game.json.ts). */
+      game: new URL(`/api/v${API_SCHEMA}/${locale}/game.json`, base).href,
     };
   }
 

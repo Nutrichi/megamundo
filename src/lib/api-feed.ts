@@ -14,6 +14,7 @@
  */
 
 import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import { render } from 'astro:content';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { heroImage } from './post-image';
@@ -36,7 +37,7 @@ export function pageCount(total: number): number {
 }
 
 /** Een pad op deze site als volledige URL. De app kent geen basis-URL. */
-function absolute(path: string, site: URL): string {
+export function absolute(path: string, site: URL): string {
   return new URL(path, site).href;
 }
 
@@ -147,6 +148,46 @@ export async function summaryOf(post: Post, site: URL) {
     detail: absolute(`/api/v${API_SCHEMA}/${post.lang}/posts/${post.slug}.json`, site),
     image: await imageOf(post, site),
   };
+}
+
+/**
+ * Een beeld dat niet bij een post hoort (een personage), in dezelfde vorm als
+ * het beeld van een post: per breedte een URL, plus een terugval. De app leest
+ * de twee met hetzelfde type.
+ */
+export async function imageVariants(
+  src: ImageMetadata,
+  widths: number[],
+  alt: string,
+  site: URL,
+) {
+  const result = await getImage({ src, widths, format: 'webp' });
+  const variants: Record<string, string> = {};
+  for (const variant of result.srcSet.values) {
+    const width = String(variant.attributes?.width ?? variant.descriptor ?? '').replace('w', '');
+    if (width) variants[width] = absolute(variant.url, site);
+  }
+  const widest = Math.max(...widths);
+  return {
+    alt,
+    width: src.width,
+    height: src.height,
+    src: variants,
+    fallback: variants[String(widest)] ?? Object.values(variants)[0],
+  };
+}
+
+/**
+ * De lopende tekst van een gebied of personage als losse alinea's. Die pagina's
+ * zijn gewone alinea's zonder beelden of lijsten, dus de app kan ze native
+ * zetten in plaats van HTML te tonen. Regeleinden binnen een alinea vallen weg,
+ * zoals Markdown ze ook weglaat.
+ */
+export function paragraphsOf(markdown: string | undefined): string[] {
+  return (markdown ?? '')
+    .split(/\n\s*\n/)
+    .map((block) => block.replace(/\s*\n\s*/g, ' ').trim())
+    .filter(Boolean);
 }
 
 /** Het volledige artikel. Eén keer ophalen per post, daarna nooit meer. */

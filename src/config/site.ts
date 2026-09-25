@@ -6,6 +6,12 @@
 /** Meet-ID uit PROJECT_SPEC.md §17.1. */
 export const ga4Id = 'G-PVE54ZRVSR';
 
+/**
+ * De Ko-fi-pagina van Nutri, voor een fooi (Nutri, 25 september 2026). Staat in
+ * de header naast het zoekveld (KofiPill.astro). Leeg betekent weg.
+ */
+export const kofiUrl = 'https://ko-fi.com/nutri_wow';
+
 /** De release van GTA VI. De aftelbalk en de teksten rekenen hierop. */
 export const releaseDate = '2026-11-19T00:00:00Z';
 

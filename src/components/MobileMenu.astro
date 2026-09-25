@@ -13,6 +13,7 @@ import { isCurrent } from '../config/nav';
 import { localizePath, useTranslations } from '../i18n/utils';
 import Logo from './Logo.astro';
 import SearchField from './SearchField.astro';
+import KofiPill from './KofiPill.astro';
 import LangPicker from './LangPicker.astro';
 import ThemeToggle from './ThemeToggle.astro';
 
@@ -106,6 +107,7 @@ const home = localizePath('', locale);
     <div class="mm-menu__foot">
       <LangPicker locale={locale} pathname={pathname} variant="grid" />
       <ThemeToggle locale={locale} variant="row" />
+      <KofiPill locale={locale} variant="menu" />
     </div>
   </div>
 </div>

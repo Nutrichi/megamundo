@@ -1,0 +1,74 @@
+---
+/*
+ * De Ko-fi-link voor een fooi (Nutri, 25 september 2026). In de header rechts
+ * van het zoekveld, voor taal en thema; onder 900 px in het mobiele menu, net
+ * als de rest van die tools.
+ *
+ * Dezelfde maat, rand en afronding als de taalknop ernaast, zodat de rij rustig
+ * blijft. Het icoon is een eigen kopje met een hartje in de huisstijl, geen
+ * logo van Ko-fi. Gewone `noopener`: dit is geen partnerlink.
+ */
+import type { Locale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import { kofiUrl } from '../config/site';
+
+interface Props {
+  locale: Locale;
+  /** `bar` in de header, `menu` in het mobiele menu. */
+  variant?: 'bar' | 'menu';
+}
+
+const { locale, variant = 'bar' } = Astro.props;
+const t = useTranslations(locale);
+---
+
+{kofiUrl && (
+  <a class:list={['mm-kofi', `is-${variant}`]} href={kofiUrl} rel="noopener" target="_blank" aria-label={t('kofi.aria')}>
+    <svg class="mm-kofi__icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+      <path d="M3.5 6.5h13v7.5a4.5 4.5 0 0 1-4.5 4.5H8a4.5 4.5 0 0 1-4.5-4.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+      <path d="M16.5 8.5h1.5a2.75 2.75 0 0 1 0 5.5h-1.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+      <path class="mm-kofi__heart" d="M10 15.2l-2.6-2.5a1.55 1.55 0 0 1 2.6-1.7 1.55 1.55 0 0 1 2.6 1.7z" />
+    </svg>
+    <span class="mm-kofi__label" aria-hidden="true">{t('kofi.label')}</span>
+  </a>
+)}
+
+<style>
+  .mm-kofi {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-field);
+    padding: 7px 11px;
+    font-size: 12.5px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--mm-muted);
+    white-space: nowrap;
+    transition: var(--mm-transition);
+  }
+
+  .mm-kofi:hover { color: var(--mm-ink); }
+
+  .mm-kofi.is-menu { align-self: flex-start; }
+
+  .mm-kofi__icon { flex: none; }
+  .mm-kofi__heart { fill: var(--mm-accent-pink); }
+
+  /* Onder 1180 px in de header alleen het kopje: met het woord erbij
+     ("Trinkgeld", "Pourboire") liep de header op 1024 px over. De naam blijft
+     in `aria-label`. Het mobiele menu houdt het woord. */
+  @media (max-width: 1179px) {
+    .mm-kofi.is-bar { padding: 7px 9px; }
+    .mm-kofi.is-bar .mm-kofi__label { display: none; }
+  }
+
+  /* Van 900 tot 1023 px liep de header al een paar pixels over, zonder deze
+     pil (gemeten 25 september 2026). Daar staat hij er niet; onder 900 px zit
+     hij in het mobiele menu. */
+  @media (max-width: 1023px) {
+    .mm-kofi.is-bar { display: none; }
+  }
+</style>

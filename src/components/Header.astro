@@ -1,7 +1,7 @@
 ---
 /*
  * De header. Links logo en woordmerk, daarnaast de hoofdnavigatie, rechts
- * zoeken, taal en thema. Onder 900 px blijft alleen logo plus hamburger
+ * zoeken, de Ko-fi-pil, taal en thema. Onder 900 px blijft alleen logo plus hamburger
  * over en verhuist de rest naar het mobiele menu.
  *
  * De navigatie komt binnen als lijst; welke tabs erin staan is al beslist
@@ -13,6 +13,7 @@ import { isCurrent } from '../config/nav';
 import { localizePath, useTranslations } from '../i18n/utils';
 import Logo from './Logo.astro';
 import SearchField from './SearchField.astro';
+import KofiPill from './KofiPill.astro';
 import LangPicker from './LangPicker.astro';
 import ThemeToggle from './ThemeToggle.astro';
 
@@ -58,6 +59,7 @@ const hrefFor = (item: NavItem) => item.children?.[0]?.path ?? item.path;
 
     <div class="mm-header__tools">
       <SearchField locale={locale} variant="bar" />
+      <KofiPill locale={locale} variant="bar" />
       <LangPicker locale={locale} pathname={pathname} variant="bar" />
       <ThemeToggle locale={locale} variant="bar" />
     </div>

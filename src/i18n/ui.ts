@@ -109,6 +109,8 @@ export const ui = {
     'footer.youtube': 'YouTube',
     'footer.discord': 'Discord',
     'footer.label': 'Site footer',
+    'kofi.label': 'Tip',
+    'kofi.aria': 'Tip on Ko-fi',
 
     'list.heading': 'ALL POSTS, NEWEST FIRST',
     'list.empty': 'No posts yet.',
@@ -248,6 +250,8 @@ export const ui = {
 
     'footer.copyright': '© {y} megamundo.be',
     'footer.label': 'Voettekst',
+    'kofi.label': 'Tip',
+    'kofi.aria': 'Geef een fooi via Ko-fi',
 
     'list.heading': 'ALLE POSTS, NIEUWSTE EERST',
     'list.empty': 'Nog geen posts.',
@@ -383,6 +387,8 @@ export const ui = {
 
     'footer.copyright': '© {y} megamundo.be',
     'footer.label': 'Pied de page',
+    'kofi.label': 'Pourboire',
+    'kofi.aria': 'Laisser un pourboire sur Ko-fi',
 
     'list.heading': 'TOUS LES ARTICLES, DU PLUS RÉCENT',
     'list.empty': 'Pas encore d’articles.',
@@ -518,6 +524,8 @@ export const ui = {
 
     'footer.copyright': '© {y} megamundo.be',
     'footer.label': 'Pie de página',
+    'kofi.label': 'Propina',
+    'kofi.aria': 'Deja una propina en Ko-fi',
 
     'list.heading': 'TODAS LAS ENTRADAS, MÁS RECIENTES PRIMERO',
     'list.empty': 'Todavía no hay entradas.',
@@ -653,6 +661,8 @@ export const ui = {
 
     'footer.copyright': '© {y} megamundo.be',
     'footer.label': 'Piè di pagina',
+    'kofi.label': 'Mancia',
+    'kofi.aria': 'Lascia una mancia su Ko-fi',
 
     'list.heading': 'TUTTI GLI ARTICOLI, DAL PIÙ RECENTE',
     'list.empty': 'Ancora nessun articolo.',
@@ -788,6 +798,8 @@ export const ui = {
 
     'footer.copyright': '© {y} megamundo.be',
     'footer.label': 'Fußzeile',
+    'kofi.label': 'Trinkgeld',
+    'kofi.aria': 'Trinkgeld über Ko-fi geben',
 
     'list.heading': 'ALLE BEITRÄGE, NEUESTE ZUERST',
     'list.empty': 'Noch keine Beiträge.',

@@ -23,7 +23,10 @@ interface Props {
   variant?: 'featured' | 'post';
   /** Het kopbeeld van een post is het grootste element boven de vouw. */
   eager?: boolean;
-  /** Aanklikbaar om het beeld groot te bekijken. Voor het kopbeeld. */
+  /**
+   * Aanklikbaar om het beeld groot te bekijken. Voor het kopbeeld; dezelfde
+   * lightbox dient sinds 29 september 2026 ook de beelden in de tekst.
+   */
   zoomable?: boolean;
 }
 
@@ -75,7 +78,7 @@ const { sizes, widths } = isPost ? heroImage : featuredImage;
   <slot />
 </div>
 
-{big && (
+{zoomable && (
   <dialog class="mm-lightbox" data-mm-lightbox>
     <button type="button" class="mm-lightbox__close" data-mm-lightbox-close aria-label="Sluiten">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -208,10 +211,37 @@ const { sizes, widths } = isPost ? heroImage : featuredImage;
   const opener = document.querySelector<HTMLElement>('[data-mm-zoom]');
   const close = document.querySelector<HTMLElement>('[data-mm-lightbox-close]');
 
-  if (dialog && img && opener) {
-    opener.addEventListener('click', () => {
-      if (!img.src) img.src = opener.dataset.mmZoom ?? '';
-      dialog.showModal();
+  const open = (src: string, alt: string) => {
+    if (!dialog || !img) return;
+    // Alleen src wisselen als het een ander beeld is; dan laadt hij niet opnieuw.
+    if (img.getAttribute('src') !== src) img.src = src;
+    img.alt = alt;
+    dialog.showModal();
+  };
+
+  if (dialog && img) {
+    if (opener) {
+      const heroAlt = img.alt;
+      opener.addEventListener('click', () => open(opener.dataset.mmZoom ?? '', heroAlt));
+    }
+
+    /*
+     * De beelden in de tekst, de <figure>'s uit §14. Astro zet ze op hun
+     * volle bronmaat in de pagina en de kolom schaalt ze terug; groot
+     * bekijken is dus hetzelfde bestand, zonder iets extra te laden. Ze
+     * krijgen een rol en een tabstop, zodat ook het toetsenbord erbij kan.
+     */
+    document.querySelectorAll<HTMLImageElement>('.mm-prose figure img').forEach((shot) => {
+      shot.tabIndex = 0;
+      shot.setAttribute('role', 'button');
+      const show = () => open(shot.currentSrc || shot.src, shot.alt);
+      shot.addEventListener('click', show);
+      shot.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          show();
+        }
+      });
     });
 
     // Klikken op het beeld of ernaast sluit. De knop rechtsboven ook.

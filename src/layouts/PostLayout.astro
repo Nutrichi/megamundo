@@ -329,6 +329,13 @@ const jsonLd = {
   .mm-prose :global(figure img) {
     width: 100%;
     display: block;
+    /* Aanklikbaar om groot te bekijken; de lightbox staat in PostImage.astro. */
+    cursor: zoom-in;
+  }
+
+  .mm-prose :global(figure img:focus-visible) {
+    outline: 2px solid var(--mm-accent-cyan);
+    outline-offset: 2px;
   }
 
   .mm-prose :global(figcaption) {

@@ -8,25 +8,29 @@
  * breekt onze kaart niet als zij naar een volgende versie gaan en kost hij
  * hun geen bandbreedte.
  *
- * Bij een nieuwe versie van YANIS: het script opnieuw draaien met --version,
- * `version` hieronder bijwerken, en nakijken of de gebieden nog kloppen.
+ * Bij een nieuwe versie van YANIS: `npm run map:update -- --version vNN`. Dat
+ * zet versie, datum en grenzen hieronder mee; kijk daarna of de gebieden
+ * nog kloppen.
  */
 
 /** Welke versie van de gemeenschapskaart er in public/map/tiles staat. */
-export const version = 'v15.0';
-export const versionDate = '2026-08-23';
+export const version = 'v16.0';
+export const versionDate = '2026-09-20';
 
 /** Waar de tegels staan, in het patroon dat Leaflet verwacht. */
 export const tileUrl = '/map/tiles/{z}/{x}/{y}.png';
 
 /**
- * De bronafbeelding is 20000 bij 20000 pixels. In het platte
- * coordinatenstelsel van de kaart loopt x van -16500 tot 3500 en y van
- * -8000 tot 12000. Leaflet noteert een punt als [y, x].
+ * De grenzen van het bronbeeld in het platte coördinatenstelsel van de
+ * kaart. Leaflet noteert een punt als [y, x]. Sinds v16 is het beeld 21000
+ * bij 20000 pixels: x loopt van -17000 tot 4000 en y van -9000 tot 11000.
+ * Tot v15 was het 20000 bij 20000, met x van -16500 tot 3500 en y van -8000
+ * tot 12000. De plaatsen houden hun coördinaten; alleen de rand verschuift.
+ * `npm run map:update` zet deze grenzen mee uit hun yanis.json.
  */
 export const fullBounds: [[number, number], [number, number]] = [
-  [-8000, -16500],
-  [12000, 3500],
+  [-9000, -17000],
+  [11000, 4000],
 ];
 
 /**

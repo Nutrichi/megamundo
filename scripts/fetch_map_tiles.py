@@ -11,7 +11,7 @@ mensen achter die site.
 
 Waarom zelf hosten en niet naar hun server linken:
 
-  * hun pad bevat het versienummer (v15), dus bij v16 breekt een link;
+  * hun pad bevat het versienummer (v16), dus bij v17 breekt een link;
   * elke bezoeker van megamundo zou anders hun bandbreedte kosten;
   * onze kaart blijft werken als hun site offline gaat.
 
@@ -19,9 +19,9 @@ Bij een nieuwe versie: --version v16 meegeven, de map met de oude versie
 weggooien en de versie in src/data/map.ts bijwerken.
 
 Rechtstreeks draaien kan ook, vanuit deze map:
-  python3 scripts/fetch_map_tiles.py                 # v15, zoom 0 tot 6
+  python3 scripts/fetch_map_tiles.py                 # v16, zoom 0 tot 6
   python3 scripts/fetch_map_tiles.py --max-zoom 5    # lichter, minder scherp
-  python3 scripts/fetch_map_tiles.py --version v16
+  python3 scripts/fetch_map_tiles.py --version v17 --width 21000 --height 20000
 """
 
 import argparse
@@ -43,9 +43,21 @@ HEADERS = {
     "Referer": "https://map.stateofleonida.net/",
 }
 
-# Hoeveel tegels er per zoomniveau in de breedte en de hoogte staan. Uitgemeten
-# op 10 september 2026; het bronbeeld is 20000 bij 20000 pixels.
-GRID = {0: 2, 1: 3, 2: 5, 3: 10, 4: 20, 5: 40, 6: 79}
+# Het diepste echte zoomniveau. Daar is één pixel van het bronbeeld één pixel
+# van een tegel; elk niveau erboven halveert.
+NATIVE_ZOOM = 6
+
+
+def grid(z: int, width: int, height: int) -> tuple[int, int]:
+    """Hoeveel tegels er op zoom z in de breedte en de hoogte staan.
+
+    Tot v15 was het bronbeeld 20000 bij 20000 en stond hier een vaste tabel
+    met een vierkant raster. V16 (20 september 2026) is 21000 breed en 20000
+    hoog, en dan klopt een vierkant niet meer: op zoom 6 zijn het 83 bij 79
+    tegels. Nagemeten tegen hun server op 29 september 2026, voor zoom 0 tot 3.
+    """
+    span = 256 * 2 ** (NATIVE_ZOOM - z)
+    return -(-width // span), -(-height // span)
 
 
 def fetch(url: str, dest: pathlib.Path, tries: int = 3) -> str:
@@ -74,7 +86,10 @@ def fetch(url: str, dest: pathlib.Path, tries: int = 3) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--version", default="v15")
+    parser.add_argument("--version", default="v16")
+    # De grootte van het bronbeeld, `originalSize` in hun yanis.json.
+    parser.add_argument("--width", type=int, default=21000)
+    parser.add_argument("--height", type=int, default=20000)
     parser.add_argument("--max-zoom", type=int, default=6)
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument(
@@ -85,13 +100,13 @@ def main() -> int:
 
     root = pathlib.Path(args.out)
     jobs = []
+    if args.max_zoom > NATIVE_ZOOM:
+        print(f"Boven zoom {NATIVE_ZOOM} zijn er geen echte tegels.", file=sys.stderr)
+        return 1
     for z in range(0, args.max_zoom + 1):
-        n = GRID.get(z)
-        if n is None:
-            print(f"Onbekend zoomniveau {z}; meet het eerst uit.", file=sys.stderr)
-            return 1
-        for x in range(n):
-            for y in range(n):
+        nx, ny = grid(z, args.width, args.height)
+        for x in range(nx):
+            for y in range(ny):
                 url = SOURCE.format(version=args.version, z=z, x=x, y=y)
                 jobs.append((url, root / str(z) / str(x) / f"{y}.png"))
 

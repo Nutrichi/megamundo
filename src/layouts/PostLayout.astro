@@ -46,6 +46,8 @@ const { Content } = await render(post.entry);
  * de waarheid.
  */
 const hasXEmbed = (post.entry.body ?? '').includes('twitter-tweet');
+/* Hetzelfde voor een insluiting van Reddit (§14.2, sinds 1 oktober 2026). */
+const hasRedditEmbed = (post.entry.body ?? '').includes('reddit-embed-bq');
 
 const category = categories[post.category];
 /*
@@ -154,6 +156,26 @@ const jsonLd = {
             })();
           </script>
           <script is:inline async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </Fragment>
+      )}
+
+      {hasRedditEmbed && (
+        <Fragment>
+          <script is:inline>
+            /*
+             * Zelfde idee als bij X: het thema van de site meegeven voor het
+             * script van Reddit de insluiting omzet.
+             */
+            (() => {
+              const attr = document.documentElement.getAttribute('data-theme');
+              const day = attr === 'day'
+                || (attr !== 'night' && window.matchMedia('(prefers-color-scheme: light)').matches);
+              for (const quote of document.querySelectorAll('blockquote.reddit-embed-bq')) {
+                quote.setAttribute('data-embed-theme', day ? 'light' : 'dark');
+              }
+            })();
+          </script>
+          <script is:inline async src="https://embed.reddit.com/widgets.js" charset="UTF-8"></script>
         </Fragment>
       )}
 
@@ -275,7 +297,8 @@ const jsonLd = {
    * iframe en krijgt die `.twitter-tweet-rendered`. Alles hieronder telt dan
    * niet meer mee, behalve de marge en de breedte.
    */
-  .mm-prose :global(blockquote.twitter-tweet) {
+  .mm-prose :global(blockquote.twitter-tweet),
+  .mm-prose :global(blockquote.reddit-embed-bq) {
     margin: 8px 0;
     border: 1px solid var(--mm-border);
     border-left: 1px solid var(--mm-border);
@@ -288,8 +311,10 @@ const jsonLd = {
     line-height: 1.6;
   }
 
-  .mm-prose :global(blockquote.twitter-tweet p) { margin: 0 0 10px; }
-  .mm-prose :global(blockquote.twitter-tweet p:last-child) {
+  .mm-prose :global(blockquote.twitter-tweet p),
+  .mm-prose :global(blockquote.reddit-embed-bq p) { margin: 0 0 10px; }
+  .mm-prose :global(blockquote.twitter-tweet p:last-child),
+  .mm-prose :global(blockquote.reddit-embed-bq p:last-child) {
     margin-bottom: 0;
     font-size: 14.5px;
     color: var(--mm-muted);

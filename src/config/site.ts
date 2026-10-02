@@ -27,7 +27,21 @@ export const social = {
      18 september 2026). Zonder die parameter kom je gewoon op het kanaal uit. */
   youtube: 'https://www.youtube.com/@nutri_r1?sub_confirmation=1',
   discord: 'https://discord.gg/E7AY5vPwcQ',
+  /* De iOS-app, live sinds oktober 2026 (Nutri). De Belgische App Store,
+     zoals Nutri hem aanleverde: zonder landcode stuurt Apple een bezoeker op
+     het web naar de Amerikaanse winkel. Op iPhone en iPad opent de App
+     Store-app toch in het land van de bezoeker. De voettekst zet er voor nl
+     en fr de taal achter (`?l=`); die twee talen kent de Belgische winkel. */
+  appStore: 'https://apps.apple.com/be/app/megamundo/id6813428259',
 };
+
+/**
+ * Het App Store-ID van de iOS-app. Safari op iPhone en iPad toont daarmee
+ * bovenaan de pagina de eigen balk van Apple met een knop naar de app
+ * (Smart App Banner); wie de app al heeft, krijgt "Open". Leeghalen laat de
+ * balk weer weg.
+ */
+export const appStoreId = '6813428259';
 
 /**
  * Het pad naar de inzendpagina uit §5.3. Sinds fase 4 bestaat die pagina, dus

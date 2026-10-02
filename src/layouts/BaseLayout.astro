@@ -14,7 +14,7 @@
 import { defaultLocale, localeTags, type Locale } from '../i18n/ui';
 import { alternateLinks, useTranslations } from '../i18n/utils';
 import { getNav, isCurrent } from '../config/nav';
-import { ga4Id } from '../config/site';
+import { ga4Id, appStoreId } from '../config/site';
 import Header from '../components/Header.astro';
 import MobileMenu from '../components/MobileMenu.astro';
 import CountdownBar from '../components/CountdownBar.astro';
@@ -215,6 +215,12 @@ gtag('config', '${ga4Id}');`;
     <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+    <!--
+      De balk van Apple bovenaan in Safari op iPhone en iPad, met een knop naar
+      de iOS-app (config/site.ts). Andere browsers negeren deze tag.
+    -->
+    {appStoreId && <meta name="apple-itunes-app" content={`app-id=${appStoreId}`} />}
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={t('site.title')} />

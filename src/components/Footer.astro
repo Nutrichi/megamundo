@@ -1,7 +1,7 @@
 ---
 /*
  * De voettekst (PROJECT_SPEC.md §16): copyright, de verplichte disclaimer en
- * de links naar YouTube en Discord.
+ * de links naar de iOS-app, YouTube en Discord.
  *
  * Bewust klein gehouden. De eerste versie had een zin over wat de site is én
  * een disclaimer van drie regels; samen was dat het zwaarste blok van de
@@ -33,6 +33,10 @@ const t = useTranslations(locale);
 const year = new Date().getFullYear();
 
 const links = [
+  {
+    label: t('footer.app'),
+    href: social.appStore && (locale === 'nl' || locale === 'fr') ? `${social.appStore}?l=${locale}` : social.appStore,
+  },
   { label: t('footer.youtube'), href: social.youtube },
   { label: t('footer.discord'), href: social.discord },
 ].filter((link) => link.href !== '');

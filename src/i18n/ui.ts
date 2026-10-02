@@ -108,6 +108,7 @@ export const ui = {
     'footer.copyright': '© {y} megamundo.be',
     'footer.youtube': 'YouTube',
     'footer.discord': 'Discord',
+    'footer.app': 'App Store',
     'footer.label': 'Site footer',
     'kofi.label': 'Tip',
     'kofi.aria': 'Tip on Ko-fi',
@@ -249,6 +250,7 @@ export const ui = {
       '{d} {du}, {h} {hu} en {m} {mu} tot de release van GTA VI op 19 november 2026',
 
     'footer.copyright': '© {y} megamundo.be',
+    'footer.app': 'App Store',
     'footer.label': 'Voettekst',
     'kofi.label': 'Tip',
     'kofi.aria': 'Geef een fooi via Ko-fi',
@@ -386,6 +388,7 @@ export const ui = {
       '{d} {du}, {h} {hu} et {m} {mu} avant la sortie de GTA VI le 19 novembre 2026',
 
     'footer.copyright': '© {y} megamundo.be',
+    'footer.app': 'App Store',
     'footer.label': 'Pied de page',
     'kofi.label': 'Pourboire',
     'kofi.aria': 'Laisser un pourboire sur Ko-fi',
@@ -523,6 +526,7 @@ export const ui = {
       '{d} {du}, {h} {hu} y {m} {mu} hasta el lanzamiento de GTA VI el 19 de noviembre de 2026',
 
     'footer.copyright': '© {y} megamundo.be',
+    'footer.app': 'App Store',
     'footer.label': 'Pie de página',
     'kofi.label': 'Propina',
     'kofi.aria': 'Deja una propina en Ko-fi',
@@ -660,6 +664,7 @@ export const ui = {
       '{d} {du}, {h} {hu} e {m} {mu} all’uscita di GTA VI il 19 novembre 2026',
 
     'footer.copyright': '© {y} megamundo.be',
+    'footer.app': 'App Store',
     'footer.label': 'Piè di pagina',
     'kofi.label': 'Mancia',
     'kofi.aria': 'Lascia una mancia su Ko-fi',
@@ -797,6 +802,7 @@ export const ui = {
       '{d} {du}, {h} {hu} und {m} {mu} bis zum Release von GTA VI am 19. November 2026',
 
     'footer.copyright': '© {y} megamundo.be',
+    'footer.app': 'App Store',
     'footer.label': 'Fußzeile',
     'kofi.label': 'Trinkgeld',
     'kofi.aria': 'Trinkgeld über Ko-fi geben',

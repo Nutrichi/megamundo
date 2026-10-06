@@ -110,3 +110,20 @@ export async function submitNews(fields: {
     return { ok: false, reason: 'network' };
   }
 }
+
+/** Inschrijven op de nieuwsbrief (§5.5). Gebruikt hetzelfde antwoord als de tips. */
+export async function subscribeNewsletter(email: string, lang: string): Promise<SubmitResult> {
+  const id = identity();
+  if (!id) return { ok: false, reason: 'storage' };
+
+  try {
+    const response = await fetch(`${supabaseUrl}/rest/v1/rpc/subscribe`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ p_email: email, p_lang: lang, p_identity: id }),
+    });
+    return response.ok ? { ok: true } : { ok: false, reason: 'network' };
+  } catch (error) {
+    return { ok: false, reason: 'network' };
+  }
+}

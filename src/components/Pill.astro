@@ -53,6 +53,7 @@ const categoryLabel = category.label;
   data-mm-post
   data-category={post.category}
   data-title={post.title.toLowerCase()}
+  data-date={post.date.toISOString()}
 >
   <span class="mm-pill__cat" aria-hidden="true">
     <svg class="mm-pill__palm" style={`--mm-palm: ${category.color};`} viewBox="0 0 24 24" fill="currentColor">

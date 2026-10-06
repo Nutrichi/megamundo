@@ -1,0 +1,44 @@
+---
+/*
+ * De inschrijving op de nieuwsbrief (§5.5) in de vijf niet-standaardtalen:
+ * /nl/subscribe enzovoort. Engels staat in ../subscribe.astro (§11).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SubscribeForm from '../../components/SubscribeForm.astro';
+import { defaultLocale, locales, type Locale } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return locales
+    .filter((locale) => locale !== defaultLocale)
+    .map((lang) => ({ params: { lang } }));
+}
+
+const locale = Astro.params.lang as Locale;
+const t = useTranslations(locale);
+---
+
+<BaseLayout locale={locale} title={t('subscribe.title')} index={false} compactCountdown>
+  <div class="mm-subscribepage">
+    <h1 class="mm-subscribepage__title">{t('subscribe.title')}</h1>
+    <SubscribeForm locale={locale} />
+  </div>
+</BaseLayout>
+
+<style>
+  .mm-subscribepage {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 8px 0 40px;
+  }
+
+  .mm-subscribepage__title {
+    font-size: 40px;
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 899px) {
+    .mm-subscribepage__title { font-size: 30px; }
+  }
+</style>

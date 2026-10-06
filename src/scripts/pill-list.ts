@@ -11,8 +11,16 @@
  *   category: in de URL (?cat=), deelbaar en terug-knop-vriendelijk
  *   language: in de URL (?language=) en bewaard in de browser; alleen Streams
  *   query:    alleen in het geheugen, zoals de handoff voorschrijft
- *   visible:  hoeveel pillen er getoond zijn; groeit per LOAD MORE
+ *   visible:  hoeveel pillen er getoond zijn; groeit per reeks
+ *
+ * Alleen op de homepage (6 oktober 2026): scheidingen naar ouderdom tussen
+ * de pillen, en vanzelf bijladen tot de posts van een maand oud. Daarna komt
+ * er alleen nog iets bij met de knop. Dat hangt aan de pillen met een datum
+ * en de labels in `data-mm-age-labels`; de feedpagina's hebben geen van
+ * beide en merken er niets van.
  */
+import { ageBucket, ageLimits, ageRank, manualFrom, type AgeBucket } from '../lib/age';
+
 const list = document.querySelector<HTMLElement>('[data-mm-list]');
 const items = list?.querySelector<HTMLElement>('[data-mm-items]');
 
@@ -30,6 +38,20 @@ if (list && items) {
   const sentinel = list.querySelector<HTMLElement>('[data-mm-sentinel]');
   const languageSelect = document.querySelector<HTMLSelectElement>('[data-mm-language]');
   const leadsBox = document.querySelector<HTMLElement>('[data-mm-leads]');
+  const ageLabels = list.querySelector<HTMLTemplateElement>('[data-mm-age-labels]')?.dataset;
+
+  /*
+   * De stap van elke pil, één keer berekend bij het laden. Zonder labels of
+   * datum blijft het null, en dan is er geen scheiding en geen grens.
+   */
+  const limits = ageLimits(new Date());
+  const buckets = new Map<HTMLElement, AgeBucket | null>(
+    pills.map((pill) => [
+      pill,
+      ageLabels && pill.dataset.date ? ageBucket(Date.parse(pill.dataset.date), limits) : null,
+    ]),
+  );
+  const manualRank = ageRank(manualFrom);
 
   const params = new URLSearchParams(window.location.search);
   const known = new Set(chips.map((chip) => chip.dataset.cat));
@@ -91,6 +113,32 @@ if (list && items) {
       return inCategory && inLanguage && notOnStage && inQuery;
     });
 
+  /** Hoeveel van de getoonde pillen jonger zijn dan een maand. */
+  const recentCount = (shown: HTMLElement[]) =>
+    shown.filter((pill) => ageRank(buckets.get(pill) ?? null) < manualRank).length;
+
+  /*
+   * De scheidingen opnieuw zetten: boven de eerste zichtbare pil van elke
+   * stap die ouder is dan de stap ervoor. De scheidingen uit de build gaan
+   * eerst weg; die golden voor het moment van bouwen.
+   */
+  const placeDividers = (visiblePills: HTMLElement[]) => {
+    if (!ageLabels) return;
+    items.querySelectorAll('[data-mm-age]').forEach((node) => node.remove());
+    let rank = 0;
+    visiblePills.forEach((pill) => {
+      const bucket = buckets.get(pill) ?? null;
+      if (bucket && ageRank(bucket) > rank) {
+        const divider = document.createElement('li');
+        divider.className = 'mm-list__age';
+        divider.dataset.mmAge = bucket;
+        divider.textContent = ageLabels[bucket] ?? '';
+        pill.before(divider);
+      }
+      rank = Math.max(rank, ageRank(bucket));
+    });
+  };
+
   const render = (markNew = false) => {
     const shown = matching();
     const cutoff = Math.min(visible, shown.length);
@@ -104,9 +152,12 @@ if (list && items) {
       pill.hidden = !show;
     });
 
+    placeDividers(shown.slice(0, cutoff));
+
     const done = cutoff >= shown.length;
     if (more) more.hidden = done;
-    if (sentinel) sentinel.hidden = done;
+    // Vanzelf bijladen stopt bij de posts van een maand oud.
+    if (sentinel) sentinel.hidden = done || (!!ageLabels && cutoff >= recentCount(shown));
     if (noResults) noResults.hidden = shown.length > 0;
 
     return shown.slice(0, cutoff);
@@ -221,7 +272,9 @@ if (list && items) {
     for (let i = 0; i < 5; i += 1) {
       if (sentinel.hidden) return;
       if (sentinel.getBoundingClientRect().top > window.innerHeight + 600) return;
-      visible += step;
+      // Nooit voorbij de grens van een maand; daar neemt de knop het over.
+      const limit = ageLabels ? recentCount(matching()) : Infinity;
+      visible = Math.max(visible, Math.min(visible + step, limit));
       render(true);
     }
   };

@@ -7,10 +7,17 @@
  * dat is wat een crawler ziet en straks ook wat Pagefind indexeert (§15),
  * en wat nog niet aan de beurt is staat er verborgen bij.
  *
- * **Bijladen gebeurt vanzelf** (11 september 2026). Kom je onderaan de
- * lijst, dan verschijnt de volgende reeks. De knop blijft bestaan voor wie
- * geen JavaScript heeft of met het toetsenbord werkt, en als vangnet: valt
- * de waarnemer weg, dan is er nog altijd iets om op te duwen.
+ * **Bijladen gebeurt vanzelf** (11 september 2026), maar alleen tot de
+ * posts van een maand oud (6 oktober 2026). Kom je onderaan de lijst, dan
+ * verschijnt de volgende reeks; wat ouder is dan een maand komt er pas bij
+ * met de knop MORE NEWS. De knop staat er ook voor wie geen JavaScript heeft
+ * of met het toetsenbord werkt.
+ *
+ * **Scheidingen naar ouderdom** (6 oktober 2026): een smalle regel boven de
+ * eerste post die ouder is dan 3 dagen, 1 week, 2 weken, 1 maand, 6 maanden
+ * of 1 jaar (`lib/age.ts`). De build zet ze al neer, de browser zet ze
+ * opnieuw: de build kan uren oud zijn, en na filteren of zoeken hoort een
+ * scheiding boven de eerste zichtbare post van zijn stap.
  *
  * Filteren en zoeken gebeuren in dezelfde lijst en op dezelfde manier: niets
  * wordt opnieuw opgehaald, er verandert alleen wat zichtbaar is.
@@ -18,7 +25,8 @@
 import type { Post } from '../lib/posts';
 import type { Locale } from '../i18n/ui';
 import { localizePath, useTranslations } from '../i18n/utils';
-import { submitPath } from '../config/site';
+import { subscribePath } from '../config/site';
+import { ageBucket, ageBuckets, ageLimits, ageRank, type AgeBucket } from '../lib/age';
 import Pill from './Pill.astro';
 
 interface Props {
@@ -36,11 +44,21 @@ const t = useTranslations(locale);
 const STEP = 15;
 
 /*
- * De knop naar het insturformulier verschijnt pas als die pagina bestaat
- * (fase 4, §5.3). Dezelfde regel als bij de sociale links in de voettekst:
- * een lege waarde betekent geen knop, dus nooit een link naar het niets.
+ * De knop naar de inschrijving voor de nieuwsbrief (6 oktober 2026; tot dan
+ * stond hier SUBMIT NEWS). Dezelfde regel als bij de sociale links in de
+ * voettekst: een lege waarde betekent geen knop.
  */
-const submitHref = submitPath ? localizePath(submitPath, locale) : '';
+const subscribeHref = subscribePath ? localizePath(subscribePath, locale) : '';
+
+/** De scheidingen zoals de build ze ziet: boven de eerste post van elke stap. */
+const limits = ageLimits(new Date());
+let rank = 0;
+const rows = posts.map((post) => {
+  const bucket = ageBucket(post.date, limits);
+  const divider: AgeBucket | null = ageRank(bucket) > rank ? bucket : null;
+  rank = Math.max(rank, ageRank(bucket));
+  return { post, divider };
+});
 ---
 
 <div class="mm-list" data-mm-list data-step={STEP}>
@@ -49,8 +67,16 @@ const submitHref = submitPath ? localizePath(submitPath, locale) : '';
   ) : (
     <>
       <ul class="mm-list__items" data-mm-items>
-        {posts.map((post) => <Pill post={post} locale={locale} />)}
+        {rows.map(({ post, divider }) => (
+          <>
+            {divider && <li class="mm-list__age" data-mm-age={divider}>{t(`list.age.${divider}`)}</li>}
+            <Pill post={post} locale={locale} />
+          </>
+        ))}
       </ul>
+
+      <!-- De labels van de scheidingen, voor het script. -->
+      <template data-mm-age-labels {...Object.fromEntries(ageBuckets.map((b) => [`data-${b}`, t(`list.age.${b}`)]))}></template>
 
       <p class="mm-list__empty" data-mm-noresults hidden>{t('list.noResults')}</p>
 
@@ -62,8 +88,8 @@ const submitHref = submitPath ? localizePath(submitPath, locale) : '';
           {t('list.loadMore')}
         </button>
 
-        {submitHref && (
-          <a class="mm-btn is-primary" href={submitHref}>{t('list.submit')}</a>
+        {subscribeHref && (
+          <a class="mm-btn is-primary" href={subscribeHref}>{t('list.subscribe')}</a>
         )}
       </div>
     </>
@@ -85,6 +111,29 @@ const submitHref = submitPath ? localizePath(submitPath, locale) : '';
     flex-direction: column;
     gap: 7px;
     min-width: 0;
+  }
+
+  /*
+   * De scheiding: klein, gedempt, met een haarlijn erachter. Meer niet; de
+   * pillen blijven het beeld dragen. Globaal, want het script zet de
+   * scheidingen opnieuw en die krijgen het kenmerk van Astro niet.
+   */
+  .mm-list :global(.mm-list__age) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 9px 0 2px;
+    font-family: var(--mm-display);
+    font-size: 13px;
+    letter-spacing: .14em;
+    color: var(--mm-muted);
+  }
+
+  .mm-list :global(.mm-list__age)::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--mm-border);
   }
 
   .mm-list__empty {

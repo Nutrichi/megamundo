@@ -1,0 +1,40 @@
+---
+/*
+ * De inschrijving op de nieuwsbrief (§5.5), in het Engels: /subscribe.
+ *
+ * Bereikbaar via de knop onder de feed. `index={false}` zet in één keer twee
+ * dingen: noindex, en géén GA4, zoals bij de inzendpagina (§17.1).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SubscribeForm from '../components/SubscribeForm.astro';
+import { defaultLocale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+const locale = defaultLocale;
+const t = useTranslations(locale);
+---
+
+<BaseLayout locale={locale} title={t('subscribe.title')} index={false} compactCountdown>
+  <div class="mm-subscribepage">
+    <h1 class="mm-subscribepage__title">{t('subscribe.title')}</h1>
+    <SubscribeForm locale={locale} />
+  </div>
+</BaseLayout>
+
+<style>
+  .mm-subscribepage {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 8px 0 40px;
+  }
+
+  .mm-subscribepage__title {
+    font-size: 40px;
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 899px) {
+    .mm-subscribepage__title { font-size: 30px; }
+  }
+</style>

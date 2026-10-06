@@ -1,13 +1,14 @@
 /*
  * De verbinding met Supabase (PROJECT_SPEC.md §8).
  *
- * Twee dingen praten met Supabase en verder niets: de likes en het
- * inzendformulier uit §5.3. Alle andere pagina's blijven volledig statisch.
+ * Drie dingen praten met Supabase en verder niets: de likes, het
+ * inzendformulier uit §5.3 en de inschrijving op de nieuwsbrief uit §5.5
+ * (6 oktober 2026). Alle andere pagina's blijven volledig statisch.
  *
  * **Deze sleutel hoort openbaar te zijn.** Hij staat in de JavaScript van de
  * site en dus in de publieke repo; zo werkt Supabase. De beveiliging zit niet
  * in de sleutel maar in `supabase/schema.sql`: row level security laat een
- * bezoeker alleen de tellingen lezen en twee functies aanroepen. De
+ * bezoeker alleen de tellingen lezen en een handvol functies aanroepen. De
  * `secret`-sleutel van hetzelfde project mag hier nooit staan.
  *
  * Valt Supabase weg, dan blijft elke pagina gewoon werken. De teller toont

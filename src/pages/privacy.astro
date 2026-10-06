@@ -22,8 +22,10 @@
  * Wat hier staat hoort overeen te komen met `PrivacyInfo.xcprivacy` in de app
  * en met het privacyformulier in App Store Connect. Verandert er iets aan wat
  * de app of de site bewaart, dan verandert het op die drie plekken samen.
+ * De nieuwsbrief (6 oktober 2026) is alleen de site, niet de app: die raakt
+ * het privacyformulier van App Store Connect en de app dus niet.
  */
-const updated = '1 October 2026';
+const updated = '6 October 2026';
 ---
 
 <!doctype html>
@@ -48,15 +50,18 @@ const updated = '1 October 2026';
 
     <p>
       The short version: there are no accounts, you are never asked for your
-      name, your email address or any other personal detail, and nothing you do
-      here is sold or handed to advertisers.
+      name or any other personal detail, your email address is only asked for
+      if you choose to subscribe to the newsletter, and nothing you do here is
+      sold or handed to advertisers.
     </p>
 
     <h2>1. No account, ever</h2>
     <p>
       You cannot sign up and you cannot log in. Reading the news, liking an
       article, watching a clip and receiving a notification all work without an
-      identity. Nothing on this site or in the app asks who you are.
+      identity. Nothing on this site or in the app asks who you are. The one
+      thing that needs an email address is the newsletter, and only because a
+      newsletter has to be sent somewhere.
     </p>
 
     <h2>2. The app</h2>
@@ -150,30 +155,46 @@ const updated = '1 October 2026';
       automatically.
     </p>
 
-    <h2>5. Where the data is kept</h2>
+    <h2>5. The newsletter</h2>
+    <p>
+      If you subscribe to the newsletter on the website, we store your email
+      address, the language of the page you subscribed on, the time you
+      subscribed, and the random browser identifier described above, which is
+      used only to limit how often one browser can sign up. The address is used
+      for one thing: sending you the newsletter. It is never shared, sold or
+      used for advertising. The app does not ask for an email address.
+    </p>
+    <p>
+      Sending has not started yet. When it does, the list will be handled by an
+      email service acting on our behalf, and every newsletter will contain a
+      link to unsubscribe. Until then, you can unsubscribe or have your address
+      removed through the contact form below.
+    </p>
+    <h2>6. Where the data is kept</h2>
     <p>
       The pages, the articles and the images are static files served by GitHub
-      Pages. Likes, push tokens and tips are stored in a hosted PostgreSQL
-      database provided by Supabase. Notifications are delivered by Apple.
-      These providers process the data on our behalf; none of them receive it
-      for their own purposes.
+      Pages. Likes, push tokens, tips and newsletter addresses are stored in a
+      hosted PostgreSQL database provided by Supabase. Notifications are
+      delivered by Apple. These providers process the data on our behalf;
+      none of them receive it for their own purposes.
     </p>
 
-    <h2>6. How long it is kept</h2>
+    <h2>7. How long it is kept</h2>
     <p>
       A like is a number in a counter and stays as long as the article exists.
       A push token is kept until it stops working or you turn notifications
-      off. A tip is kept until it has been dealt with.
+      off. A tip is kept until it has been dealt with. A newsletter address is
+      kept until you unsubscribe or ask for it to be removed.
     </p>
 
-    <h2>7. Children</h2>
+    <h2>8. Children</h2>
     <p>
       Megamundo is not aimed at children under 13 and does not knowingly
-      collect anything from them. Since nothing here identifies anyone, there
-      is nothing to collect in the first place.
+      collect anything from them. Apart from a newsletter address someone
+      chooses to give, nothing here identifies anyone.
     </p>
 
-    <h2>8. Your rights</h2>
+    <h2>9. Your rights</h2>
     <p>
       Under the GDPR you can ask what is held about you, and ask for it to be
       corrected or erased. Because there are no accounts and no identifiers
@@ -183,15 +204,21 @@ const updated = '1 October 2026';
       yourself, by turning notifications off, clearing your browser data, or
       deleting the app.
     </p>
+    <p>
+      The newsletter is the exception: if you subscribed, your address can be
+      found, and you can ask through the contact form to see it, correct it or
+      have it erased.
+    </p>
 
-    <h2>9. Changes</h2>
+    <h2>10. Changes</h2>
     <p>
       If this policy changes, the date at the top changes with it.
     </p>
 
-    <h2>10. Contact</h2>
+    <h2>11. Contact</h2>
     <p>
-      Questions about this policy can be sent through the form at
+      Questions about this policy, and requests about your newsletter address,
+      can be sent through the form at
       <a href="https://megamundo.be/submit/">megamundo.be/submit</a>.
     </p>
   </body>

@@ -44,8 +44,10 @@ export const social = {
 export const appStoreId = '6813428259';
 
 /**
- * Het pad naar de inzendpagina uit §5.3. Sinds fase 4 bestaat die pagina, dus
- * de knop SUBMIT NEWS staat onder de feed. Leeghalen laat de knop weer
- * verdwijnen; dezelfde regel als bij de sociale links hierboven.
+ * Het pad naar de inschrijving voor de nieuwsbrief (§5.5). De knop eronder
+ * in de feed verving op 6 oktober 2026 SUBMIT NEWS; de inzendpagina zelf
+ * (§5.3) bestaat nog, als contactpagina, maar staat niet meer in de feed.
+ * Leeghalen laat de knop verdwijnen; dezelfde regel als bij de sociale links
+ * hierboven.
  */
-export const submitPath = 'submit';
+export const subscribePath = 'subscribe';

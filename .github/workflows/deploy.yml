@@ -168,3 +168,66 @@ jobs:
 
           echo "::warning title=Melding niet verstuurd::notify gaf $status. $antwoord"
           exit 0
+
+      # Nieuwe artikels melden bij IndexNow (8 oktober 2026). Bing, en via
+      # Bing ook ChatGPT-search en Copilot, Yandex, Seznam en Naver krijgen
+      # zo meteen een seintje in plaats van te wachten tot hun crawler langs
+      # komt. Google doet niet mee; dat leest de sitemaps.
+      #
+      # De sleutel is publiek by design: het bestand public/<sleutel>.txt
+      # bewijst dat wij de eigenaar van het domein zijn. Een nieuwe sleutel
+      # nemen kan altijd: nieuw bestand, en de naam hieronder aanpassen.
+      #
+      # Wat er gemeld wordt: de adressen uit /news-sitemap.xml (nieuws van de
+      # laatste twee dagen, in elke taal) die nog niet gemeld zijn. Wat al
+      # gemeld is, gaat in de cache van run naar run mee, zodat een geplande
+      # build elk kwartier niet steeds dezelfde lijst opnieuw stuurt. Even
+      # wachten vóór het ophalen, zodat Pages de nieuwe versie al serveert.
+      #
+      # Net als het seintje aan de app maakt een mislukking de run niet rood,
+      # maar wel een waarschuwing in het overzicht.
+      - name: Gemelde adressen terughalen
+        uses: actions/cache/restore@v6
+        with:
+          path: indexnow-sent.txt
+          key: indexnow-${{ github.run_id }}
+          restore-keys: indexnow-
+
+      - name: Nieuwe artikels melden bij IndexNow
+        env:
+          INDEXNOW_KEY: c8b3660e269ad41339873e17b030444f
+        run: |
+          touch indexnow-sent.txt
+          sleep 30
+          curl -s https://megamundo.be/news-sitemap.xml \
+            | grep -o '<loc>[^<]*</loc>' | sed 's/<\/\?loc>//g' | sort -u > indexnow-now.txt || true
+          comm -23 indexnow-now.txt <(sort -u indexnow-sent.txt) > indexnow-new.txt
+          count=$(wc -l < indexnow-new.txt | tr -d ' ')
+          echo "nieuw te melden: $count"
+          if [ "$count" = "0" ]; then exit 0; fi
+
+          lijst=$(sed 's/.*/"&"/' indexnow-new.txt | paste -sd, -)
+          status=$(curl -s -o /tmp/indexnow-antwoord.txt -w '%{http_code}' -X POST \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            --data "{\"host\":\"megamundo.be\",\"key\":\"$INDEXNOW_KEY\",\"keyLocation\":\"https://megamundo.be/$INDEXNOW_KEY.txt\",\"urlList\":[$lijst]}" \
+            https://api.indexnow.org/indexnow) || status=000
+          echo "IndexNow gaf $status"
+
+          case "$status" in
+            200|202)
+              cat indexnow-new.txt >> indexnow-sent.txt
+              # Alleen wat nog in de nieuws-sitemap staat onthouden; de rest
+              # komt er nooit meer in, dus de lijst blijft klein.
+              grep -Fxf indexnow-now.txt indexnow-sent.txt | sort -u > indexnow-keep.txt || true
+              mv indexnow-keep.txt indexnow-sent.txt
+              exit 0 ;;
+          esac
+          echo "::warning title=IndexNow niet gemeld::IndexNow gaf $status. $(head -c 300 /tmp/indexnow-antwoord.txt 2>/dev/null | tr '\n' ' ')"
+          exit 0
+
+      - name: Gemelde adressen bewaren
+        if: always()
+        uses: actions/cache/save@v6
+        with:
+          path: indexnow-sent.txt
+          key: indexnow-${{ github.run_id }}

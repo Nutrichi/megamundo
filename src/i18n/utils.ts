@@ -35,12 +35,20 @@ export function useTranslations(locale: Locale) {
 /**
  * Bouwt een pad in een bepaalde taal. Engels krijgt geen voorvoegsel (§11).
  * `path` is altijd zonder taal, met of zonder leidende slash.
+ *
+ * Een pagina krijgt altijd een slash achteraan (8 oktober 2026). GitHub Pages
+ * stuurt `/news/slug` met een 301 door naar `/news/slug/`, dus zonder slash
+ * was elke interne link een omweg, en wezen de hreflang-tags naar een
+ * omleiding, wat Google als fout telt. Een bestand (`/llms.txt`) of een pad
+ * met `#` of `?` blijft zoals het is.
  */
 export function localizePath(path: string, locale: Locale): string {
   const clean = path.replace(/^\/+|\/+$/g, '');
   const prefix = locale === defaultLocale ? '' : `/${locale}`;
   if (!clean) return prefix === '' ? '/' : `${prefix}/`;
-  return `${prefix}/${clean}`;
+  const last = clean.split('/').pop() ?? '';
+  const slash = /[.#?]/.test(last) ? '' : '/';
+  return `${prefix}/${clean}${slash}`;
 }
 
 /**

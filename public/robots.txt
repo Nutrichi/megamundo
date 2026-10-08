@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://megamundo.be/sitemap.xml
+Sitemap: https://megamundo.be/news-sitemap.xml

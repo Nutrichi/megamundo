@@ -1,6 +1,37 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { readdirSync, readFileSync } from 'node:fs';
+
+/*
+ * De datum van elke post, voor <lastmod> in de sitemap (8 oktober 2026).
+ * Daarmee ziet Google welke pagina's nieuw zijn en haalt het die eerst op.
+ * Uit de Engelse frontmatter, de bron (§11); de vertalingen dragen dezelfde
+ * datum. Hier met de hand gelezen, want astro:content bestaat nog niet
+ * wanneer deze configuratie laadt.
+ */
+function postDates() {
+  /** @type {Map<string, string>} */
+  const dates = new Map();
+  for (const collection of ['news', 'guides']) {
+    let files = [];
+    try {
+      files = readdirSync(`src/content/${collection}/en`);
+    } catch {
+      continue;
+    }
+    for (const file of files) {
+      if (!file.endsWith('.md')) continue;
+      const text = readFileSync(`src/content/${collection}/en/${file}`, 'utf8');
+      const match = text.match(/^date:\s*["']?([^"'\n]+)/m);
+      if (!match) continue;
+      const date = new Date(match[1].trim());
+      if (!Number.isNaN(date.getTime())) dates.set(`${collection}/${file.slice(0, -3)}`, date.toISOString());
+    }
+  }
+  return dates;
+}
+const lastmods = postDates();
 
 // https://astro.build/config
 export default defineConfig({
@@ -53,6 +84,11 @@ export default defineConfig({
         locales: { en: 'en', nl: 'nl', fr: 'fr', es: 'es', it: 'it', de: 'de' },
       },
       filter: (page) => !/\/(submit|subscribe|privacy)\/?$/.test(new URL(page).pathname),
+      serialize(item) {
+        const match = new URL(item.url).pathname.match(/^\/(?:[a-z]{2}\/)?(news|guides)\/([^/]+)\/?$/);
+        const lastmod = match && lastmods.get(`${match[1]}/${match[2]}`);
+        return lastmod ? { ...item, lastmod } : item;
+      },
     }),
   ],
 

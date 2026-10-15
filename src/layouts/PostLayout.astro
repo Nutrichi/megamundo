@@ -48,6 +48,12 @@ const { Content } = await render(post.entry);
 const hasXEmbed = (post.entry.body ?? '').includes('twitter-tweet');
 /* Hetzelfde voor een insluiting van Reddit (§14.2, sinds 1 oktober 2026). */
 const hasRedditEmbed = (post.entry.body ?? '').includes('reddit-embed-bq');
+/*
+ * Een video van YouTube in de tekst (§14.2.2, sinds 15 oktober 2026). Geen
+ * script van YouTube: alleen een klein scriptje dat bij een klik de speler
+ * plaatst, zoals op Clips. Voor die klik laadt er niets van YouTube.
+ */
+const hasVideo = (post.entry.body ?? '').includes('mm-video');
 
 const category = categories[post.category];
 /*
@@ -186,6 +192,42 @@ const jsonLd = {
           </script>
           <script is:inline async src="https://embed.reddit.com/widgets.js" charset="UTF-8"></script>
         </Fragment>
+      )}
+
+      {hasVideo && (
+        <script is:inline>
+          /*
+           * Het eigen beeld wordt een knop. Pas bij een klik komt de speler
+           * van YouTube er, in de privacyvriendelijke variant, en speelt hij
+           * meteen af. Zonder script blijven het beeld en de link staan.
+           */
+          (() => {
+            for (const box of document.querySelectorAll('.mm-video[data-youtube]')) {
+              const shot = box.querySelector('img');
+              const stage = shot && shot.closest('p');
+              if (!stage) continue;
+              stage.classList.add('mm-video__stage');
+              const play = document.createElement('button');
+              play.type = 'button';
+              play.className = 'mm-video__play';
+              play.setAttribute('aria-label', box.dataset.label || box.dataset.title || 'Play');
+              play.addEventListener('click', () => {
+                const frame = document.createElement('iframe');
+                frame.src = 'https://www.youtube-nocookie.com/embed/'
+                  + encodeURIComponent(box.dataset.youtube) + '?autoplay=1&rel=0';
+                frame.title = box.dataset.title || '';
+                frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+                frame.allowFullscreen = true;
+                // YouTube weigert een embed die niet zegt van welke site hij komt.
+                frame.referrerPolicy = 'strict-origin-when-cross-origin';
+                stage.classList.add('is-playing');
+                stage.replaceChildren(frame);
+                frame.focus();
+              });
+              stage.append(play);
+            }
+          })();
+        </script>
       )}
 
       <div class="mm-post__like" data-pagefind-ignore>
@@ -370,6 +412,90 @@ const jsonLd = {
   .mm-prose :global(figure img:focus-visible) {
     outline: 2px solid var(--mm-accent-cyan);
     outline-offset: 2px;
+  }
+
+  /* Een video van YouTube in de tekst (§14.2.2). In de Markdown een
+     <div class="mm-video"> met een eigen beeld en een link eronder; het
+     scriptje in deze layout maakt van het beeld een knop. Het beeld staat
+     buiten een <figure>, dus de lightbox laat het met rust. */
+  .mm-prose :global(.mm-video) {
+    margin: 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mm-prose :global(.mm-video > p) { margin: 0; }
+
+  .mm-prose :global(.mm-video__stage) {
+    position: relative;
+    aspect-ratio: 16 / 9;
+  }
+
+  .mm-prose :global(.mm-video__stage img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .mm-prose :global(.mm-video__stage iframe) {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 1px solid var(--mm-border);
+    border-radius: var(--mm-r-card-sm);
+    background: #000;
+  }
+
+  /* De knop ligt over het hele beeld; het rondje en de driehoek zijn die
+     van de clips op de homepage. */
+  .mm-prose :global(.mm-video__play) {
+    position: absolute;
+    inset: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--mm-r-card-sm);
+    background: none;
+    cursor: pointer;
+  }
+
+  .mm-prose :global(.mm-video__play::before) {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+    border: 2px solid #f2f0f6;
+    border-radius: 999px;
+    background: rgba(7, 6, 15, .45);
+    transition: background .15s ease;
+  }
+
+  .mm-prose :global(.mm-video__play::after) {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -11px 0 0 -6px;
+    border-left: 18px solid #f2f0f6;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+  }
+
+  .mm-prose :global(.mm-video__play:hover::before) { background: rgba(7, 6, 15, .7); }
+
+  .mm-prose :global(.mm-video__play:focus-visible) {
+    outline: 2px solid var(--mm-accent-cyan);
+    outline-offset: 2px;
+  }
+
+  .mm-prose :global(.mm-video > p:last-child) {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--mm-muted);
   }
 
   .mm-prose :global(figcaption) {

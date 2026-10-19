@@ -47,6 +47,24 @@ después.
 <p><a href="https://twitter.com/videotech/status/2110898507448254774">ben (@videotech) en X, 16 de octubre de 2026</a></p>
 </blockquote>
 
+Ese vídeo procede de una historia de andrewblakeames en Instagram. Fotos
+de la misma historia muestran dos de los coches de cerca. Las matrículas
+dicen VCE CTY. En el coche de policía pone Vice Beach Police.
+
+<figure>
+
+![Un Corvette con un vinilo rosa, azul claro y morado y la matrícula VCE CTY circula por el centro de Miami, detrás de un deportivo de policía negro.](../../../assets/posts/gta-vi-miami-coquette-vice-city-wrap.jpg)
+
+<figcaption>De una historia de andrewblakeames en Instagram, 15 de octubre de 2026, compartida por @GTASixInfo en X.</figcaption>
+</figure>
+
+<figure>
+
+![Un Lamborghini blanco y negro con Vice Beach Police en la parte trasera y una barra de luces en el techo circula en el tráfico de Miami, junto a un deportivo rosa.](../../../assets/posts/gta-vi-miami-vice-beach-police-lamborghini.jpg)
+
+<figcaption>De una historia de andrewblakeames en Instagram, 15 de octubre de 2026, compartida por @GTASixInfo en X.</figcaption>
+</figure>
+
 ## Reacciones
 
 Las reacciones en redes sociales son sobre todo positivas, escribe IGN. Los

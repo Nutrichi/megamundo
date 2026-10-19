@@ -48,6 +48,24 @@ Tag später.
 <p><a href="https://twitter.com/videotech/status/2110898507448254774">ben (@videotech) auf X, 16. Oktober 2026</a></p>
 </blockquote>
 
+Das Video stammt aus einer Story von andrewblakeames auf Instagram. Fotos
+aus derselben Story zeigen zwei der Autos aus der Nähe. Auf den Kennzeichen
+steht VCE CTY. Auf dem Polizeiwagen steht Vice Beach Police.
+
+<figure>
+
+![Eine Corvette mit pinker, hellblauer und lila Folierung und dem Kennzeichen VCE CTY fährt durch die Innenstadt von Miami, hinter einem schwarzen Polizeisportwagen.](../../../assets/posts/gta-vi-miami-coquette-vice-city-wrap.jpg)
+
+<figcaption>Aus einer Story von andrewblakeames auf Instagram, 15. Oktober 2026, geteilt von @GTASixInfo auf X.</figcaption>
+</figure>
+
+<figure>
+
+![Ein schwarz-weißer Lamborghini mit Vice Beach Police am Heck und einem Lichtbalken auf dem Dach im Verkehr von Miami, neben einem pinken Sportwagen.](../../../assets/posts/gta-vi-miami-vice-beach-police-lamborghini.jpg)
+
+<figcaption>Aus einer Story von andrewblakeames auf Instagram, 15. Oktober 2026, geteilt von @GTASixInfo auf X.</figcaption>
+</figure>
+
 ## Reaktionen
 
 Die Reaktionen in sozialen Medien sind überwiegend positiv, schreibt IGN.

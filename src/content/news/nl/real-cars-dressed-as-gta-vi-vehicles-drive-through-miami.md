@@ -48,6 +48,24 @@ later.
 <p><a href="https://twitter.com/videotech/status/2110898507448254774">ben (@videotech) op X, 16 oktober 2026</a></p>
 </blockquote>
 
+Die video komt uit een story van andrewblakeames op Instagram. Foto's uit
+dezelfde story tonen twee van de auto's van dichtbij. Op de nummerplaten
+staat VCE CTY. Op de politieauto staat Vice Beach Police.
+
+<figure>
+
+![Een Corvette met een roze, lichtblauwe en paarse wrap en de nummerplaat VCE CTY rijdt door het centrum van Miami, achter een zwarte politiesportwagen.](../../../assets/posts/gta-vi-miami-coquette-vice-city-wrap.jpg)
+
+<figcaption>Uit een story van andrewblakeames op Instagram, 15 oktober 2026, gedeeld door @GTASixInfo op X.</figcaption>
+</figure>
+
+<figure>
+
+![Een zwart-witte Lamborghini met Vice Beach Police op de achterkant en een zwaailichtbalk op het dak rijdt in het verkeer van Miami, naast een roze sportwagen.](../../../assets/posts/gta-vi-miami-vice-beach-police-lamborghini.jpg)
+
+<figcaption>Uit een story van andrewblakeames op Instagram, 15 oktober 2026, gedeeld door @GTASixInfo op X.</figcaption>
+</figure>
+
 ## Reacties
 
 De reacties op sociale media zijn vooral positief, schrijft IGN. Spelers

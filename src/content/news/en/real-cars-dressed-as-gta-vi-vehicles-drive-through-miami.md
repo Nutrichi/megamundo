@@ -47,6 +47,24 @@ later.
 <p><a href="https://twitter.com/videotech/status/2110898507448254774">ben (@videotech) on X, 16 October 2026</a></p>
 </blockquote>
 
+That video comes from a story of andrewblakeames on Instagram. Photos from
+the same story show two of the cars up close. The plates read VCE CTY. On
+the police car it says Vice Beach Police.
+
+<figure>
+
+![A Corvette with a pink, light blue and purple wrap and the plate VCE CTY drives through downtown Miami, behind a black police sports car.](../../../assets/posts/gta-vi-miami-coquette-vice-city-wrap.jpg)
+
+<figcaption>From a story of andrewblakeames on Instagram, 15 October 2026, shared by @GTASixInfo on X.</figcaption>
+</figure>
+
+<figure>
+
+![A black and white Lamborghini with Vice Beach Police on the back and a light bar on the roof drives in Miami traffic, next to a pink sports car.](../../../assets/posts/gta-vi-miami-vice-beach-police-lamborghini.jpg)
+
+<figcaption>From a story of andrewblakeames on Instagram, 15 October 2026, shared by @GTASixInfo on X.</figcaption>
+</figure>
+
 ## Reactions
 
 Reactions on social media are mostly positive, IGN writes. Players praise

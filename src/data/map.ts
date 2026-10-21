@@ -14,8 +14,8 @@
  */
 
 /** Welke versie van de gemeenschapskaart er in public/map/tiles staat. */
-export const version = 'v16.0';
-export const versionDate = '2026-09-20';
+export const version = 'v17.0';
+export const versionDate = '2026-10-17';
 
 /** Waar de tegels staan, in het patroon dat Leaflet verwacht. */
 export const tileUrl = '/map/tiles/{z}/{x}/{y}.png';

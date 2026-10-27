@@ -1,7 +1,7 @@
 ---
 title: "GTA VI reportedly needs 210 GB on PlayStation 5"
 description: "The X account PlayStation Game Size puts the standard edition at 210 GB. Rockstar has not announced a size, and the Ultimate Edition is not known."
-date: 2026-10-27T23:05:00+01:00
+date: 2026-10-27T22:45:00+01:00
 category: gta6
 lang: en
 image: ../../../assets/posts/gta-vi-screenshot-boobie-ike-02.jpg

@@ -1,7 +1,7 @@
 ---
 title: "GTA VI occuperait 210 Go sur PlayStation 5"
 description: "Le compte X PlayStation Game Size annonce 210 Go pour l'édition standard. Rockstar n'a communiqué aucune taille, et celle de l'Ultimate Edition reste inconnue."
-date: 2026-10-27T23:05:00+01:00
+date: 2026-10-27T22:45:00+01:00
 category: gta6
 lang: fr
 image: ../../../assets/posts/gta-vi-screenshot-boobie-ike-02.jpg
